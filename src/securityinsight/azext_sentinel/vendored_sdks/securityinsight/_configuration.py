@@ -12,13 +12,14 @@ from azure.core.configuration import Configuration
 from azure.core.pipeline import policies
 from azure.mgmt.core.policies import ARMHttpLoggingPolicy
 
+from ._version import VERSION
+
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any
 
     from azure.core.credentials import TokenCredential
 
-VERSION = "unknown"
 
 class SecurityInsightsConfiguration(Configuration):
     """Configuration for SecurityInsights.
@@ -28,7 +29,7 @@ class SecurityInsightsConfiguration(Configuration):
 
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials.TokenCredential
-    :param subscription_id: Azure subscription ID.
+    :param subscription_id: The ID of the target subscription.
     :type subscription_id: str
     """
 
@@ -47,9 +48,9 @@ class SecurityInsightsConfiguration(Configuration):
 
         self.credential = credential
         self.subscription_id = subscription_id
-        self.api_version = "2020-01-01"
+        self.api_version = "2022-06-01-preview"
         self.credential_scopes = kwargs.pop('credential_scopes', ['https://management.azure.com/.default'])
-        kwargs.setdefault('sdk_moniker', 'securityinsights/{}'.format(VERSION))
+        kwargs.setdefault('sdk_moniker', 'mgmt-securityinsight/{}'.format(VERSION))
         self._configure(**kwargs)
 
     def _configure(

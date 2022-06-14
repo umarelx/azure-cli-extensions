@@ -12,9 +12,14 @@
 from knack.help_files import helps
 
 
+helps['sentinel'] = '''
+    type: group
+    short-summary: Manage Security Insights
+'''
+
 helps['sentinel alert-rule'] = """
     type: group
-    short-summary: sentinel alert-rule
+    short-summary: Manage alert rule with sentinel
 """
 
 helps['sentinel alert-rule list'] = """
@@ -30,176 +35,150 @@ helps['sentinel alert-rule show'] = """
     type: command
     short-summary: "Gets the alert rule."
     examples:
-      - name: Get an alert rule.
+      - name: Get a Fusion alert rule.
         text: |-
                az sentinel alert-rule show --resource-group "myRg" --rule-id "myFirstFusionRule" --workspace-name \
 "myWorkspace"
+      - name: Get a MicrosoftSecurityIncidentCreation rule.
+        text: |-
+               az sentinel alert-rule show --resource-group "myRg" --rule-id "microsoftSecurityIncidentCreationRuleExam\
+ple" --workspace-name "myWorkspace"
+      - name: Get a Scheduled alert rule.
+        text: |-
+               az sentinel alert-rule show --resource-group "myRg" --rule-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
+--workspace-name "myWorkspace"
+      - name: Get an Nrt alert rule.
+        text: |-
+               az sentinel alert-rule show --resource-group "myRg" --rule-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
+--workspace-name "myWorkspace"
 """
 
 helps['sentinel alert-rule create'] = """
     type: command
-    short-summary: "Creates or updates the action of alert rule. And Create the alert rule."
-    parameters:
-      - name: --fusion-alert-rule
-        short-summary: "Represents Fusion alert rule."
-        long-summary: |
-            Usage: --fusion-alert-rule alert-rule-template-name=XX enabled=XX kind=XX etag=XX
-
-            alert-rule-template-name: The Name of the alert rule template used to create this rule.
-            enabled: Determines whether this alert rule is enabled or disabled.
-            kind: Required. The alert rule kind
-            etag: Etag of the azure resource
-      - name: --microsoft-security-incident-creation-alert-rule
-        short-summary: "Represents MicrosoftSecurityIncidentCreation rule."
-        long-summary: |
-            Usage: --microsoft-security-incident-creation-alert-rule display-names-filter=XX \
-display-names-exclude-filter=XX product-filter=XX severities-filter=XX alert-rule-template-name=XX description=XX \
-display-name=XX enabled=XX kind=XX etag=XX
-
-            display-names-filter: the alerts' displayNames on which the cases will be generated
-            display-names-exclude-filter: the alerts' displayNames on which the cases will not be generated
-            product-filter: The alerts' productName on which the cases will be generated
-            severities-filter: the alerts' severities on which the cases will be generated
-            alert-rule-template-name: The Name of the alert rule template used to create this rule.
-            description: The description of the alert rule.
-            display-name: The display name for alerts created by this alert rule.
-            enabled: Determines whether this alert rule is enabled or disabled.
-            kind: Required. The alert rule kind
-            etag: Etag of the azure resource
-      - name: --scheduled-alert-rule
-        short-summary: "Represents scheduled alert rule."
-        long-summary: |
-            Usage: --scheduled-alert-rule query=XX query-frequency=XX query-period=XX severity=XX trigger-operator=XX \
-trigger-threshold=XX alert-rule-template-name=XX description=XX display-name=XX enabled=XX suppression-duration=XX \
-suppression-enabled=XX tactics=XX kind=XX etag=XX
-
-            query: The query that creates alerts for this rule.
-            query-frequency: The frequency (in ISO 8601 duration format) for this alert rule to run.
-            query-period: The period (in ISO 8601 duration format) that this alert rule looks at.
-            severity: The severity for alerts created by this alert rule.
-            trigger-operator: The operation against the threshold that triggers alert rule.
-            trigger-threshold: The threshold triggers this alert rule.
-            alert-rule-template-name: The Name of the alert rule template used to create this rule.
-            description: The description of the alert rule.
-            display-name: The display name for alerts created by this alert rule.
-            enabled: Determines whether this alert rule is enabled or disabled.
-            suppression-duration: The suppression (in ISO 8601 duration format) to wait since last time this alert \
-rule been triggered.
-            suppression-enabled: Determines whether the suppression for this alert rule is enabled or disabled.
-            tactics: The tactics of the alert rule
-            kind: Required. The alert rule kind
-            etag: Etag of the azure resource
+    short-summary: "Create the alert rule."
     examples:
-      - name: Creates or updates an action of alert rule.
+      - name: Creates or updates a Fusion alert rule with scenario exclusion pattern.
         text: |-
-               az sentinel alert-rule create --etag "{etag}" \
---logic-app-resource-id "/subscriptions/{subs}/resourceGroups/myRg/providers/Microsoft.Lo\
-gic/workflows/MyAlerts" --trigger-uri "https://xxx.northcentralus.logic.azure.com:443/workflows/xxx/triggers/\
-manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=signature" \
---action-id "{action-id}" --resource-group "myRg" --rule-id "{rule-id}" --workspace-name "myWorkspace"
+               az sentinel alert-rule create --alert-rule "{\\"etag\\":\\"3d00c3ca-0000-0100-0000-5d42d5010000\\",\\"ki\
+nd\\":\\"Fusion\\",\\"properties\\":{\\"alertRuleTemplateName\\":\\"f71aba3d-28fb-450b-b192-4e76a83015c8\\",\\"enabled\
+\\":true,\\"sourceSettings\\":[{\\"enabled\\":true,\\"sourceName\\":\\"Anomalies\\",\\"sourceSubTypes\\":null},{\\"enab\
+led\\":true,\\"sourceName\\":\\"Alert providers\\",\\"sourceSubTypes\\":[{\\"enabled\\":true,\\"severityFilters\\":{\\"\
+filters\\":[{\\"enabled\\":true,\\"severity\\":\\"High\\"},{\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\
+\\":true,\\"severity\\":\\"Low\\"},{\\"enabled\\":true,\\"severity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\\
+"Azure Active Directory Identity Protection\\"},{\\"enabled\\":true,\\"severityFilters\\":{\\"filters\\":[{\\"enabled\\\
+":true,\\"severity\\":\\"High\\"},{\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"severity\\":\
+\\"Low\\"},{\\"enabled\\":true,\\"severity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Azure \
+Defender\\"},{\\"enabled\\":true,\\"severityFilters\\":{\\"filters\\":[{\\"enabled\\":true,\\"severity\\":\\"High\\"},{\
+\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"severity\\":\\"Low\\"},{\\"enabled\\":true,\\"se\
+verity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Azure Defender for IoT\\"},{\\"enabled\\":true,\\"severityF\
+ilter\\":[\\"High\\",\\"Medium\\",\\"Low\\",\\"Informational\\"],\\"severityFilters\\":{\\"filters\\":[{\\"enabled\\":t\
+rue,\\"severity\\":\\"High\\"},{\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"severity\\":\\"L\
+ow\\"},{\\"enabled\\":true,\\"severity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Microsoft 365 \
+Defender\\"},{\\"enabled\\":true,\\"severityFilters\\":{\\"filters\\":[{\\"enabled\\":true,\\"severity\\":\\"High\\"},{\
+\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"severity\\":\\"Low\\"},{\\"enabled\\":true,\\"se\
+verity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Microsoft Cloud App Security\\"},{\\"enabled\\":true,\\"sev\
+erityFilters\\":{\\"filters\\":[{\\"enabled\\":true,\\"severity\\":\\"High\\"},{\\"enabled\\":true,\\"severity\\":\\"Me\
+dium\\"},{\\"enabled\\":true,\\"severity\\":\\"Low\\"},{\\"enabled\\":true,\\"severity\\":\\"Informational\\"}]},\\"sou\
+rceSubTypeName\\":\\"Microsoft Defender for Endpoint\\"},{\\"enabled\\":true,\\"severityFilters\\":{\\"filters\\":[{\\"\
+enabled\\":true,\\"severity\\":\\"High\\"},{\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"seve\
+rity\\":\\"Low\\"},{\\"enabled\\":true,\\"severity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Microsoft \
+Defender for Identity\\"},{\\"enabled\\":true,\\"severityFilters\\":{\\"filters\\":[{\\"enabled\\":true,\\"severity\\":\
+\\"High\\"},{\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"severity\\":\\"Low\\"},{\\"enabled\
+\\":true,\\"severity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Microsoft Defender for Office \
+365\\"},{\\"enabled\\":true,\\"severityFilters\\":{\\"filters\\":[{\\"enabled\\":true,\\"severity\\":\\"High\\"},{\\"en\
+abled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"severity\\":\\"Low\\"},{\\"enabled\\":true,\\"severit\
+y\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Azure Sentinel scheduled analytics \
+rules\\"}]},{\\"enabled\\":true,\\"sourceName\\":\\"Raw logs from other sources\\",\\"sourceSubTypes\\":[{\\"enabled\\"\
+:true,\\"severityFilters\\":{\\"filters\\":null},\\"sourceSubTypeName\\":\\"Palo Alto Networks\\"}]}]}}" \
+--resource-group "myRg" --rule-id "myFirstFusionRule" --workspace-name "myWorkspace"
       - name: Creates or updates a Fusion alert rule.
         text: |-
-               az sentinel alert-rule create --fusion-alert-rule etag="{etag}" \
-alert-rule-template-name="{name}" enabled=true --resource-group "myRg" --rule-id \
-"myFirstFusionRule" --workspace-name "myWorkspace"
+               az sentinel alert-rule create --alert-rule "{\\"etag\\":\\"3d00c3ca-0000-0100-0000-5d42d5010000\\",\\"ki\
+nd\\":\\"Fusion\\",\\"properties\\":{\\"alertRuleTemplateName\\":\\"f71aba3d-28fb-450b-b192-4e76a83015c8\\",\\"enabled\
+\\":true,\\"sourceSettings\\":[{\\"enabled\\":true,\\"sourceName\\":\\"Anomalies\\",\\"sourceSubTypes\\":null},{\\"enab\
+led\\":true,\\"sourceName\\":\\"Alert providers\\",\\"sourceSubTypes\\":[{\\"enabled\\":true,\\"severityFilters\\":{\\"\
+filters\\":[{\\"enabled\\":true,\\"severity\\":\\"High\\"},{\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\
+\\":true,\\"severity\\":\\"Low\\"},{\\"enabled\\":true,\\"severity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\\
+"Azure Active Directory Identity Protection\\"},{\\"enabled\\":true,\\"severityFilters\\":{\\"filters\\":[{\\"enabled\\\
+":true,\\"severity\\":\\"High\\"},{\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"severity\\":\
+\\"Low\\"},{\\"enabled\\":true,\\"severity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Azure \
+Defender\\"},{\\"enabled\\":true,\\"severityFilters\\":{\\"filters\\":[{\\"enabled\\":true,\\"severity\\":\\"High\\"},{\
+\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"severity\\":\\"Low\\"},{\\"enabled\\":true,\\"se\
+verity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Azure Defender for IoT\\"},{\\"enabled\\":true,\\"severityF\
+ilter\\":[\\"High\\",\\"Medium\\",\\"Low\\",\\"Informational\\"],\\"severityFilters\\":{\\"filters\\":[{\\"enabled\\":t\
+rue,\\"severity\\":\\"High\\"},{\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"severity\\":\\"L\
+ow\\"},{\\"enabled\\":true,\\"severity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Microsoft 365 \
+Defender\\"},{\\"enabled\\":true,\\"severityFilters\\":{\\"filters\\":[{\\"enabled\\":true,\\"severity\\":\\"High\\"},{\
+\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"severity\\":\\"Low\\"},{\\"enabled\\":true,\\"se\
+verity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Microsoft Cloud App Security\\"},{\\"enabled\\":true,\\"sev\
+erityFilters\\":{\\"filters\\":[{\\"enabled\\":true,\\"severity\\":\\"High\\"},{\\"enabled\\":true,\\"severity\\":\\"Me\
+dium\\"},{\\"enabled\\":true,\\"severity\\":\\"Low\\"},{\\"enabled\\":true,\\"severity\\":\\"Informational\\"}]},\\"sou\
+rceSubTypeName\\":\\"Microsoft Defender for Endpoint\\"},{\\"enabled\\":true,\\"severityFilters\\":{\\"filters\\":[{\\"\
+enabled\\":true,\\"severity\\":\\"High\\"},{\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"seve\
+rity\\":\\"Low\\"},{\\"enabled\\":true,\\"severity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Microsoft \
+Defender for Identity\\"},{\\"enabled\\":true,\\"severityFilters\\":{\\"filters\\":[{\\"enabled\\":true,\\"severity\\":\
+\\"High\\"},{\\"enabled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"severity\\":\\"Low\\"},{\\"enabled\
+\\":true,\\"severity\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Microsoft Defender for Office \
+365\\"},{\\"enabled\\":true,\\"severityFilters\\":{\\"filters\\":[{\\"enabled\\":true,\\"severity\\":\\"High\\"},{\\"en\
+abled\\":true,\\"severity\\":\\"Medium\\"},{\\"enabled\\":true,\\"severity\\":\\"Low\\"},{\\"enabled\\":true,\\"severit\
+y\\":\\"Informational\\"}]},\\"sourceSubTypeName\\":\\"Azure Sentinel scheduled analytics \
+rules\\"}]},{\\"enabled\\":true,\\"sourceName\\":\\"Raw logs from other sources\\",\\"sourceSubTypes\\":[{\\"enabled\\"\
+:true,\\"severityFilters\\":{\\"filters\\":null},\\"sourceSubTypeName\\":\\"Palo Alto Networks\\"}]}]}}" \
+--resource-group "myRg" --rule-id "myFirstFusionRule" --workspace-name "myWorkspace"
       - name: Creates or updates a MicrosoftSecurityIncidentCreation rule.
         text: |-
-               az sentinel alert-rule create --microsoft-security-incident-creation-alert-rule \
-etag="{etag}" product-filter="Microsoft Cloud App Security" display-name="testing \
-displayname" enabled=true --resource-group "myRg" --rule-id "microsoftSecurityIncidentCreationRuleExample" \
---workspace-name "myWorkspace"
+               az sentinel alert-rule create --alert-rule "{\\"etag\\":\\"\\\\\\"260097e0-0000-0d00-0000-5d6fa88f0000\\\
+\\\\"\\",\\"kind\\":\\"MicrosoftSecurityIncidentCreation\\",\\"properties\\":{\\"displayName\\":\\"testing \
+displayname\\",\\"enabled\\":true,\\"productFilter\\":\\"Microsoft Cloud App Security\\"}}" --resource-group "myRg" \
+--rule-id "microsoftSecurityIncidentCreationRuleExample" --workspace-name "myWorkspace"
+      - name: Creates or updates a Nrt alert rule.
+        text: |-
+               az sentinel alert-rule create --alert-rule "{\\"etag\\":\\"\\\\\\"0300bf09-0000-0000-0000-5c37296e0000\\\
+\\\\"\\",\\"kind\\":\\"NRT\\",\\"properties\\":{\\"description\\":\\"\\",\\"displayName\\":\\"Rule2\\",\\"enabled\\":tr\
+ue,\\"eventGroupingSettings\\":{\\"aggregationKind\\":\\"AlertPerResult\\"},\\"incidentConfiguration\\":{\\"createIncid\
+ent\\":true,\\"groupingConfiguration\\":{\\"enabled\\":true,\\"groupByEntities\\":[\\"Host\\",\\"Account\\"],\\"lookbac\
+kDuration\\":\\"PT5H\\",\\"matchingMethod\\":\\"Selected\\",\\"reopenClosedIncident\\":false}},\\"query\\":\\"Protectio\
+nStatus | extend HostCustomEntity = Computer | extend IPCustomEntity = ComputerIP_Hidden\\",\\"severity\\":\\"High\\",\
+\\"suppressionDuration\\":\\"PT1H\\",\\"suppressionEnabled\\":false,\\"tactics\\":[\\"Persistence\\",\\"LateralMovement\
+\\"],\\"techniques\\":[\\"T1037\\",\\"T1021\\"]}}" --resource-group "myRg" --rule-id "73e01a99-5cd7-4139-a149-9f2736ff2\
+ab5" --workspace-name "myWorkspace"
       - name: Creates or updates a Scheduled alert rule.
         text: |-
-               az sentinel alert-rule create --scheduled-alert-rule etag="{etag}" \
-query="ProtectionStatus | extend HostCustomEntity = Computer | extend IPCustomEntity = ComputerIP_Hidden" \
-query-frequency="PT1H" query-period="P2DT1H30M" severity="High" trigger-operator="GreaterThan" trigger-threshold=0 \
-description="" display-name="Rule2" enabled=true suppression-duration="PT1H" suppression-enabled=false \
-tactics="Persistence" tactics="LateralMovement" --resource-group "myRg" --rule-id "{rule-id}" \
---workspace-name "myWorkspace"
+               az sentinel alert-rule create --alert-rule "{\\"etag\\":\\"\\\\\\"0300bf09-0000-0000-0000-5c37296e0000\\\
+\\\\"\\",\\"kind\\":\\"Scheduled\\",\\"properties\\":{\\"description\\":\\"An example for a scheduled \
+rule\\",\\"alertDetailsOverride\\":{\\"alertDescriptionFormat\\":\\"Suspicious activity was made by \
+{{ComputerIP}}\\",\\"alertDisplayNameFormat\\":\\"Alert from {{Computer}}\\"},\\"customDetails\\":{\\"OperatingSystemNa\
+me\\":\\"OSName\\",\\"OperatingSystemType\\":\\"OSType\\"},\\"displayName\\":\\"My scheduled \
+rule\\",\\"enabled\\":true,\\"entityMappings\\":[{\\"entityType\\":\\"Host\\",\\"fieldMappings\\":[{\\"columnName\\":\\\
+"Computer\\",\\"identifier\\":\\"FullName\\"}]},{\\"entityType\\":\\"IP\\",\\"fieldMappings\\":[{\\"columnName\\":\\"Co\
+mputerIP\\",\\"identifier\\":\\"Address\\"}]}],\\"eventGroupingSettings\\":{\\"aggregationKind\\":\\"AlertPerResult\\"}\
+,\\"incidentConfiguration\\":{\\"createIncident\\":true,\\"groupingConfiguration\\":{\\"enabled\\":true,\\"groupByAlert\
+Details\\":[\\"DisplayName\\"],\\"groupByCustomDetails\\":[\\"OperatingSystemType\\",\\"OperatingSystemName\\"],\\"grou\
+pByEntities\\":[\\"Host\\"],\\"lookbackDuration\\":\\"PT5H\\",\\"matchingMethod\\":\\"Selected\\",\\"reopenClosedIncide\
+nt\\":false}},\\"query\\":\\"Heartbeat\\",\\"queryFrequency\\":\\"PT1H\\",\\"queryPeriod\\":\\"P2DT1H30M\\",\\"severity\
+\\":\\"High\\",\\"suppressionDuration\\":\\"PT1H\\",\\"suppressionEnabled\\":false,\\"tactics\\":[\\"Persistence\\",\\"\
+LateralMovement\\"],\\"techniques\\":[\\"T1037\\",\\"T1021\\"],\\"triggerOperator\\":\\"GreaterThan\\",\\"triggerThresh\
+old\\":0}}" --resource-group "myRg" --rule-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --workspace-name "myWorkspace"
 """
 
 helps['sentinel alert-rule update'] = """
     type: command
     short-summary: "Update the alert rule."
-    parameters:
-      - name: --fusion-alert-rule
-        short-summary: "Represents Fusion alert rule."
-        long-summary: |
-            Usage: --fusion-alert-rule alert-rule-template-name=XX enabled=XX kind=XX etag=XX
-
-            alert-rule-template-name: The Name of the alert rule template used to create this rule.
-            enabled: Determines whether this alert rule is enabled or disabled.
-            kind: Required. The alert rule kind
-            etag: Etag of the azure resource
-      - name: --microsoft-security-incident-creation-alert-rule
-        short-summary: "Represents MicrosoftSecurityIncidentCreation rule."
-        long-summary: |
-            Usage: --microsoft-security-incident-creation-alert-rule display-names-filter=XX \
-display-names-exclude-filter=XX product-filter=XX severities-filter=XX alert-rule-template-name=XX description=XX \
-display-name=XX enabled=XX kind=XX etag=XX
-
-            display-names-filter: the alerts' displayNames on which the cases will be generated
-            display-names-exclude-filter: the alerts' displayNames on which the cases will not be generated
-            product-filter: The alerts' productName on which the cases will be generated
-            severities-filter: the alerts' severities on which the cases will be generated
-            alert-rule-template-name: The Name of the alert rule template used to create this rule.
-            description: The description of the alert rule.
-            display-name: The display name for alerts created by this alert rule.
-            enabled: Determines whether this alert rule is enabled or disabled.
-            kind: Required. The alert rule kind
-            etag: Etag of the azure resource
-      - name: --scheduled-alert-rule
-        short-summary: "Represents scheduled alert rule."
-        long-summary: |
-            Usage: --scheduled-alert-rule query=XX query-frequency=XX query-period=XX severity=XX trigger-operator=XX \
-trigger-threshold=XX alert-rule-template-name=XX description=XX display-name=XX enabled=XX suppression-duration=XX \
-suppression-enabled=XX tactics=XX kind=XX etag=XX
-
-            query: The query that creates alerts for this rule.
-            query-frequency: The frequency (in ISO 8601 duration format) for this alert rule to run.
-            query-period: The period (in ISO 8601 duration format) that this alert rule looks at.
-            severity: The severity for alerts created by this alert rule.
-            trigger-operator: The operation against the threshold that triggers alert rule.
-            trigger-threshold: The threshold triggers this alert rule.
-            alert-rule-template-name: The Name of the alert rule template used to create this rule.
-            description: The description of the alert rule.
-            display-name: The display name for alerts created by this alert rule.
-            enabled: Determines whether this alert rule is enabled or disabled.
-            suppression-duration: The suppression (in ISO 8601 duration format) to wait since last time this alert \
-rule been triggered.
-            suppression-enabled: Determines whether the suppression for this alert rule is enabled or disabled.
-            tactics: The tactics of the alert rule
-            kind: Required. The alert rule kind
-            etag: Etag of the azure resource
 """
 
 helps['sentinel alert-rule delete'] = """
     type: command
-    short-summary: "Delete the action of alert rule. And Delete the alert rule."
+    short-summary: "Delete the alert rule."
     examples:
-      - name: Delete an action of alert rule.
-        text: |-
-               az sentinel alert-rule delete --action-id "{action-id}" --resource-group \
-"myRg" --rule-id "{rule-id}" --workspace-name "myWorkspace"
       - name: Delete an alert rule.
         text: |-
-               az sentinel alert-rule delete --resource-group "myRg" --rule-id "{rule-id}" \
+               az sentinel alert-rule delete --resource-group "myRg" --rule-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
 --workspace-name "myWorkspace"
-"""
-
-helps['sentinel alert-rule get-action'] = """
-    type: command
-    short-summary: "Gets the action of alert rule."
-    examples:
-      - name: Get an action of alert rule.
-        text: |-
-               az sentinel alert-rule get-action --action-id "{action-id}" --resource-group \
-"myRg" --rule-id "{rule-id}" --workspace-name "myWorkspace"
 """
 
 helps['sentinel action'] = """
     type: group
-    short-summary: sentinel action
+    short-summary: Manage action with sentinel
 """
 
 helps['sentinel action list'] = """
@@ -208,13 +187,52 @@ helps['sentinel action list'] = """
     examples:
       - name: Get all actions of alert rule.
         text: |-
-               az sentinel action list --resource-group "myRg" --rule-id "{rule-id}" \
+               az sentinel action list --resource-group "myRg" --rule-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
 --workspace-name "myWorkspace"
+"""
+
+helps['sentinel action show'] = """
+    type: command
+    short-summary: "Gets the action of alert rule."
+    examples:
+      - name: Get an action of alert rule.
+        text: |-
+               az sentinel action show --action-id "912bec42-cb66-4c03-ac63-1761b6898c3e" --resource-group "myRg" \
+--rule-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel action create'] = """
+    type: command
+    short-summary: "Create the action of alert rule."
+    examples:
+      - name: Creates or updates an action of alert rule.
+        text: |-
+               az sentinel action create --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\"" --logic-app-resource-id \
+"/subscriptions/d0cfe6b2-9ac0-4464-9919-dccaee2e48c0/resourceGroups/myRg/providers/Microsoft.Logic/workflows/MyAlerts" \
+--trigger-uri "https://prod-31.northcentralus.logic.azure.com:443/workflows/cd3765391efd48549fd7681ded1d48d7/triggers/m\
+anual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=signature" --action-id \
+"912bec42-cb66-4c03-ac63-1761b6898c3e" --resource-group "myRg" --rule-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel action update'] = """
+    type: command
+    short-summary: "Update the action of alert rule."
+"""
+
+helps['sentinel action delete'] = """
+    type: command
+    short-summary: "Delete the action of alert rule."
+    examples:
+      - name: Delete an action of alert rule.
+        text: |-
+               az sentinel action delete --action-id "912bec42-cb66-4c03-ac63-1761b6898c3e" --resource-group "myRg" \
+--rule-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --workspace-name "myWorkspace"
 """
 
 helps['sentinel alert-rule-template'] = """
     type: group
-    short-summary: sentinel alert-rule-template
+    short-summary: Manage alert rule template with sentinel
 """
 
 helps['sentinel alert-rule-template list'] = """
@@ -232,288 +250,106 @@ helps['sentinel alert-rule-template show'] = """
     examples:
       - name: Get alert rule template by Id.
         text: |-
-               az sentinel alert-rule-template show --alert-rule-template-id "{id}" \
+               az sentinel alert-rule-template show --alert-rule-template-id "65360bb0-8986-4ade-a89d-af3cf44d28aa" \
 --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel bookmark'] = """
+helps['sentinel automation-rule'] = """
     type: group
-    short-summary: sentinel bookmark
+    short-summary: Manage automation rule with sentinel
 """
 
-helps['sentinel bookmark list'] = """
+helps['sentinel automation-rule list'] = """
     type: command
-    short-summary: "Gets all bookmarks."
+    short-summary: "Gets all automation rules."
     examples:
-      - name: Get all bookmarks.
+      - name: AutomationRules_List
         text: |-
-               az sentinel bookmark list --resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel automation-rule list --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel bookmark show'] = """
+helps['sentinel automation-rule show'] = """
     type: command
-    short-summary: "Gets a bookmark."
+    short-summary: "Gets the automation rule."
     examples:
-      - name: Get a bookmark.
+      - name: AutomationRules_Get
         text: |-
-               az sentinel bookmark show --bookmark-id "{id}" --resource-group "myRg" \
+               az sentinel automation-rule show --automation-rule-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel automation-rule create'] = """
+    type: command
+    short-summary: "Create the automation rule."
+    parameters:
+      - name: --actions
+        short-summary: "The actions to execute when the automation rule is triggered."
+        long-summary: |
+            Usage: --actions order=XX action-type=XX
+
+            action-type: Required. The type of the automation rule action.
+
+            Multiple actions can be specified by using more than one --actions argument.
+      - name: --conditions
+        short-summary: "The conditions to evaluate to determine if the automation rule should be triggered on a given \
+object."
+        long-summary: |
+            Usage: --conditions condition-type=XX
+
+
+            Multiple actions can be specified by using more than one --conditions argument.
+    examples:
+      - name: AutomationRules_CreateOrUpdate
+        text: |-
+               az sentinel automation-rule create --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\"" --actions \
+actionConfiguration={"severity":"High"} action-type="ModifyProperties" order=1 --display-name "High severity incidents \
+escalation" --order 1 --conditions conditionProperties={"operator":"Contains","propertyName":"IncidentRelatedAnalyticRu\
+leIds","propertyValues":["/subscriptions/d0cfe6b2-9ac0-4464-9919-dccaee2e48c0/resourceGroups/myRg/providers/Microsoft.O\
+perationalInsights/workspaces/myWorkspace/providers/Microsoft.SecurityInsights/alertRules/fab3d2d4-747f-46a7-8ef0-9c0be\
+8112bf7","/subscriptions/d0cfe6b2-9ac0-4464-9919-dccaee2e48c0/resourceGroups/myRg/providers/Microsoft.OperationalInsigh\
+ts/workspaces/myWorkspace/providers/Microsoft.SecurityInsights/alertRules/8deb8303-e94d-46ff-96e0-5fd94b33df1a"]} \
+condition-type="Property" --conditions conditionProperties={"changeType":"ChangedFrom","operator":"Equals","propertyNam\
+e":"IncidentStatus","propertyValues":["Closed"]} condition-type="PropertyChanged" --conditions \
+conditionProperties={"arrayType":"Alerts","changeType":"Added"} condition-type="PropertyArrayChanged" --is-enabled \
+true --triggers-when "Created" --automation-rule-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" \
 --workspace-name "myWorkspace"
 """
 
-helps['sentinel bookmark create'] = """
+helps['sentinel automation-rule update'] = """
     type: command
-    short-summary: "Create the bookmark."
+    short-summary: "Update the automation rule."
     parameters:
-      - name: --incident-info
-        short-summary: "Describes an incident that relates to bookmark"
+      - name: --actions
+        short-summary: "The actions to execute when the automation rule is triggered."
         long-summary: |
-            Usage: --incident-info incident-id=XX severity=XX title=XX relation-name=XX
+            Usage: --actions order=XX action-type=XX
 
-            incident-id: Required. Incident Id
-            severity: Required. The severity of the incident
-            title: Required. The title of the incident
-            relation-name: Required. Relation Name
+            action-type: Required. The type of the automation rule action.
+
+            Multiple actions can be specified by using more than one --actions argument.
+      - name: --conditions
+        short-summary: "The conditions to evaluate to determine if the automation rule should be triggered on a given \
+object."
+        long-summary: |
+            Usage: --conditions condition-type=XX
+
+
+            Multiple actions can be specified by using more than one --conditions argument.
+"""
+
+helps['sentinel automation-rule delete'] = """
+    type: command
+    short-summary: "Delete the automation rule."
     examples:
-      - name: Creates or updates a bookmark.
+      - name: AutomationRules_Delete
         text: |-
-               az sentinel bookmark create --etag "{etag}" --created \
-"2019-01-01T13:15:30Z" --display-name "My bookmark" --labels "Tag1" --labels "Tag2" --notes "Found a suspicious \
-activity" -q "SecurityEvent | where TimeGenerated > ago(1d) and TimeGenerated < ago(2d)" --query-result "Security \
-Event query result" --updated "2019-01-01T13:15:30Z" --bookmark-id "{id}" \
+               az sentinel automation-rule delete --automation-rule-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
 --resource-group "myRg" --workspace-name "myWorkspace"
-"""
-
-helps['sentinel bookmark update'] = """
-    type: command
-    short-summary: "Update the bookmark."
-    parameters:
-      - name: --incident-info
-        short-summary: "Describes an incident that relates to bookmark"
-        long-summary: |
-            Usage: --incident-info incident-id=XX severity=XX title=XX relation-name=XX
-
-            incident-id: Required. Incident Id
-            severity: Required. The severity of the incident
-            title: Required. The title of the incident
-            relation-name: Required. Relation Name
-"""
-
-helps['sentinel bookmark delete'] = """
-    type: command
-    short-summary: "Delete the bookmark."
-    examples:
-      - name: Delete a bookmark.
-        text: |-
-               az sentinel bookmark delete --bookmark-id "{id}" --resource-group \
-"myRg" --workspace-name "myWorkspace"
-"""
-
-helps['sentinel data-connector'] = """
-    type: group
-    short-summary: sentinel data-connector
-"""
-
-helps['sentinel data-connector list'] = """
-    type: command
-    short-summary: "Gets all data connectors."
-    examples:
-      - name: Get all data connectors.
-        text: |-
-               az sentinel data-connector list --resource-group "myRg" --workspace-name "myWorkspace"
-"""
-
-helps['sentinel data-connector show'] = """
-    type: command
-    short-summary: "Gets a data connector."
-    examples:
-      - name: Get a data connector.
-        text: |-
-               az sentinel data-connector show --data-connector-id "{id}" --resource-group "myRg" \
-               --workspace-name "myWorkspace"
-"""
-
-helps['sentinel data-connector create'] = """
-    type: command
-    short-summary: "Create the data connector."
-    parameters:
-      - name: --aad-data-connector
-        short-summary: "Represents AAD (Azure Active Directory) data connector."
-        long-summary: |
-            Usage: --aad-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --aatp-data-connector
-        short-summary: "Represents AATP (Azure Advanced Threat Protection) data connector."
-        long-summary: |
-            Usage: --aatp-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --asc-data-connector
-        short-summary: "Represents ASC (Azure Security Center) data connector."
-        long-summary: |
-            Usage: --asc-data-connector subscription-id=XX state=XX kind=XX etag=XX
-
-            subscription-id: The subscription id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --aws-cloud-trail-data-connector
-        short-summary: "Represents Amazon Web Services CloudTrail data connector."
-        long-summary: |
-            Usage: --aws-cloud-trail-data-connector aws-role-arn=XX state=XX kind=XX etag=XX
-
-            aws-role-arn: The Aws Role Arn (with CloudTrailReadOnly policy) that is used to access the Aws account.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --mcas-data-connector
-        short-summary: "Represents MCAS (Microsoft Cloud App Security) data connector."
-        long-summary: |
-            Usage: --mcas-data-connector tenant-id=XX state-data-types-alerts-state=XX state-data-types-discovery-logs-\
-state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state-data-types-alerts-state: Describe whether this data type connection is enabled or not.
-            state-data-types-discovery-logs-state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --mdatp-data-connector
-        short-summary: "Represents MDATP (Microsoft Defender Advanced Threat Protection) data connector."
-        long-summary: |
-            Usage: --mdatp-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --office-data-connector
-        short-summary: "Represents office data connector."
-        long-summary: |
-            Usage: --office-data-connector tenant-id=XX state-data-types-share-point-state=XX \
-state-data-types-exchange-state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state-data-types-share-point-state: Describe whether this data type connection is enabled or not.
-            state-data-types-exchange-state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --ti-data-connector
-        short-summary: "Represents threat intelligence data connector."
-        long-summary: |
-            Usage: --ti-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-    examples:
-      - name: Creates or updates an Office365 data connector.
-        text: |-
-               az sentinel data-connector create --office-data-connector etag="{etag}" \
-               tenant-id="{tenant-id}" --data-connector-id "{id}" --resource-group "myRg" --workspace-name "myWorkspace"
-"""
-
-helps['sentinel data-connector update'] = """
-    type: command
-    short-summary: "Update the data connector."
-    parameters:
-      - name: --aad-data-connector
-        short-summary: "Represents AAD (Azure Active Directory) data connector."
-        long-summary: |
-            Usage: --aad-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --aatp-data-connector
-        short-summary: "Represents AATP (Azure Advanced Threat Protection) data connector."
-        long-summary: |
-            Usage: --aatp-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --asc-data-connector
-        short-summary: "Represents ASC (Azure Security Center) data connector."
-        long-summary: |
-            Usage: --asc-data-connector subscription-id=XX state=XX kind=XX etag=XX
-
-            subscription-id: The subscription id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --aws-cloud-trail-data-connector
-        short-summary: "Represents Amazon Web Services CloudTrail data connector."
-        long-summary: |
-            Usage: --aws-cloud-trail-data-connector aws-role-arn=XX state=XX kind=XX etag=XX
-
-            aws-role-arn: The Aws Role Arn (with CloudTrailReadOnly policy) that is used to access the Aws account.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --mcas-data-connector
-        short-summary: "Represents MCAS (Microsoft Cloud App Security) data connector."
-        long-summary: |
-            Usage: --mcas-data-connector tenant-id=XX state-data-types-alerts-state=XX state-data-types-discovery-logs-\
-state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state-data-types-alerts-state: Describe whether this data type connection is enabled or not.
-            state-data-types-discovery-logs-state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --mdatp-data-connector
-        short-summary: "Represents MDATP (Microsoft Defender Advanced Threat Protection) data connector."
-        long-summary: |
-            Usage: --mdatp-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --office-data-connector
-        short-summary: "Represents office data connector."
-        long-summary: |
-            Usage: --office-data-connector tenant-id=XX state-data-types-share-point-state=XX \
-state-data-types-exchange-state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state-data-types-share-point-state: Describe whether this data type connection is enabled or not.
-            state-data-types-exchange-state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --ti-data-connector
-        short-summary: "Represents threat intelligence data connector."
-        long-summary: |
-            Usage: --ti-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-"""
-
-helps['sentinel data-connector delete'] = """
-    type: command
-    short-summary: "Delete the data connector."
-    examples:
-      - name: Delete a data connector.
-        text: |-
-               az sentinel data-connector delete --data-connector-id "{id}" --resource-group "myRg" \
-               --workspace-name "myWorkspace"
 """
 
 helps['sentinel incident'] = """
     type: group
-    short-summary: sentinel incident
+    short-summary: Manage incident with sentinel
 """
 
 helps['sentinel incident list'] = """
@@ -532,7 +368,8 @@ helps['sentinel incident show'] = """
     examples:
       - name: Get an incident.
         text: |-
-               az sentinel incident show --incident-id "{id}" --resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel incident show --incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" \
+--workspace-name "myWorkspace"
 """
 
 helps['sentinel incident create'] = """
@@ -550,20 +387,21 @@ helps['sentinel incident create'] = """
       - name: --owner
         short-summary: "Describes a user that the incident is assigned to"
         long-summary: |
-            Usage: --owner email=XX assigned-to=XX object-id=XX user-principal-name=XX
+            Usage: --owner email=XX assigned-to=XX object-id=XX user-principal-name=XX owner-type=XX
 
             email: The email of the user the incident is assigned to.
             assigned-to: The name of the user the incident is assigned to.
             object-id: The object id of the user the incident is assigned to.
             user-principal-name: The user principal name of the user the incident is assigned to.
+            owner-type: The type of the owner the incident is assigned to.
     examples:
       - name: Creates or updates an incident.
         text: |-
-               az sentinel incident create --etag "{etag}" --description "This is \
+               az sentinel incident create --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\"" --description "This is \
 a demo incident" --classification "FalsePositive" --classification-comment "Not a malicious activity" \
 --classification-reason "IncorrectAlertLogic" --first-activity-time-utc "2019-01-01T13:00:30Z" \
---last-activity-time-utc "2019-01-01T13:05:30Z" --owner object-id="{oid}" --severity \
-"High" --status "Closed" --title "My incident" --incident-id "{id}" --resource-group \
+--last-activity-time-utc "2019-01-01T13:05:30Z" --owner object-id="2046feea-040d-4a46-9e2b-91c2941bfa70" --severity \
+"High" --status "Closed" --title "My incident" --incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group \
 "myRg" --workspace-name "myWorkspace"
 """
 
@@ -582,12 +420,13 @@ helps['sentinel incident update'] = """
       - name: --owner
         short-summary: "Describes a user that the incident is assigned to"
         long-summary: |
-            Usage: --owner email=XX assigned-to=XX object-id=XX user-principal-name=XX
+            Usage: --owner email=XX assigned-to=XX object-id=XX user-principal-name=XX owner-type=XX
 
             email: The email of the user the incident is assigned to.
             assigned-to: The name of the user the incident is assigned to.
             object-id: The object id of the user the incident is assigned to.
             user-principal-name: The user principal name of the user the incident is assigned to.
+            owner-type: The type of the owner the incident is assigned to.
 """
 
 helps['sentinel incident delete'] = """
@@ -596,13 +435,515 @@ helps['sentinel incident delete'] = """
     examples:
       - name: Delete an incident.
         text: |-
-               az sentinel incident delete --incident-id "{id}" --resource-group \
+               az sentinel incident delete --incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group \
 "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel incident create-team'] = """
+    type: command
+    short-summary: "Creates a Microsoft team to investigate the incident by sharing information and insights between \
+participants."
+    examples:
+      - name: Creates incident teams group.
+        text: |-
+               az sentinel incident create-team --incident-id "69a30280-6a4c-4aa7-9af0-5d63f335d600" --resource-group \
+"ambawolvese5resourcegroup" --team-description "Team description" --team-name "Team name" --workspace-name \
+"AmbaE5WestCentralUS"
+"""
+
+helps['sentinel incident list-alert'] = """
+    type: command
+    short-summary: "Gets all incident alerts."
+    examples:
+      - name: Get all incident alerts.
+        text: |-
+               az sentinel incident list-alert --incident-id "afbd324f-6c48-459c-8710-8d1e1cd03812" --resource-group \
+"myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel incident list-bookmark'] = """
+    type: command
+    short-summary: "Gets all incident bookmarks."
+    examples:
+      - name: Get all incident bookmarks.
+        text: |-
+               az sentinel incident list-bookmark --incident-id "afbd324f-6c48-459c-8710-8d1e1cd03812" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel incident list-entity'] = """
+    type: command
+    short-summary: "Gets all incident related entities."
+    examples:
+      - name: Gets all incident related entities
+        text: |-
+               az sentinel incident list-entity --incident-id "afbd324f-6c48-459c-8710-8d1e1cd03812" --resource-group \
+"myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel incident run-playbook'] = """
+    type: command
+    short-summary: "Triggers playbook on a specific incident."
+    examples:
+      - name: Incidents_RunPlaybook
+        text: |-
+               az sentinel incident run-playbook --incident-identifier "73e01a99-5cd7-4139-a149-9f2736ff2ar4" \
+--logic-apps-resource-id "/subscriptions/d0cfe6b2-9ac0-4464-9919-dccaee2e48c0/resourceGroups/myRg/providers/Microsoft.L\
+ogic/workflows/my-playbook-name" --tenant-id "qwere6b2-9ac0-4464-9919-dccaee2e4ddd" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel bookmark'] = """
+    type: group
+    short-summary: Manage bookmark with sentinel
+"""
+
+helps['sentinel bookmark list'] = """
+    type: command
+    short-summary: "Gets all bookmarks."
+    examples:
+      - name: Get all bookmarks.
+        text: |-
+               az sentinel bookmark list --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel bookmark show'] = """
+    type: command
+    short-summary: "Gets a bookmark."
+    examples:
+      - name: Get a bookmark.
+        text: |-
+               az sentinel bookmark show --bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel bookmark create'] = """
+    type: command
+    short-summary: "Create the bookmark."
+    parameters:
+      - name: --incident-info
+        short-summary: "Describes an incident that relates to bookmark"
+        long-summary: |
+            Usage: --incident-info incident-id=XX severity=XX title=XX relation-name=XX
+
+            incident-id: Incident Id
+            severity: The severity of the incident
+            title: The title of the incident
+            relation-name: Relation Name
+    examples:
+      - name: Creates or updates a bookmark.
+        text: |-
+               az sentinel bookmark create --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\"" --created \
+"2021-09-01T13:15:30Z" --user-info-object-id "2046feea-040d-4a46-9e2b-91c2941bfa70" --display-name "My bookmark" \
+--entity-mappings "[{\\"entityType\\":\\"Account\\",\\"fieldMappings\\":[{\\"identifier\\":\\"Fullname\\",\\"value\\":\
+\\"johndoe@microsoft.com\\"}]}]" --labels "Tag1" "Tag2" --notes "Found a suspicious activity" --query "SecurityEvent | \
+where TimeGenerated > ago(1d) and TimeGenerated < ago(2d)" --query-result "Security Event query result" --tactics \
+"Execution" --techniques "T1609" --updated "2021-09-01T13:15:30Z" --object-id "2046feea-040d-4a46-9e2b-91c2941bfa70" \
+--bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel bookmark update'] = """
+    type: command
+    short-summary: "Update the bookmark."
+    parameters:
+      - name: --incident-info
+        short-summary: "Describes an incident that relates to bookmark"
+        long-summary: |
+            Usage: --incident-info incident-id=XX severity=XX title=XX relation-name=XX
+
+            incident-id: Incident Id
+            severity: The severity of the incident
+            title: The title of the incident
+            relation-name: Relation Name
+"""
+
+helps['sentinel bookmark delete'] = """
+    type: command
+    short-summary: "Delete the bookmark."
+    examples:
+      - name: Delete a bookmark.
+        text: |-
+               az sentinel bookmark delete --bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group \
+"myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel bookmark relation'] = """
+    type: group
+    short-summary: Manage bookmark relation with sentinel
+"""
+
+helps['sentinel bookmark relation list'] = """
+    type: command
+    short-summary: "Gets all bookmark relations."
+    examples:
+      - name: Get all bookmark relations.
+        text: |-
+               az sentinel bookmark relation list --bookmark-id "2216d0e1-91e3-4902-89fd-d2df8c535096" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel bookmark relation show'] = """
+    type: command
+    short-summary: "Gets a bookmark relation."
+    examples:
+      - name: Get a bookmark relation.
+        text: |-
+               az sentinel bookmark relation show --bookmark-id "2216d0e1-91e3-4902-89fd-d2df8c535096" --relation-name \
+"4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel bookmark relation create'] = """
+    type: command
+    short-summary: "Creates the bookmark relation."
+    examples:
+      - name: Creates or updates a bookmark relation.
+        text: |-
+               az sentinel bookmark relation create --bookmark-id "2216d0e1-91e3-4902-89fd-d2df8c535096" \
+--related-resource-id "/subscriptions/d0cfe6b2-9ac0-4464-9919-dccaee2e48c0/resourceGroups/myRg/providers/Microsoft.Oper\
+ationalInsights/workspaces/myWorkspace/providers/Microsoft.SecurityInsights/incidents/afbd324f-6c48-459c-8710-8d1e1cd03\
+812" --relation-name "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel bookmark relation update'] = """
+    type: command
+    short-summary: "Update the bookmark relation."
+"""
+
+helps['sentinel bookmark relation delete'] = """
+    type: command
+    short-summary: "Delete the bookmark relation."
+    examples:
+      - name: Delete the bookmark relation.
+        text: |-
+               az sentinel bookmark relation delete --bookmark-id "2216d0e1-91e3-4902-89fd-d2df8c535096" \
+--relation-name "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel bookmark'] = """
+    type: group
+    short-summary: Manage bookmark with sentinel
+"""
+
+helps['sentinel bookmark expand'] = """
+    type: command
+    short-summary: "Expand an bookmark."
+    examples:
+      - name: Expand an bookmark
+        text: |-
+               az sentinel bookmark expand --bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --end-time \
+"2020-01-24T17:21:00.000Z" --expansion-id "27f76e63-c41b-480f-bb18-12ad2e011d49" --start-time \
+"2019-12-25T17:21:00.000Z" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel ip-geodata'] = """
+    type: group
+    short-summary: Manage ip geodata with sentinel
+"""
+
+helps['sentinel ip-geodata show'] = """
+    type: command
+    short-summary: "Get geodata for a single IP address."
+    examples:
+      - name: Get geodata for a single IP address
+        text: |-
+               az sentinel ip-geodata show --ip-address "1.2.3.4" --resource-group "myRg"
+"""
+
+helps['sentinel domain-whois'] = """
+    type: group
+    short-summary: Manage domain whois with sentinel
+"""
+
+helps['sentinel domain-whois show'] = """
+    type: command
+    short-summary: "Get whois information for a single domain name."
+    examples:
+      - name: Get whois information for a single domain name
+        text: |-
+               az sentinel domain-whois show --domain "microsoft.com" --resource-group "myRg"
+"""
+
+helps['sentinel entity'] = """
+    type: group
+    short-summary: Manage entity with sentinel
+"""
+
+helps['sentinel entity list'] = """
+    type: command
+    short-summary: "Gets all entities."
+    examples:
+      - name: Get all entities.
+        text: |-
+               az sentinel entity list --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel entity show'] = """
+    type: command
+    short-summary: "Gets an entity."
+    examples:
+      - name: Get a cloud application entity.
+        text: |-
+               az sentinel entity show --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a dns entity.
+        text: |-
+               az sentinel entity show --entity-id "f4e74920-f2c0-4412-a45f-66d94fdf01f8" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a file entity.
+        text: |-
+               az sentinel entity show --entity-id "af378b21-b4aa-4fe7-bc70-13f8621a322f" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a file hash entity.
+        text: |-
+               az sentinel entity show --entity-id "ea359fa6-c1e5-f878-e105-6344f3e399a1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a host entity.
+        text: |-
+               az sentinel entity show --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a mailCluster entity.
+        text: |-
+               az sentinel entity show --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a mailMessage entity.
+        text: |-
+               az sentinel entity show --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a mailbox entity.
+        text: |-
+               az sentinel entity show --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a malware entity.
+        text: |-
+               az sentinel entity show --entity-id "af378b21-b4aa-4fe7-bc70-13f8621a322f" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a process entity.
+        text: |-
+               az sentinel entity show --entity-id "7264685c-038c-42c6-948c-38e14ef1fb98" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a registry key entity.
+        text: |-
+               az sentinel entity show --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a registry value entity.
+        text: |-
+               az sentinel entity show --entity-id "dc44bd11-b348-4d76-ad29-37bf7aa41356" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a security alert entity.
+        text: |-
+               az sentinel entity show --entity-id "4aa486e0-6f85-41af-99ea-7acdce7be6c8" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a security group entity.
+        text: |-
+               az sentinel entity show --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a submissionMail entity.
+        text: |-
+               az sentinel entity show --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get a url entity.
+        text: |-
+               az sentinel entity show --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get an IoT device entity.
+        text: |-
+               az sentinel entity show --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get an account entity.
+        text: |-
+               az sentinel entity show --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get an azure resource entity.
+        text: |-
+               az sentinel entity show --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Get an ip entity.
+        text: |-
+               az sentinel entity show --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel entity expand'] = """
+    type: command
+    short-summary: "Expands an entity."
+    examples:
+      - name: Expand an entity
+        text: |-
+               az sentinel entity expand --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --end-time \
+"2019-05-26T00:00:00.000Z" --expansion-id "a77992f3-25e9-4d01-99a4-5ff606cc410a" --start-time \
+"2019-04-25T00:00:00.000Z" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel entity get-insight'] = """
+    type: command
+    short-summary: "Execute Insights for an entity."
+    examples:
+      - name: Entity Insight
+        text: |-
+               az sentinel entity get-insight --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" \
+--add-default-extended-time-range false --end-time "2021-10-01T00:00:00.000Z" --insight-query-ids \
+"cae8d0aa-aa45-4d53-8d88-17dd64ffd4e4" --start-time "2021-09-01T00:00:00.000Z" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel entity query'] = """
+    type: command
+    short-summary: "Get Insights and Activities for an entity."
+    examples:
+      - name: Get Entity Query
+        text: |-
+               az sentinel entity query --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel entity-get-timeline'] = """
+    type: group
+    short-summary: Manage entity get timeline with sentinel
+"""
+
+helps['sentinel entity-get-timeline list'] = """
+    type: command
+    short-summary: "Timeline for an entity."
+    examples:
+      - name: Entity timeline
+        text: |-
+               az sentinel entity-get-timeline list --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --end-time \
+"2021-10-01T00:00:00.000Z" --number-of-bucket 4 --start-time "2021-09-01T00:00:00.000Z" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel entity-relation'] = """
+    type: group
+    short-summary: Manage entity relation with sentinel
+"""
+
+helps['sentinel entity-relation list'] = """
+    type: command
+    short-summary: "Gets all relations of an entity."
+    examples:
+      - name: Get all relations of an entity.
+        text: |-
+               az sentinel entity-relation list --entity-id "afbd324f-6c48-459c-8710-8d1e1cd03812" --resource-group \
+"myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel entity-relation'] = """
+    type: group
+    short-summary: Manage entity relation with sentinel
+"""
+
+helps['sentinel entity-relation show-relation'] = """
+    type: command
+    short-summary: "Gets an entity relation."
+    examples:
+      - name: Get an entity relation.
+        text: |-
+               az sentinel entity-relation show-relation --entity-id "afbd324f-6c48-459c-8710-8d1e1cd03812" \
+--relation-name "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel entity-query'] = """
+    type: group
+    short-summary: Manage entity query with sentinel
+"""
+
+helps['sentinel entity-query list'] = """
+    type: command
+    short-summary: "Gets all entity queries."
+    examples:
+      - name: Get all entity queries.
+        text: |-
+               az sentinel entity-query list --kind "Expansion" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel entity-query show'] = """
+    type: command
+    short-summary: "Gets an entity query."
+    examples:
+      - name: Get an Activity entity query.
+        text: |-
+               az sentinel entity-query show --entity-query-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b" --resource-group \
+"myRg" --workspace-name "myWorkspace"
+      - name: Get an Expansion entity query.
+        text: |-
+               az sentinel entity-query show --entity-query-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b" --resource-group \
+"myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel entity-query create'] = """
+    type: command
+    short-summary: "Create the entity query."
+    examples:
+      - name: Creates or updates an Activity entity query.
+        text: |-
+               az sentinel entity-query create --entity-query "{\\"etag\\":\\"\\\\\\"0300bf09-0000-0000-0000-5c37296e00\
+00\\\\\\"\\",\\"kind\\":\\"Activity\\",\\"properties\\":{\\"description\\":\\"Account deleted on \
+host\\",\\"content\\":\\"On \'{{Computer}}\' the account \'{{TargetAccount}}\' was deleted by \
+\'{{AddedBy}}\'\\",\\"enabled\\":true,\\"entitiesFilter\\":{\\"Host_OsFamily\\":[\\"Windows\\"]},\\"inputEntityType\\":\
+\\"Host\\",\\"queryDefinitions\\":{\\"query\\":\\"let GetAccountActions = (v_Host_Name:string, v_Host_NTDomain:string, \
+v_Host_DnsDomain:string, v_Host_AzureID:string, v_Host_OMSAgentID:string){\\\\nSecurityEvent\\\\n| where EventID in \
+(4725, 4726, 4767, 4720, 4722, 4723, 4724)\\\\n// parsing for Host to handle variety of conventions coming from \
+data\\\\n| extend Host_HostName = case(\\\\nComputer has \'@\', tostring(split(Computer, \'@\')[0]),\\\\nComputer has \
+\'\\\\\\\\\\\\\\\\\', tostring(split(Computer, \'\\\\\\\\\\\\\\\\\')[1]),\\\\nComputer has \'.\', \
+tostring(split(Computer, \'.\')[0]),\\\\nComputer\\\\n)\\\\n| extend Host_NTDomain = case(\\\\nComputer has \
+\'\\\\\\\\\\\\\\\\\', tostring(split(Computer, \'\\\\\\\\\\\\\\\\\')[0]), \\\\nComputer has \'.\', \
+tostring(split(Computer, \'.\')[-2]), \\\\nComputer\\\\n)\\\\n| extend Host_DnsDomain = case(\\\\nComputer has \
+\'\\\\\\\\\\\\\\\\\', tostring(split(Computer, \'\\\\\\\\\\\\\\\\\')[0]), \\\\nComputer has \'.\', \
+strcat_array(array_slice(split(Computer,\'.\'),-2,-1),\'.\'), \\\\nComputer\\\\n)\\\\n| where (Host_HostName =~ \
+v_Host_Name and Host_NTDomain =~ v_Host_NTDomain) \\\\nor (Host_HostName =~ v_Host_Name and Host_DnsDomain =~ \
+v_Host_DnsDomain) \\\\nor v_Host_AzureID =~ _ResourceId \\\\nor v_Host_OMSAgentID == SourceComputerId\\\\n| project \
+TimeGenerated, EventID, Activity, Computer, TargetAccount, TargetUserName, TargetDomainName, TargetSid, \
+SubjectUserName, SubjectUserSid, _ResourceId, SourceComputerId\\\\n| extend AddedBy = SubjectUserName\\\\n// Future \
+support for Activities\\\\n| extend timestamp = TimeGenerated, HostCustomEntity = Computer, AccountCustomEntity = \
+TargetAccount\\\\n};\\\\nGetAccountActions(\'{{Host_HostName}}\', \'{{Host_NTDomain}}\', \'{{Host_DnsDomain}}\', \
+\'{{Host_AzureID}}\', \'{{Host_OMSAgentID}}\')\\\\n \\\\n| where EventID == 4726 \\"},\\"requiredInputFieldsSets\\":[[\
+\\"Host_HostName\\",\\"Host_NTDomain\\"],[\\"Host_HostName\\",\\"Host_DnsDomain\\"],[\\"Host_AzureID\\"],[\\"Host_OMSAg\
+entID\\"]],\\"templateName\\":null,\\"title\\":\\"An account was deleted on this host\\"}}" --entity-query-id \
+"07da3cc8-c8ad-4710-a44e-334cdcb7882b" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel entity-query update'] = """
+    type: command
+    short-summary: "Update the entity query."
+"""
+
+helps['sentinel entity-query delete'] = """
+    type: command
+    short-summary: "Delete the entity query."
+    examples:
+      - name: Delete an entity query.
+        text: |-
+               az sentinel entity-query delete --entity-query-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel entity-query-template'] = """
+    type: group
+    short-summary: Manage entity query template with sentinel
+"""
+
+helps['sentinel entity-query-template list'] = """
+    type: command
+    short-summary: "Gets all entity query templates."
+    examples:
+      - name: Get all entity query templates.
+        text: |-
+               az sentinel entity-query-template list --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel entity-query-template show'] = """
+    type: command
+    short-summary: "Gets an entity query."
+    examples:
+      - name: Get an Activity entity query template.
+        text: |-
+               az sentinel entity-query-template show --entity-query-template-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b"\
+ --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
 helps['sentinel incident-comment'] = """
     type: group
-    short-summary: sentinel incident-comment
+    short-summary: Manage incident comment with sentinel
 """
 
 helps['sentinel incident-comment list'] = """
@@ -611,7 +952,7 @@ helps['sentinel incident-comment list'] = """
     examples:
       - name: Get all incident comments.
         text: |-
-               az sentinel incident-comment list --incident-id "{id}" --resource-group \
+               az sentinel incident-comment list --incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group \
 "myRg" --workspace-name "myWorkspace"
 """
 
@@ -621,17 +962,1320 @@ helps['sentinel incident-comment show'] = """
     examples:
       - name: Get an incident comment.
         text: |-
-               az sentinel incident-comment show --incident-comment-id "{comment-id}" \
---incident-id "{id}" --resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel incident-comment show --incident-comment-id "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" \
+--incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
 helps['sentinel incident-comment create'] = """
     type: command
-    short-summary: "Creates the incident comment."
+    short-summary: "Create the incident comment."
     examples:
-      - name: Creates an incident comment.
+      - name: Creates or updates an incident comment.
         text: |-
                az sentinel incident-comment create --message "Some message" --incident-comment-id \
-"4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" --incident-id "{id}" --resource-group "myRg" \
+"4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" --incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" \
 --workspace-name "myWorkspace"
+"""
+
+helps['sentinel incident-comment update'] = """
+    type: command
+    short-summary: "Update the incident comment."
+"""
+
+helps['sentinel incident-comment delete'] = """
+    type: command
+    short-summary: "Delete the incident comment."
+    examples:
+      - name: Delete the incident comment.
+        text: |-
+               az sentinel incident-comment delete --incident-comment-id "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" \
+--incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel incident-relation'] = """
+    type: group
+    short-summary: Manage incident relation with sentinel
+"""
+
+helps['sentinel incident-relation list'] = """
+    type: command
+    short-summary: "Gets all incident relations."
+    examples:
+      - name: Get all incident relations.
+        text: |-
+               az sentinel incident-relation list --incident-id "afbd324f-6c48-459c-8710-8d1e1cd03812" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel incident-relation show'] = """
+    type: command
+    short-summary: "Gets an incident relation."
+    examples:
+      - name: Get an incident relation.
+        text: |-
+               az sentinel incident-relation show --incident-id "afbd324f-6c48-459c-8710-8d1e1cd03812" --relation-name \
+"4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel incident-relation create'] = """
+    type: command
+    short-summary: "Create the incident relation."
+    examples:
+      - name: Creates or updates an incident relation.
+        text: |-
+               az sentinel incident-relation create --incident-id "afbd324f-6c48-459c-8710-8d1e1cd03812" \
+--related-resource-id "/subscriptions/d0cfe6b2-9ac0-4464-9919-dccaee2e48c0/resourceGroups/myRg/providers/Microsoft.Oper\
+ationalIinsights/workspaces/myWorkspace/providers/Microsoft.SecurityInsights/bookmarks/2216d0e1-91e3-4902-89fd-d2df8c53\
+5096" --relation-name "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel incident-relation update'] = """
+    type: command
+    short-summary: "Update the incident relation."
+"""
+
+helps['sentinel incident-relation delete'] = """
+    type: command
+    short-summary: "Delete the incident relation."
+    examples:
+      - name: Delete the incident relation.
+        text: |-
+               az sentinel incident-relation delete --incident-id "afbd324f-6c48-459c-8710-8d1e1cd03812" \
+--relation-name "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel metadata'] = """
+    type: group
+    short-summary: Manage metadata with sentinel
+"""
+
+helps['sentinel metadata list'] = """
+    type: command
+    short-summary: "List of all metadata."
+    examples:
+      - name: Get all metadata with OData filter/orderby/skip/top
+        text: |-
+               az sentinel metadata list --resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get all metadata.
+        text: |-
+               az sentinel metadata list --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel metadata show'] = """
+    type: command
+    short-summary: "Get a Metadata."
+    examples:
+      - name: Get single metadata by name
+        text: |-
+               az sentinel metadata show --name "metadataName" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel metadata create'] = """
+    type: command
+    short-summary: "Create a Metadata."
+    parameters:
+      - name: --source
+        short-summary: "Source of the content.  This is where/how it was created."
+        long-summary: |
+            Usage: --source kind=XX name=XX source-id=XX
+
+            kind: Required. Source type of the content
+            name: Name of the content source.  The repo name, solution name, LA workspace name etc.
+            source-id: ID of the content source.  The solution ID, workspace ID, etc
+      - name: --author
+        short-summary: "The creator of the content item."
+        long-summary: |
+            Usage: --author name=XX email=XX link=XX
+
+            name: Name of the author. Company or person.
+            email: Email of author contact
+            link: Link for author/vendor page
+      - name: --support
+        short-summary: "Support information for the metadata - type, name, contact information"
+        long-summary: |
+            Usage: --support tier=XX name=XX email=XX link=XX
+
+            tier: Required. Type of support for content item
+            name: Name of the support contact. Company or person.
+            email: Email of support contact
+            link: Link for support help, like to support page to open a ticket etc.
+      - name: --categories
+        short-summary: "Categories for the solution content item"
+        long-summary: |
+            Usage: --categories domains=XX verticals=XX
+
+            domains: domain for the solution content item
+            verticals: Industry verticals for the solution content item
+    examples:
+      - name: Create/update full metadata.
+        text: |-
+               az sentinel metadata create --author name="User Name" email="email@microsoft.com" --categories \
+domains="Application" domains="Security – Insider Threat" verticals="Healthcare" --content-id \
+"c00ee137-7475-47c8-9cce-ec6f0f1bedd0" --content-schema-version "2.0" --custom-version "1.0" --dependencies \
+"{\\"criteria\\":[{\\"criteria\\":[{\\"name\\":\\"Microsoft Defender for Endpoint\\",\\"contentId\\":\\"045d06d0-ee72-4\
+794-aba4-cf5646e4c756\\",\\"kind\\":\\"DataConnector\\"},{\\"contentId\\":\\"dbfcb2cc-d782-40ef-8d94-fe7af58a6f2d\\",\\\
+"kind\\":\\"DataConnector\\"},{\\"contentId\\":\\"de4dca9b-eb37-47d6-a56f-b8b06b261593\\",\\"kind\\":\\"DataConnector\\\
+",\\"version\\":\\"2.0\\"}],\\"operator\\":\\"OR\\"},{\\"contentId\\":\\"31ee11cc-9989-4de8-b176-5e0ef5c4dbab\\",\\"kin\
+d\\":\\"Playbook\\",\\"version\\":\\"1.0\\"},{\\"contentId\\":\\"21ba424a-9438-4444-953a-7059539a7a1b\\",\\"kind\\":\\"\
+Parser\\"}],\\"operator\\":\\"AND\\"}" --first-publish-date "2021-05-18" --kind "AnalyticsRule" --last-publish-date \
+"2021-05-18" --parent-id "/subscriptions/2e1dc338-d04d-4443-b721-037eff4fdcac/resourceGroups/myRg/providers/Microsoft.O\
+perationalInsights/workspaces/myWorkspace/providers/Microsoft.SecurityInsights/alertRules/ruleName" --preview-images \
+"firstImage.png" "secondImage.jpeg" --preview-images-dark "firstImageDark.png" "secondImageDark.jpeg" --providers \
+"Amazon" "Microsoft" --source name="Contoso Solution 1.0" kind="Solution" source-id="b688a130-76f4-4a07-bf57-762222a3ca\
+df" --support name="Microsoft" email="support@microsoft.com" link="https://support.microsoft.com/" tier="Partner" \
+--threat-analysis-tactics "reconnaissance" "commandandcontrol" --threat-analysis-techniques "T1548" "T1548.001" \
+--version "1.0.0.0" --name "metadataName" --resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Create/update minimal metadata.
+        text: |-
+               az sentinel metadata create --content-id "c00ee137-7475-47c8-9cce-ec6f0f1bedd0" --kind "AnalyticsRule" \
+--parent-id "/subscriptions/2e1dc338-d04d-4443-b721-037eff4fdcac/resourceGroups/myRg/providers/Microsoft.OperationalIns\
+ights/workspaces/myWorkspace/providers/Microsoft.SecurityInsights/alertRules/ruleName" --name "metadataName" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel metadata update'] = """
+    type: command
+    short-summary: "Update an existing Metadata."
+    parameters:
+      - name: --source
+        short-summary: "Source of the content.  This is where/how it was created."
+        long-summary: |
+            Usage: --source kind=XX name=XX source-id=XX
+
+            kind: Required. Source type of the content
+            name: Name of the content source.  The repo name, solution name, LA workspace name etc.
+            source-id: ID of the content source.  The solution ID, workspace ID, etc
+      - name: --author
+        short-summary: "The creator of the content item."
+        long-summary: |
+            Usage: --author name=XX email=XX link=XX
+
+            name: Name of the author. Company or person.
+            email: Email of author contact
+            link: Link for author/vendor page
+      - name: --support
+        short-summary: "Support information for the metadata - type, name, contact information"
+        long-summary: |
+            Usage: --support tier=XX name=XX email=XX link=XX
+
+            tier: Required. Type of support for content item
+            name: Name of the support contact. Company or person.
+            email: Email of support contact
+            link: Link for support help, like to support page to open a ticket etc.
+      - name: --categories
+        short-summary: "Categories for the solution content item"
+        long-summary: |
+            Usage: --categories domains=XX verticals=XX
+
+            domains: domain for the solution content item
+            verticals: Industry verticals for the solution content item
+    examples:
+      - name: Update metadata.
+        text: |-
+               az sentinel metadata update --name "metadataName" --author name="User Name" email="email@microsoft.com" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel metadata delete'] = """
+    type: command
+    short-summary: "Delete a Metadata."
+    examples:
+      - name: Delete metadata.
+        text: |-
+               az sentinel metadata delete --name "metadataName" --resource-group "myRg" --workspace-name \
+"myWorkspace"
+"""
+
+helps['sentinel office-consent'] = """
+    type: group
+    short-summary: Manage office consent with sentinel
+"""
+
+helps['sentinel office-consent list'] = """
+    type: command
+    short-summary: "Gets all office365 consents."
+    examples:
+      - name: Get all office consents.
+        text: |-
+               az sentinel office-consent list --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel office-consent show'] = """
+    type: command
+    short-summary: "Gets an office365 consent."
+    examples:
+      - name: Get an office consent.
+        text: |-
+               az sentinel office-consent show --consent-id "04e5fd05-ff86-4b97-b8d2-1c20933cb46c" --resource-group \
+"myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel office-consent delete'] = """
+    type: command
+    short-summary: "Delete the office365 consent."
+    examples:
+      - name: Delete an office consent.
+        text: |-
+               az sentinel office-consent delete --consent-id "04e5fd05-ff86-4b97-b8d2-1c20933cb46c" --resource-group \
+"myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel sentinel-onboarding-state'] = """
+    type: group
+    short-summary: Manage sentinel onboarding state with sentinel
+"""
+
+helps['sentinel sentinel-onboarding-state list'] = """
+    type: command
+    short-summary: "Gets all Sentinel onboarding states."
+    examples:
+      - name: Get all Sentinel onboarding states
+        text: |-
+               az sentinel sentinel-onboarding-state list --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel sentinel-onboarding-state show'] = """
+    type: command
+    short-summary: "Get Sentinel onboarding state."
+    examples:
+      - name: Get Sentinel onboarding state
+        text: |-
+               az sentinel sentinel-onboarding-state show --resource-group "myRg" --name "default" --workspace-name \
+"myWorkspace"
+"""
+
+helps['sentinel sentinel-onboarding-state create'] = """
+    type: command
+    short-summary: "Create Sentinel onboarding state."
+    examples:
+      - name: Create Sentinel onboarding state
+        text: |-
+               az sentinel sentinel-onboarding-state create --resource-group "myRg" --name "default" \
+--customer-managed-key false --workspace-name "myWorkspace"
+"""
+
+helps['sentinel sentinel-onboarding-state delete'] = """
+    type: command
+    short-summary: "Delete Sentinel onboarding state."
+    examples:
+      - name: Delete Sentinel onboarding state
+        text: |-
+               az sentinel sentinel-onboarding-state delete --resource-group "myRg" --name "default" --workspace-name \
+"myWorkspace"
+"""
+
+helps['sentinel security-ml-analytic-setting'] = """
+    type: group
+    short-summary: Manage security ml analytic setting with sentinel
+"""
+
+helps['sentinel security-ml-analytic-setting list'] = """
+    type: command
+    short-summary: "Gets all Security ML Analytics Settings."
+    examples:
+      - name: Get all Security ML Analytics Settings.
+        text: |-
+               az sentinel security-ml-analytic-setting list --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel security-ml-analytic-setting show'] = """
+    type: command
+    short-summary: "Gets the Security ML Analytics Settings."
+    examples:
+      - name: Get a Anomaly Security ML Analytics Settings.
+        text: |-
+               az sentinel security-ml-analytic-setting show --resource-group "myRg" --settings-resource-name \
+"myFirstAnomalySettings" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel security-ml-analytic-setting create'] = """
+    type: command
+    short-summary: "Create the Security ML Analytics Settings."
+    examples:
+      - name: Creates or updates a Anomaly Security ML Analytics Settings.
+        text: |-
+               az sentinel security-ml-analytic-setting create --resource-group "myRg" --security-ml-analytics-setting \
+"{\\"etag\\":\\"\\\\\\"260090e2-0000-0d00-0000-5d6fb8670000\\\\\\"\\",\\"kind\\":\\"Anomaly\\",\\"properties\\":{\\"des\
+cription\\":\\"When account logs from a source region that has rarely been logged in from during the last 14 days, an \
+anomaly is triggered.\\",\\"anomalySettingsVersion\\":0,\\"anomalyVersion\\":\\"1.0.5\\",\\"customizableObservations\\"\
+:{\\"multiSelectObservations\\":null,\\"prioritizeExcludeObservations\\":null,\\"singleSelectObservations\\":[{\\"name\
+\\":\\"Device vendor\\",\\"description\\":\\"Select device vendor of network connection logs from \
+CommonSecurityLog\\",\\"rerun\\":\\"RerunAlways\\",\\"sequenceNumber\\":1,\\"supportedValues\\":[\\"Palo Alto \
+Networks\\",\\"Fortinet\\",\\"Check Point\\"],\\"supportedValuesKql\\":null,\\"value\\":[\\"Palo Alto \
+Networks\\"],\\"valuesKql\\":null}],\\"singleValueObservations\\":null,\\"thresholdObservations\\":[{\\"name\\":\\"Dail\
+y data transfer threshold in MB\\",\\"description\\":\\"Suppress anomalies when daily data transfered (in MB) per hour \
+is less than the chosen value\\",\\"maximum\\":\\"100\\",\\"minimum\\":\\"1\\",\\"rerun\\":\\"RerunAlways\\",\\"sequenc\
+eNumber\\":1,\\"value\\":\\"25\\"},{\\"name\\":\\"Number of standard deviations\\",\\"description\\":\\"Triggers \
+anomalies when number of standard deviations is greater than the chosen value\\",\\"maximum\\":\\"10\\",\\"minimum\\":\
+\\"2\\",\\"rerun\\":\\"RerunAlways\\",\\"sequenceNumber\\":2,\\"value\\":\\"3\\"}]},\\"displayName\\":\\"Login from \
+unusual region\\",\\"enabled\\":true,\\"frequency\\":\\"PT1H\\",\\"isDefaultSettings\\":true,\\"requiredDataConnectors\
+\\":[{\\"connectorId\\":\\"AWS\\",\\"dataTypes\\":[\\"AWSCloudTrail\\"]}],\\"settingsDefinitionId\\":\\"f209187f-1d17-4\
+431-94af-c141bf5f23db\\",\\"settingsStatus\\":\\"Production\\",\\"tactics\\":[\\"Exfiltration\\",\\"CommandAndControl\\\
+"],\\"techniques\\":[\\"T1037\\",\\"T1021\\"]}}" --settings-resource-name "f209187f-1d17-4431-94af-c141bf5f23db" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel security-ml-analytic-setting update'] = """
+    type: command
+    short-summary: "Update the Security ML Analytics Settings."
+"""
+
+helps['sentinel security-ml-analytic-setting delete'] = """
+    type: command
+    short-summary: "Delete the Security ML Analytics Settings."
+    examples:
+      - name: Delete a Security ML Analytics Settings.
+        text: |-
+               az sentinel security-ml-analytic-setting delete --resource-group "myRg" --settings-resource-name \
+"f209187f-1d17-4431-94af-c141bf5f23db" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel product-setting'] = """
+    type: group
+    short-summary: Manage product setting with sentinel
+"""
+
+helps['sentinel product-setting list'] = """
+    type: command
+    short-summary: "List of all the settings."
+    examples:
+      - name: Get all settings.
+        text: |-
+               az sentinel product-setting list --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel product-setting show'] = """
+    type: command
+    short-summary: "Gets a setting."
+    examples:
+      - name: Get EyesOn settings.
+        text: |-
+               az sentinel product-setting show --resource-group "myRg" --settings-name "EyesOn" --workspace-name \
+"myWorkspace"
+"""
+
+helps['sentinel product-setting update'] = """
+    type: command
+    short-summary: "Updates setting."
+    parameters:
+      - name: --anomalies
+        short-summary: "Settings with single toggle."
+        long-summary: |
+            Usage: --anomalies kind=XX etag=XX
+
+            kind: Required. The kind of the setting
+            etag: Etag of the azure resource
+      - name: --eyes-on
+        short-summary: "Settings with single toggle."
+        long-summary: |
+            Usage: --eyes-on kind=XX etag=XX
+
+            kind: Required. The kind of the setting
+            etag: Etag of the azure resource
+      - name: --entity-analytics
+        short-summary: "Settings with single toggle."
+        long-summary: |
+            Usage: --entity-analytics entity-providers=XX kind=XX etag=XX
+
+            entity-providers: The relevant entity providers that are synced
+            kind: Required. The kind of the setting
+            etag: Etag of the azure resource
+      - name: --ueba
+        short-summary: "Settings with single toggle."
+        long-summary: |
+            Usage: --ueba data-sources=XX kind=XX etag=XX
+
+            data-sources: The relevant data sources that enriched by ueba
+            kind: Required. The kind of the setting
+            etag: Etag of the azure resource
+"""
+
+helps['sentinel product-setting delete'] = """
+    type: command
+    short-summary: "Delete setting of the product."
+    examples:
+      - name: Delete EyesOn settings.
+        text: |-
+               az sentinel product-setting delete --resource-group "myRg" --settings-name "EyesOn" --workspace-name \
+"myWorkspace"
+"""
+
+helps['sentinel source-control'] = """
+    type: group
+    short-summary: Manage source control with sentinel
+"""
+
+helps['sentinel source-control list-repository'] = """
+    type: command
+    short-summary: "Gets a list of repositories metadata."
+    examples:
+      - name: Get repository list.
+        text: |-
+               az sentinel source-control list-repository --repo-type "Github" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel source-control'] = """
+    type: group
+    short-summary: Manage source control with sentinel
+"""
+
+helps['sentinel source-control list'] = """
+    type: command
+    short-summary: "Gets all source controls, without source control items."
+    examples:
+      - name: Get all source controls.
+        text: |-
+               az sentinel source-control list --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel source-control show'] = """
+    type: command
+    short-summary: "Gets a source control byt its identifier."
+    examples:
+      - name: Get a source control.
+        text: |-
+               az sentinel source-control show --resource-group "myRg" --source-control-id \
+"789e0c1f-4a3d-43ad-809c-e713b677b04a" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel source-control create'] = """
+    type: command
+    short-summary: "Creates a source control."
+    parameters:
+      - name: --deployment
+        short-summary: "Deployment information."
+        long-summary: |
+            Usage: --deployment deployment-id=XX deployment-state=XX deployment-result=XX deployment-time=XX \
+deployment-logs-url=XX
+
+            deployment-id: Deployment identifier.
+            deployment-state: Current status of the deployment.
+            deployment-result: The outcome of the deployment.
+            deployment-time: The time when the deployment finished.
+            deployment-logs-url: Url to access repository action logs.
+      - name: --webhook
+        short-summary: "The webhook object created for the source-control."
+        long-summary: |
+            Usage: --webhook webhook-id=XX webhook-url=XX webhook-secret-update-time=XX rotate-webhook-secret=XX
+
+            webhook-id: Unique identifier for the webhook.
+            webhook-url: URL that gets invoked by the webhook.
+            webhook-secret-update-time: Time when the webhook secret was updated.
+            rotate-webhook-secret: A flag to instruct the backend service to rotate webhook secret.
+      - name: --azure-dev-ops-resource-info
+        short-summary: "Resources created in Azure DevOps for this source-control."
+        long-summary: |
+            Usage: --azure-dev-ops-resource-info pipeline-id=XX service-connection-id=XX
+
+            pipeline-id: Id of the pipeline created for the source-control.
+            service-connection-id: Id of the service-connection created for the source-control.
+      - name: --path-mapping
+        short-summary: "Dictionary of source control content type and path mapping."
+        long-summary: |
+            Usage: --path-mapping content-type=XX path=XX
+
+            content-type: Content type.
+            path: The path to the content.
+
+            Multiple actions can be specified by using more than one --path-mapping argument.
+    examples:
+      - name: Creates a source control.
+        text: |-
+               az sentinel source-control create --resource-group "myRg" --etag "\\"0300bf09-0000-0000-0000-5c37296e000\
+0\\"" --description "This is a source control" --content-types "AnalyticRules" "Workbook" --display-name "My Source \
+Control" --repo-type "Github" --branch "master" --display-url "https://github.com/user/repo" --path-mapping \
+path="path/to/rules" content-type="AnalyticRules" --path-mapping path="path/to/workbooks" content-type="Workbook" \
+--url "https://github.com/user/repo" --source-control-id "789e0c1f-4a3d-43ad-809c-e713b677b04a" --workspace-name \
+"myWorkspace"
+"""
+
+helps['sentinel source-control delete'] = """
+    type: command
+    short-summary: "Delete a source control."
+    examples:
+      - name: Delete a source control.
+        text: |-
+               az sentinel source-control delete --resource-group "myRg" --source-control-id \
+"789e0c1f-4a3d-43ad-809c-e713b677b04a" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel threat-intelligence-indicator'] = """
+    type: group
+    short-summary: Manage threat intelligence indicator with sentinel
+"""
+
+helps['sentinel threat-intelligence-indicator show'] = """
+    type: command
+    short-summary: "View a threat intelligence indicator by name."
+    examples:
+      - name: View a threat intelligence indicator by name
+        text: |-
+               az sentinel threat-intelligence-indicator show --name "e16ef847-962e-d7b6-9c8b-a33e4bd30e47" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel threat-intelligence-indicator create'] = """
+    type: command
+    short-summary: "Update a threat Intelligence indicator."
+    parameters:
+      - name: --kill-chain-phases
+        short-summary: "Kill chain phases"
+        long-summary: |
+            Usage: --kill-chain-phases kill-chain-name=XX phase-name=XX
+
+            kill-chain-name: Kill chainName name
+            phase-name: Phase name
+
+            Multiple actions can be specified by using more than one --kill-chain-phases argument.
+      - name: --granular-markings
+        short-summary: "Granular Markings"
+        long-summary: |
+            Usage: --granular-markings language=XX marking-ref=XX selectors=XX
+
+            language: Language granular marking model
+            marking-ref: marking reference granular marking model
+            selectors: granular marking model selectors
+
+            Multiple actions can be specified by using more than one --granular-markings argument.
+    examples:
+      - name: Update a threat Intelligence indicator
+        text: |-
+               az sentinel threat-intelligence-indicator create --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" \
+--description "debugging indicators" --confidence 78 --created-by-ref "contoso@contoso.com" --display-name "new \
+schema" --external-references "[]" --modified "" --pattern "[url:value = \'https://www.contoso.com\']" --pattern-type \
+"url" --revoked false --source "Azure Sentinel" --threat-intelligence-tags "new schema" --threat-types "compromised" \
+--valid-from "2020-04-15T17:44:00.114052Z" --valid-until "" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel threat-intelligence-indicator delete'] = """
+    type: command
+    short-summary: "Delete a threat intelligence indicator."
+    examples:
+      - name: Delete a threat intelligence indicator
+        text: |-
+               az sentinel threat-intelligence-indicator delete --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel threat-intelligence-indicator append-tag'] = """
+    type: command
+    short-summary: "Append tags to a threat intelligence indicator."
+    examples:
+      - name: Append tags to a threat intelligence indicator
+        text: |-
+               az sentinel threat-intelligence-indicator append-tag --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" \
+--threat-intelligence-tags "tag1" "tag2" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel threat-intelligence-indicator create-indicator'] = """
+    type: command
+    short-summary: "Create a new threat intelligence indicator."
+    parameters:
+      - name: --kill-chain-phases
+        short-summary: "Kill chain phases"
+        long-summary: |
+            Usage: --kill-chain-phases kill-chain-name=XX phase-name=XX
+
+            kill-chain-name: Kill chainName name
+            phase-name: Phase name
+
+            Multiple actions can be specified by using more than one --kill-chain-phases argument.
+      - name: --granular-markings
+        short-summary: "Granular Markings"
+        long-summary: |
+            Usage: --granular-markings language=XX marking-ref=XX selectors=XX
+
+            language: Language granular marking model
+            marking-ref: marking reference granular marking model
+            selectors: granular marking model selectors
+
+            Multiple actions can be specified by using more than one --granular-markings argument.
+    examples:
+      - name: Create a new Threat Intelligence
+        text: |-
+               az sentinel threat-intelligence-indicator create-indicator --description "debugging indicators" \
+--confidence 78 --created-by-ref "contoso@contoso.com" --display-name "new schema" --external-references "[]" \
+--modified "" --pattern "[url:value = \'https://www.contoso.com\']" --pattern-type "url" --revoked false --source \
+"Azure Sentinel" --threat-intelligence-tags "new schema" --threat-types "compromised" --valid-from \
+"2021-09-15T17:44:00.114052Z" --valid-until "" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel threat-intelligence-indicator query-indicator'] = """
+    type: command
+    short-summary: "Query threat intelligence indicators as per filtering criteria."
+    parameters:
+      - name: --sort-by
+        short-summary: "Columns to sort by and sorting order"
+        long-summary: |
+            Usage: --sort-by item-key=XX sort-order=XX
+
+            item-key: Column name
+            sort-order: Sorting order (ascending/descending/unsorted).
+
+            Multiple actions can be specified by using more than one --sort-by argument.
+    examples:
+      - name: Query threat intelligence indicators as per filtering criteria
+        text: |-
+               az sentinel threat-intelligence-indicator query-indicator --max-confidence 80 --max-valid-until \
+"2021-04-25T17:44:00.114052Z" --min-confidence 25 --min-valid-until "2021-04-05T17:44:00.114052Z" --page-size 100 \
+--sort-by item-key="lastUpdatedTimeUtc" sort-order="descending" --sources "Azure Sentinel" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel threat-intelligence-indicator replace-tag'] = """
+    type: command
+    short-summary: "Replace tags added to a threat intelligence indicator."
+    parameters:
+      - name: --kill-chain-phases
+        short-summary: "Kill chain phases"
+        long-summary: |
+            Usage: --kill-chain-phases kill-chain-name=XX phase-name=XX
+
+            kill-chain-name: Kill chainName name
+            phase-name: Phase name
+
+            Multiple actions can be specified by using more than one --kill-chain-phases argument.
+      - name: --granular-markings
+        short-summary: "Granular Markings"
+        long-summary: |
+            Usage: --granular-markings language=XX marking-ref=XX selectors=XX
+
+            language: Language granular marking model
+            marking-ref: marking reference granular marking model
+            selectors: granular marking model selectors
+
+            Multiple actions can be specified by using more than one --granular-markings argument.
+    examples:
+      - name: Replace tags to a Threat Intelligence
+        text: |-
+               az sentinel threat-intelligence-indicator replace-tag --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" \
+--etag "\\"0000262c-0000-0800-0000-5e9767060000\\"" --threat-intelligence-tags "patching tags" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel threat-intelligence-indicator'] = """
+    type: group
+    short-summary: Manage threat intelligence indicator with sentinel
+"""
+
+helps['sentinel threat-intelligence-indicator list'] = """
+    type: command
+    short-summary: "Get all threat intelligence indicators."
+    examples:
+      - name: Get all threat intelligence indicators
+        text: |-
+               az sentinel threat-intelligence-indicator list --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel threat-intelligence-indicator-metric'] = """
+    type: group
+    short-summary: Manage threat intelligence indicator metric with sentinel
+"""
+
+helps['sentinel threat-intelligence-indicator-metric list'] = """
+    type: command
+    short-summary: "Get threat intelligence indicators metrics (Indicators counts by Type, Threat Type, Source)."
+    examples:
+      - name: Get threat intelligence indicators metrics.
+        text: |-
+               az sentinel threat-intelligence-indicator-metric list --resource-group "myRg" --workspace-name \
+"myWorkspace"
+"""
+
+helps['sentinel watchlist'] = """
+    type: group
+    short-summary: Manage watchlist with sentinel
+"""
+
+helps['sentinel watchlist list'] = """
+    type: command
+    short-summary: "Gets all watchlists, without watchlist items."
+    examples:
+      - name: Get all watchlists.
+        text: |-
+               az sentinel watchlist list --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel watchlist show'] = """
+    type: command
+    short-summary: "Gets a watchlist, without its watchlist items."
+    examples:
+      - name: Get a watchlist.
+        text: |-
+               az sentinel watchlist show --resource-group "myRg" --watchlist-alias "highValueAsset" --workspace-name \
+"myWorkspace"
+"""
+
+helps['sentinel watchlist create'] = """
+    type: command
+    short-summary: "Create a Watchlist and its Watchlist Items (bulk creation, e.g. through text/csv content type). To \
+create a Watchlist and its Items, we should call this endpoint with either rawContent or a valid SAR URI and \
+contentType properties. The rawContent is mainly used for small watchlist (content size below 3.8 MB). The SAS URI \
+enables the creation of large watchlist, where the content size can go up to 500 MB. The status of processing such \
+large file can be polled through the URL returned in Azure-AsyncOperation header."
+    examples:
+      - name: Creates or updates a watchlist and bulk creates watchlist items.
+        text: |-
+               az sentinel watchlist create --resource-group "myRg" --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\""\
+ --description "Watchlist from CSV content" --content-type "text/csv" --display-name "High Value Assets Watchlist" \
+--items-search-key "header1" --number-of-lines-to-skip 1 --provider "Microsoft" --raw-content "This line will be \
+skipped\\nheader1,header2\\nvalue1,value2" --source "watchlist.csv" --source-type "Local file" --watchlist-alias \
+"highValueAsset" --workspace-name "myWorkspace"
+      - name: Creates or updates a watchlist.
+        text: |-
+               az sentinel watchlist create --resource-group "myRg" --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\""\
+ --description "Watchlist from CSV content" --display-name "High Value Assets Watchlist" --items-search-key "header1" \
+--provider "Microsoft" --source "watchlist.csv" --source-type "Local file" --watchlist-alias "highValueAsset" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel watchlist update'] = """
+    type: command
+    short-summary: "Update a Watchlist and its Watchlist Items (bulk creation, e.g. through text/csv content type). To \
+Update a Watchlist and its Items, we should call this endpoint with either rawContent or a valid SAR URI and \
+contentType properties. The rawContent is mainly used for small watchlist (content size below 3.8 MB). The SAS URI \
+enables the creation of large watchlist, where the content size can go up to 500 MB. The status of processing such \
+large file can be polled through the URL returned in Azure-AsyncOperation header."
+"""
+
+helps['sentinel watchlist delete'] = """
+    type: command
+    short-summary: "Delete a watchlist."
+    examples:
+      - name: Delete a watchlist.
+        text: |-
+               az sentinel watchlist delete --resource-group "myRg" --watchlist-alias "highValueAsset" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel watchlist-item'] = """
+    type: group
+    short-summary: Manage watchlist item with sentinel
+"""
+
+helps['sentinel watchlist-item list'] = """
+    type: command
+    short-summary: "Gets all watchlist Items."
+    examples:
+      - name: Get all watchlist Items.
+        text: |-
+               az sentinel watchlist-item list --resource-group "myRg" --watchlist-alias "highValueAsset" \
+--workspace-name "myWorkspace"
+"""
+
+helps['sentinel watchlist-item show'] = """
+    type: command
+    short-summary: "Gets a watchlist, without its watchlist items."
+    examples:
+      - name: Get a watchlist item.
+        text: |-
+               az sentinel watchlist-item show --resource-group "myRg" --watchlist-alias "highValueAsset" \
+--watchlist-item-id "3f8901fe-63d9-4875-9ad5-9fb3b8105797" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel watchlist-item create'] = """
+    type: command
+    short-summary: "Create a watchlist item."
+    examples:
+      - name: Creates or updates a watchlist item.
+        text: |-
+               az sentinel watchlist-item create --resource-group "myRg" --watchlist-alias "highValueAsset" --etag \
+"0300bf09-0000-0000-0000-5c37296e0000" --items-key-value "{\\"Business tier\\":\\"10.0.2.0/24\\",\\"Data \
+tier\\":\\"10.0.2.0/24\\",\\"Gateway subnet\\":\\"10.0.255.224/27\\",\\"Private DMZ in\\":\\"10.0.0.0/27\\",\\"Public \
+DMZ out\\":\\"10.0.0.96/27\\",\\"Web Tier\\":\\"10.0.1.0/24\\"}" --watchlist-item-id "82ba292c-dc97-4dfc-969d-d4dd9e666\
+842" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel watchlist-item update'] = """
+    type: command
+    short-summary: "Update a watchlist item."
+"""
+
+helps['sentinel watchlist-item delete'] = """
+    type: command
+    short-summary: "Delete a watchlist item."
+    examples:
+      - name: Delete a watchlist Item.
+        text: |-
+               az sentinel watchlist-item delete --resource-group "myRg" --watchlist-alias "highValueAsset" \
+--watchlist-item-id "4008512e-1d30-48b2-9ee2-d3612ed9d3ea" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel data-connector'] = """
+    type: group
+    short-summary: Manage data connector with sentinel
+"""
+
+helps['sentinel data-connector list'] = """
+    type: command
+    short-summary: "Gets all data connectors."
+    examples:
+      - name: Get all data connectors.
+        text: |-
+               az sentinel data-connector list --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel data-connector show'] = """
+    type: command
+    short-summary: "Gets a data connector."
+    examples:
+      - name: Get a APIPolling data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "316ec55e-7138-4d63-ab18-90c8a60fd1c8" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get a ASC data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "763f9fa1-c2d3-4fa2-93e9-bccd4899aa12" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get a Dynamics365 data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "c2541efb-c9a6-47fe-9501-87d1017d1512" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get a GenericUI data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "316ec55e-7138-4d63-ab18-90c8a60fd1c8" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get a IoT data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "d2e5dc7a-f3a2-429d-954b-939fa8c2932e" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get a MCAS data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "b96d014d-b5c2-4a01-9aba-a8058f629d42" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get a MDATP data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "06b3ccb8-1384-4bcc-aec7-852f6d57161b" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get a MicrosoftThreatIntelligence data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "c345bf40-8509-4ed2-b947-50cb773aaf04" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get a MicrosoftThreatProtection data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "c345bf40-8509-4ed2-b947-50cb773aaf04" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get a TI Taxii data connector.
+        text: |-
+               az sentinel data-connector show --data-connector-id "c39bb458-02a7-4b3f-b0c8-71a1d2692652" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get a TI data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "c345bf40-8509-4ed2-b947-50cb773aaf04" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get an AAD data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "f0cd27d2-5f03-4c06-ba31-d2dc82dcb51d" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get an AATP data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "07e42cb3-e658-4e90-801c-efa0f29d3d44" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get an Aws S3 data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "afef3743-0c88-469c-84ff-ca2e87dc1e48" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get an AwsCloudTrail data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "c345bf40-8509-4ed2-b947-50cb773aaf04" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get an Office ATP data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "3d3e955e-33eb-401d-89a7-251c81ddd660" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get an Office IRM data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "3d3e955e-33eb-401d-89a7-251c81ddd660" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get an Office365 PowerBI data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get an Office365 Project data connector
+        text: |-
+               az sentinel data-connector show --data-connector-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Get an Office365 data connector.
+        text: |-
+               az sentinel data-connector show --data-connector-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel data-connector create'] = """
+    type: command
+    short-summary: "Create the data connector."
+    examples:
+      - name: Creates or updates a APIPolling data connector
+        text: |-
+               az sentinel data-connector create --data-connector "{\\"kind\\":\\"APIPolling\\",\\"properties\\":{\\"co\
+nnectorUiConfig\\":{\\"availability\\":{\\"isPreview\\":true,\\"status\\":1},\\"connectivityCriteria\\":[{\\"type\\":\\\
+"SentinelKindsV2\\",\\"value\\":[]}],\\"dataTypes\\":[{\\"name\\":\\"{{graphQueriesTableName}}\\",\\"lastDataReceivedQu\
+ery\\":\\"{{graphQueriesTableName}}\\\\n            | summarize Time = max(TimeGenerated)\\\\n            | where \
+isnotempty(Time)\\"}],\\"descriptionMarkdown\\":\\"The GitHub audit log connector provides the capability to ingest \
+GitHub logs into Azure Sentinel. By connecting GitHub audit logs into Azure Sentinel, you can view this data in \
+workbooks, use it to create custom alerts, and improve your investigation process.\\",\\"graphQueries\\":[{\\"baseQuery\
+\\":\\"{{graphQueriesTableName}}\\",\\"legend\\":\\"GitHub audit log events\\",\\"metricName\\":\\"Total events \
+received\\"}],\\"graphQueriesTableName\\":\\"GitHubAuditLogPolling_CL\\",\\"instructionSteps\\":[{\\"description\\":\\"\
+Enable GitHub audit Logs. \\\\n Follow [this](https://docs.github.com/en/github/authenticating-to-github/keeping-your-a\
+ccount-and-data-secure/creating-a-personal-access-token) to create or find your personal \
+key\\",\\"instructions\\":[{\\"type\\":\\"APIKey\\",\\"parameters\\":{\\"enable\\":\\"true\\",\\"userRequestPlaceHolder\
+sInput\\":[{\\"displayText\\":\\"Organization Name\\",\\"placeHolderName\\":\\"{{placeHolder1}}\\",\\"placeHolderValue\
+\\":\\"\\",\\"requestObjectKey\\":\\"apiEndpoint\\"}]}}],\\"title\\":\\"Connect GitHub Enterprise Audit Log to Azure \
+Sentinel\\"}],\\"permissions\\":{\\"customs\\":[{\\"name\\":\\"GitHub API personal token \
+Key\\",\\"description\\":\\"You need access to GitHub personal token, the key should have \'admin:org\' \
+scope\\"}],\\"resourceProvider\\":[{\\"permissionsDisplayText\\":\\"read and write permissions are \
+required.\\",\\"provider\\":\\"Microsoft.OperationalInsights/workspaces\\",\\"providerDisplayName\\":\\"Workspace\\",\\\
+"requiredPermissions\\":{\\"delete\\":true,\\"read\\":true,\\"write\\":true},\\"scope\\":\\"Workspace\\"}]},\\"publishe\
+r\\":\\"GitHub\\",\\"sampleQueries\\":[{\\"description\\":\\"All logs\\",\\"query\\":\\"{{graphQueriesTableName}}\\\\n \
+| take 10 <change>\\"}],\\"title\\":\\"GitHub Enterprise Audit Log\\"},\\"pollingConfig\\":{\\"auth\\":{\\"apiKeyIdenti\
+fier\\":\\"token\\",\\"apiKeyName\\":\\"Authorization\\",\\"authType\\":\\"APIKey\\"},\\"paging\\":{\\"pageSizeParaName\
+\\":\\"per_page\\",\\"pagingType\\":\\"LinkHeader\\"},\\"response\\":{\\"eventsJsonPaths\\":[\\"$\\"]},\\"request\\":{\
+\\"apiEndpoint\\":\\"https://api.github.com/organizations/{{placeHolder1}}/audit-log\\",\\"headers\\":{\\"Accept\\":\\"\
+application/json\\",\\"User-Agent\\":\\"Scuba\\"},\\"httpMethod\\":\\"Get\\",\\"queryParameters\\":{\\"phrase\\":\\"cre\
+ated:{_QueryWindowStartTime}..{_QueryWindowEndTime}\\"},\\"queryTimeFormat\\":\\"yyyy-MM-ddTHH:mm:ssZ\\",\\"queryWindow\
+InMin\\":15,\\"rateLimitQps\\":50,\\"retryCount\\":2,\\"timeoutInSeconds\\":60}}}}" --data-connector-id \
+"316ec55e-7138-4d63-ab18-90c8a60fd1c8" --resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Creates or updates a Dynamics365 data connector.
+        text: |-
+               az sentinel data-connector create --data-connector "{\\"etag\\":\\"\\\\\\"0300bf09-0000-0000-0000-5c3729\
+6e0000\\\\\\"\\",\\"kind\\":\\"Dynamics365\\",\\"properties\\":{\\"dataTypes\\":{\\"dynamics365CdsActivities\\":{\\"sta\
+te\\":\\"Enabled\\"}},\\"tenantId\\":\\"2070ecc9-b4d5-4ae4-adaa-936fa1954fa8\\"}}" --data-connector-id \
+"c2541efb-c9a6-47fe-9501-87d1017d1512" --resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Creates or updates a GenericUI data connector
+        text: |-
+               az sentinel data-connector create --data-connector "{\\"kind\\":\\"GenericUI\\",\\"properties\\":{\\"con\
+nectorUiConfig\\":{\\"availability\\":{\\"isPreview\\":true,\\"status\\":1},\\"connectivityCriteria\\":[{\\"type\\":\\"\
+IsConnectedQuery\\",\\"value\\":[\\"{{graphQueriesTableName}}\\\\n            | summarize LastLogReceived = \
+max(TimeGenerated)\\\\n            | project IsConnected = LastLogReceived > ago(30d)\\"]}],\\"dataTypes\\":[{\\"name\\\
+":\\"{{graphQueriesTableName}}\\",\\"lastDataReceivedQuery\\":\\"{{graphQueriesTableName}}\\\\n            | summarize \
+Time = max(TimeGenerated)\\\\n            | where isnotempty(Time)\\"}],\\"descriptionMarkdown\\":\\"The [Qualys \
+Vulnerability Management (VM)](https://www.qualys.com/apps/vulnerability-management/) data connector provides the \
+capability to ingest vulnerability host detection data into Azure Sentinel through the Qualys API. The connector \
+provides visibility into host detection data from vulerability scans. This connector provides Azure Sentinel the \
+capability to view dashboards, create custom alerts, and improve investigation \\",\\"graphQueries\\":[{\\"baseQuery\\"\
+:\\"{{graphQueriesTableName}}\\",\\"legend\\":\\"{{graphQueriesTableName}}\\",\\"metricName\\":\\"Total data \
+received\\"}],\\"graphQueriesTableName\\":\\"QualysHostDetection_CL\\",\\"instructionSteps\\":[{\\"description\\":\\">*\
+*NOTE:** This connector uses Azure Functions to connect to Qualys VM to pull its logs into Azure Sentinel. This might \
+result in additional data ingestion costs. Check the [Azure Functions pricing page](https://azure.microsoft.com/pricing\
+/details/functions/) for details.\\",\\"title\\":\\"\\"},{\\"description\\":\\">**(Optional Step)** Securely store \
+workspace and API authorization key(s) or token(s) in Azure Key Vault. Azure Key Vault provides a secure mechanism to \
+store and retrieve key values. [Follow these instructions](https://docs.microsoft.com/azure/app-service/app-service-key\
+-vault-references) to use Azure Key Vault with an Azure Function App.\\",\\"title\\":\\"\\"},{\\"description\\":\\"**ST\
+EP 1 - Configuration steps for the Qualys VM API**\\\\n\\\\n1. Log into the Qualys Vulnerability Management console \
+with an administrator account, select the **Users** tab and the **Users** subtab. \\\\n2. Click on the **New** \
+drop-down menu and select **Users..**\\\\n3. Create a username and password for the API account. \\\\n4. In the **User \
+Roles** tab, ensure the account role is set to **Manager** and access is allowed to **GUI** and **API**\\\\n4. Log out \
+of the administrator account and log into the console with the new API credentials for validation, then log out of the \
+API account. \\\\n5. Log back into the console using an administrator account and modify the API accounts User Roles, \
+removing access to **GUI**. \\\\n6. Save all changes.\\",\\"title\\":\\"\\"},{\\"description\\":\\"**STEP 2 - Choose \
+ONE from the following two deployment options to deploy the connector and the associated Azure \
+Function**\\\\n\\\\n>**IMPORTANT:** Before deploying the Qualys VM connector, have the Workspace ID and Workspace \
+Primary Key (can be copied from the following), as well as the Qualys VM API Authorization Key(s), readily \
+available.\\",\\"instructions\\":[{\\"type\\":\\"CopyableLabel\\",\\"parameters\\":{\\"fillWith\\":[\\"WorkspaceId\\"],\
+\\"label\\":\\"Workspace ID\\"}},{\\"type\\":\\"CopyableLabel\\",\\"parameters\\":{\\"fillWith\\":[\\"PrimaryKey\\"],\\\
+"label\\":\\"Primary Key\\"}}],\\"title\\":\\"\\"},{\\"description\\":\\"Use this method for automated deployment of \
+the Qualys VM connector using an ARM Tempate.\\\\n\\\\n1. Click the **Deploy to Azure** button below. \
+\\\\n\\\\n\\\\t[![Deploy To Azure](https://aka.ms/deploytoazurebutton)](https://aka.ms/sentinelqualysvmazuredeploy)\\\\\
+n2. Select the preferred **Subscription**, **Resource Group** and **Location**. \\\\n3. Enter the **Workspace ID**, \
+**Workspace Key**, **API Username**, **API Password** , update the **URI**, and any additional URI **Filter \
+Parameters** (each filter should be separated by an \\\\\\"&\\\\\\" symbol, no spaces.) \\\\n> - Enter the URI that \
+corresponds to your region. The complete list of API Server URLs can be [found here](https://www.qualys.com/docs/qualys\
+-api-vmpc-user-guide.pdf#G4.735348) -- There is no need to add a time suffix to the URI, the Function App will \
+dynamically append the Time Value to the URI in the proper format. \\\\n - The default **Time Interval** is set to \
+pull the last five (5) minutes of data. If the time interval needs to be modified, it is recommended to change the \
+Function App Timer Trigger accordingly (in the function.json file, post deployment) to prevent overlapping data \
+ingestion. \\\\n> - Note: If using Azure Key Vault secrets for any of the values above, use \
+the`@Microsoft.KeyVault(SecretUri={Security Identifier})`schema in place of the string values. Refer to [Key Vault \
+references documentation](https://docs.microsoft.com/azure/app-service/app-service-key-vault-references) for further \
+details. \\\\n4. Mark the checkbox labeled **I agree to the terms and conditions stated above**. \\\\n5. Click \
+**Purchase** to deploy.\\",\\"title\\":\\"Option 1 - Azure Resource Manager (ARM) Template\\"},{\\"description\\":\\"Us\
+e the following step-by-step instructions to deploy the Quayls VM connector manually with Azure \
+Functions.\\",\\"title\\":\\"Option 2 - Manual Deployment of Azure Functions\\"},{\\"description\\":\\"**1. Create a \
+Function App**\\\\n\\\\n1.  From the Azure Portal, navigate to [Function App](https://portal.azure.com/#blade/HubsExten\
+sion/BrowseResource/resourceType/Microsoft.Web%2Fsites/kind/functionapp), and select **+ Add**.\\\\n2. In the \
+**Basics** tab, ensure Runtime stack is set to **Powershell Core**. \\\\n3. In the **Hosting** tab, ensure the \
+**Consumption (Serverless)** plan type is selected.\\\\n4. Make other preferrable configuration changes, if needed, \
+then click **Create**.\\",\\"title\\":\\"\\"},{\\"description\\":\\"**2. Import Function App Code**\\\\n\\\\n1. In the \
+newly created Function App, select **Functions** on the left pane and click **+ New Function**.\\\\n2. Select **Timer \
+Trigger**.\\\\n3. Enter a unique Function **Name** and leave the default cron schedule of every 5 minutes, then click \
+**Create**.\\\\n5. Click on **Code + Test** on the left pane. \\\\n6. Copy the [Function App \
+Code](https://aka.ms/sentinelqualysvmazurefunctioncode) and paste into the Function App `run.ps1` editor.\\\\n7. Click \
+**Save**.\\",\\"title\\":\\"\\"},{\\"description\\":\\"**3. Configure the Function App**\\\\n\\\\n1. In the Function \
+App, select the Function App Name and select **Configuration**.\\\\n2. In the **Application settings** tab, select **+ \
+New application setting**.\\\\n3. Add each of the following seven (7) application settings individually, with their \
+respective string values (case-sensitive): \\\\n\\\\t\\\\tapiUsername\\\\n\\\\t\\\\tapiPassword\\\\n\\\\t\\\\tworkspace\
+ID\\\\n\\\\t\\\\tworkspaceKey\\\\n\\\\t\\\\turi\\\\n\\\\t\\\\tfilterParameters\\\\n\\\\t\\\\ttimeInterval\\\\n> - \
+Enter the URI that corresponds to your region. The complete list of API Server URLs can be [found \
+here](https://www.qualys.com/docs/qualys-api-vmpc-user-guide.pdf#G4.735348). The `uri` value must follow the following \
+schema: `https://<API Server>/api/2.0/fo/asset/host/vm/detection/?action=list&vm_processed_after=` -- There is no need \
+to add a time suffix to the URI, the Function App will dynamically append the Time Value to the URI in the proper \
+format.\\\\n> - Add any additional filter parameters, for the `filterParameters` variable, that need to be appended to \
+the URI. Each parameter should be seperated by an \\\\\\"&\\\\\\" symbol and should not include any spaces.\\\\n> - \
+Set the `timeInterval` (in minutes) to the value of `5` to correspond to the Timer Trigger of every `5` minutes. If \
+the time interval needs to be modified, it is recommended to change the Function App Timer Trigger accordingly to \
+prevent overlapping data ingestion.\\\\n> - Note: If using Azure Key Vault, use the`@Microsoft.KeyVault(SecretUri={Secu\
+rity Identifier})`schema in place of the string values. Refer to [Key Vault references documentation](https://docs.micr\
+osoft.com/azure/app-service/app-service-key-vault-references) for further details.\\\\n4. Once all application \
+settings have been entered, click **Save**.\\",\\"title\\":\\"\\"},{\\"description\\":\\"**4. Configure the \
+host.json**.\\\\n\\\\nDue to the potentially large amount of Qualys host detection data being ingested, it can cause \
+the execution time to surpass the default Function App timeout of five (5) minutes. Increase the default timeout \
+duration to the maximum of ten (10) minutes, under the Consumption Plan, to allow more time for the Function App to \
+execute.\\\\n\\\\n1. In the Function App, select the Function App Name and select the **App Service Editor** \
+blade.\\\\n2. Click **Go** to open the editor, then select the **host.json** file under the **wwwroot** \
+directory.\\\\n3. Add the line `\\\\\\"functionTimeout\\\\\\": \\\\\\"00:10:00\\\\\\",` above the `managedDependancy` \
+line \\\\n4. Ensure **SAVED** appears on the top right corner of the editor, then exit the editor.\\\\n\\\\n> NOTE: If \
+a longer timeout duration is required, consider upgrading to an [App Service Plan](https://docs.microsoft.com/azure/azu\
+re-functions/functions-scale#timeout)\\",\\"title\\":\\"\\"}],\\"permissions\\":{\\"customs\\":[{\\"name\\":\\"Microsof\
+t.Web/sites permissions\\",\\"description\\":\\"Read and write permissions to Azure Functions to create a Function App \
+is required. [See the documentation to learn more about Azure Functions](https://docs.microsoft.com/azure/azure-functio\
+ns/).\\"},{\\"name\\":\\"Qualys API Key\\",\\"description\\":\\"A Qualys VM API username and password is required. \
+[See the documentation to learn more about Qualys VM API](https://www.qualys.com/docs/qualys-api-vmpc-user-guide.pdf).\
+\\"}],\\"resourceProvider\\":[{\\"permissionsDisplayText\\":\\"read and write permissions on the workspace are \
+required.\\",\\"provider\\":\\"Microsoft.OperationalInsights/workspaces\\",\\"providerDisplayName\\":\\"Workspace\\",\\\
+"requiredPermissions\\":{\\"delete\\":true,\\"read\\":true,\\"write\\":true},\\"scope\\":\\"Workspace\\"},{\\"permissio\
+nsDisplayText\\":\\"read permissions to shared keys for the workspace are required. [See the documentation to learn \
+more about workspace keys](https://docs.microsoft.com/azure/azure-monitor/platform/agent-windows#obtain-workspace-id-an\
+d-key).\\",\\"provider\\":\\"Microsoft.OperationalInsights/workspaces/sharedKeys\\",\\"providerDisplayName\\":\\"Keys\\\
+",\\"requiredPermissions\\":{\\"action\\":true},\\"scope\\":\\"Workspace\\"}]},\\"publisher\\":\\"Qualys\\",\\"sampleQu\
+eries\\":[{\\"description\\":\\"Top 10 Vulerabilities detected\\",\\"query\\":\\"{{graphQueriesTableName}}\\\\n | \
+mv-expand todynamic(Detections_s)\\\\n | extend Vulnerability = tostring(Detections_s.Results)\\\\n | summarize \
+count() by Vulnerability\\\\n | top 10 by count_\\"}],\\"title\\":\\"Qualys Vulnerability Management (CCP DEMO)\\"}}}" \
+--data-connector-id "316ec55e-7138-4d63-ab18-90c8a60fd1c8" --resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Creates or updates a Threat Intelligence Taxii data connector.
+        text: |-
+               az sentinel data-connector create --data-connector "{\\"etag\\":\\"d12423f6-a60b-4ca5-88c0-feb1a182d0f0\
+\\",\\"kind\\":\\"ThreatIntelligenceTaxii\\",\\"properties\\":{\\"collectionId\\":\\"135\\",\\"dataTypes\\":{\\"taxiiCl\
+ient\\":{\\"state\\":\\"Enabled\\"}},\\"friendlyName\\":\\"testTaxii\\",\\"password\\":\\"--\\",\\"pollingFrequency\\":\
+\\"OnceADay\\",\\"taxiiLookbackPeriod\\":\\"2020-01-01T13:00:30.123Z\\",\\"taxiiServer\\":\\"https://limo.anomali.com/a\
+pi/v1/taxii2/feeds\\",\\"tenantId\\":\\"06b3ccb8-1384-4bcc-aec7-852f6d57161b\\",\\"userName\\":\\"--\\",\\"workspaceId\
+\\":\\"dd124572-4962-4495-9bd2-9dade12314b4\\"}}" --data-connector-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Creates or updates an Office PowerBI data connector
+        text: |-
+               az sentinel data-connector create --data-connector "{\\"etag\\":\\"\\\\\\"0300bf09-0000-0000-0000-5c3729\
+6e0000\\\\\\"\\",\\"kind\\":\\"OfficePowerBI\\",\\"properties\\":{\\"dataTypes\\":{\\"logs\\":{\\"state\\":\\"Enabled\\\
+"}},\\"tenantId\\":\\"2070ecc9-b4d5-4ae4-adaa-936fa1954fa8\\"}}" --data-connector-id "73e01a99-5cd7-4139-a149-9f2736ff2\
+ab5" --resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Creates or updates an Office365 Project data connector
+        text: |-
+               az sentinel data-connector create --data-connector "{\\"etag\\":\\"\\\\\\"0300bf09-0000-0000-0000-5c3729\
+6e0000\\\\\\"\\",\\"kind\\":\\"Office365Project\\",\\"properties\\":{\\"dataTypes\\":{\\"logs\\":{\\"state\\":\\"Enable\
+d\\"}},\\"tenantId\\":\\"2070ecc9-b4d5-4ae4-adaa-936fa1954fa8\\"}}" --data-connector-id "73e01a99-5cd7-4139-a149-9f2736\
+ff2ab5" --resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Creates or updates an Office365 data connector
+        text: |-
+               az sentinel data-connector create --data-connector "{\\"etag\\":\\"\\\\\\"0300bf09-0000-0000-0000-5c3729\
+6e0000\\\\\\"\\",\\"kind\\":\\"Office365\\",\\"properties\\":{\\"dataTypes\\":{\\"exchange\\":{\\"state\\":\\"Enabled\\\
+"},\\"sharePoint\\":{\\"state\\":\\"Enabled\\"},\\"teams\\":{\\"state\\":\\"Enabled\\"}},\\"tenantId\\":\\"2070ecc9-b4d\
+5-4ae4-adaa-936fa1954fa8\\"}}" --data-connector-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" \
+--workspace-name "myWorkspace"
+      - name: Creates or updates an Threat Intelligence Platform data connector
+        text: |-
+               az sentinel data-connector create --data-connector "{\\"kind\\":\\"ThreatIntelligence\\",\\"properties\\\
+":{\\"dataTypes\\":{\\"indicators\\":{\\"state\\":\\"Enabled\\"}},\\"tenantId\\":\\"06b3ccb8-1384-4bcc-aec7-852f6d57161\
+b\\",\\"tipLookbackPeriod\\":\\"2020-01-01T13:00:30.123Z\\"}}" --data-connector-id "73e01a99-5cd7-4139-a149-9f2736ff2ab\
+5" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel data-connector update'] = """
+    type: command
+    short-summary: "Update the data connector."
+"""
+
+helps['sentinel data-connector delete'] = """
+    type: command
+    short-summary: "Delete the data connector."
+    examples:
+      - name: Delete a APIPolling data connector
+        text: |-
+               az sentinel data-connector delete --data-connector-id "316ec55e-7138-4d63-ab18-90c8a60fd1c8" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Delete a GenericUI data connector
+        text: |-
+               az sentinel data-connector delete --data-connector-id "316ec55e-7138-4d63-ab18-90c8a60fd1c8" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Delete an Office PowerBI data connector
+        text: |-
+               az sentinel data-connector delete --data-connector-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Delete an Office365 Project data connector
+        text: |-
+               az sentinel data-connector delete --data-connector-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Delete an Office365 data connector
+        text: |-
+               az sentinel data-connector delete --data-connector-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel data-connector connect'] = """
+    type: command
+    short-summary: "Connects a data connector."
+    examples:
+      - name: Connect an APIPolling V2 logs data connector
+        text: |-
+               az sentinel data-connector connect --api-key "123456789" --data-collection-endpoint \
+"https://test.eastus.ingest.monitor.azure.com" --data-collection-rule-immutable-id "dcr-34adsj9o7d6f9de204478b9cgb43b63\
+1" --kind "APIKey" --output-stream "Custom-MyTableRawData" --request-config-user-input-values \
+"[{\\"displayText\\":\\"Organization Name\\",\\"placeHolderName\\":\\"{{placeHolder1}}\\",\\"placeHolderValue\\":\\"som\
+ePlaceHolderValue\\",\\"requestObjectKey\\":\\"apiEndpoint\\"}]" --data-connector-id "316ec55e-7138-4d63-ab18-90c8a60fd\
+1c8" --resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Connect an APIPolling data connector
+        text: |-
+               az sentinel data-connector connect --api-key "123456789" --kind "APIKey" --request-config-user-input-val\
+ues "[{\\"displayText\\":\\"Organization Name\\",\\"placeHolderName\\":\\"{{placeHolder1}}\\",\\"placeHolderValue\\":\\\
+"somePlaceHolderValue\\",\\"requestObjectKey\\":\\"apiEndpoint\\"}]" --data-connector-id \
+"316ec55e-7138-4d63-ab18-90c8a60fd1c8" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel data-connector disconnect'] = """
+    type: command
+    short-summary: "Disconnect a data connector."
+    examples:
+      - name: Disconnect an APIPolling data connector
+        text: |-
+               az sentinel data-connector disconnect --data-connector-id "316ec55e-7138-4d63-ab18-90c8a60fd1c8" \
+--resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel data-connector-check-requirement'] = """
+    type: group
+    short-summary: Manage data connector check requirement with sentinel
+"""
+
+helps['sentinel data-connector-check-requirement post'] = """
+    type: command
+    short-summary: "Get requirements state for a data connector type."
+    parameters:
+      - name: --aad-check-requirements
+        short-summary: "Represents AAD (Azure Active Directory) requirements check request."
+        long-summary: |
+            Usage: --aad-check-requirements tenant-id=XX kind=XX
+
+            tenant-id: The tenant id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --aatp-check-requirements
+        short-summary: "Represents AATP (Azure Advanced Threat Protection) requirements check request."
+        long-summary: |
+            Usage: --aatp-check-requirements tenant-id=XX kind=XX
+
+            tenant-id: The tenant id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --asc-check-requirements
+        short-summary: "Represents ASC (Azure Security Center) requirements check request."
+        long-summary: |
+            Usage: --asc-check-requirements subscription-id=XX kind=XX
+
+            subscription-id: The subscription id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --aws-cloud-trail-check-requirements
+        short-summary: "Amazon Web Services CloudTrail requirements check request."
+        long-summary: |
+            Usage: --aws-cloud-trail-check-requirements kind=XX
+
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --aws-s3-check-requirements
+        short-summary: "Amazon Web Services S3 requirements check request."
+        long-summary: |
+            Usage: --aws-s3-check-requirements kind=XX
+
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --dynamics365-check-requirements
+        short-summary: "Represents Dynamics365 requirements check request."
+        long-summary: |
+            Usage: --dynamics365-check-requirements tenant-id=XX kind=XX
+
+            tenant-id: The tenant id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --mcas-check-requirements
+        short-summary: "Represents MCAS (Microsoft Cloud App Security) requirements check request."
+        long-summary: |
+            Usage: --mcas-check-requirements tenant-id=XX kind=XX
+
+            tenant-id: The tenant id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --mdatp-check-requirements
+        short-summary: "Represents MDATP (Microsoft Defender Advanced Threat Protection) requirements check request."
+        long-summary: |
+            Usage: --mdatp-check-requirements tenant-id=XX kind=XX
+
+            tenant-id: The tenant id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --msti-check-requirements
+        short-summary: "Represents Microsoft Threat Intelligence requirements check request."
+        long-summary: |
+            Usage: --msti-check-requirements tenant-id=XX kind=XX
+
+            tenant-id: The tenant id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --mtp-check-requirements
+        short-summary: "Represents MTP (Microsoft Threat Protection) requirements check request."
+        long-summary: |
+            Usage: --mtp-check-requirements tenant-id=XX kind=XX
+
+            tenant-id: The tenant id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --office-atp-check-requirements
+        short-summary: "Represents OfficeATP (Office 365 Advanced Threat Protection) requirements check request."
+        long-summary: |
+            Usage: --office-atp-check-requirements tenant-id=XX kind=XX
+
+            tenant-id: The tenant id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --office-irm-check-requirements
+        short-summary: "Represents OfficeIRM (Microsoft Insider Risk Management) requirements check request."
+        long-summary: |
+            Usage: --office-irm-check-requirements tenant-id=XX kind=XX
+
+            tenant-id: The tenant id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --office365-project-check-requirements
+        short-summary: "Represents Office365 Project requirements check request."
+        long-summary: |
+            Usage: --office365-project-check-requirements tenant-id=XX kind=XX
+
+            tenant-id: The tenant id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --office-power-bi-check-requirements
+        short-summary: "Represents Office PowerBI requirements check request."
+        long-summary: |
+            Usage: --office-power-bi-check-requirements tenant-id=XX kind=XX
+
+            tenant-id: The tenant id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --ti-check-requirements
+        short-summary: "Threat Intelligence Platforms data connector check requirements"
+        long-summary: |
+            Usage: --ti-check-requirements tenant-id=XX kind=XX
+
+            tenant-id: The tenant id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --ti-taxii-check-requirements
+        short-summary: "Threat Intelligence TAXII data connector check requirements"
+        long-summary: |
+            Usage: --ti-taxii-check-requirements tenant-id=XX kind=XX
+
+            tenant-id: The tenant id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+      - name: --io-t-check-requirements
+        short-summary: "Represents IoT requirements check request."
+        long-summary: |
+            Usage: --io-t-check-requirements subscription-id=XX kind=XX
+
+            subscription-id: The subscription id to connect to, and get the data from.
+            kind: Required. Describes the kind of connector to be checked.
+    examples:
+      - name: Check requirements for AAD - no authorization.
+        text: |-
+               az sentinel data-connector-check-requirement post --aad-check-requirements \
+tenant-id="2070ecc9-b4d5-4ae4-adaa-936fa1954fa8" --resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Check requirements for AAD - no license.
+        text: |-
+               az sentinel data-connector-check-requirement post --aad-check-requirements \
+tenant-id="2070ecc9-b4d5-4ae4-adaa-936fa1954fa8" --resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Check requirements for AAD.
+        text: |-
+               az sentinel data-connector-check-requirement post --aad-check-requirements \
+tenant-id="2070ecc9-b4d5-4ae4-adaa-936fa1954fa8" --resource-group "myRg" --workspace-name "myWorkspace"
 """

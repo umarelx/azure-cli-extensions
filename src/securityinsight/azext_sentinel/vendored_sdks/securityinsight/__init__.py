@@ -7,6 +7,9 @@
 # --------------------------------------------------------------------------
 
 from ._security_insights import SecurityInsights
+from ._version import VERSION
+
+__version__ = VERSION
 __all__ = ['SecurityInsights']
 
 try:

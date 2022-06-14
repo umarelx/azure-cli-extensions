@@ -11,24 +11,49 @@
 # pylint: disable=too-many-statements
 
 from azure.cli.core.commands.parameters import (
+    get_three_state_flag,
     get_enum_type,
     resource_group_name_type
 )
+from azure.cli.core.commands.validators import validate_file_or_dict
 from azext_sentinel.action import (
-    AddFusionAlertRule,
-    AddMicrosoftSecurityIncidentCreationAlertRule,
-    AddScheduledAlertRule,
-    AddIncidentInfo,
-    AddAadDataConnector,
-    AddAatpDataConnector,
-    AddAscDataConnector,
-    AddAwsCloudTrailDataConnector,
-    AddMcasDataConnector,
-    AddMdatpDataConnector,
-    AddOfficeDataConnector,
-    AddTiDataConnector,
+    AddActions,
+    AddConditions,
     AddLabels,
-    AddOwner
+    AddOwner,
+    AddIncidentInfo,
+    AddSource,
+    AddAuthor,
+    AddSupport,
+    AddCategories,
+    AddAnomalies,
+    AddEyesOn,
+    AddEntityAnalytics,
+    AddUeba,
+    AddDeployment,
+    AddWebhook,
+    AddAzureDevOpsResourceInfo,
+    AddPathMapping,
+    AddKillChainPhases,
+    AddGranularMarkings,
+    AddSortBy,
+    AddAadCheckRequirements,
+    AddAatpCheckRequirements,
+    AddAscCheckRequirements,
+    AddAwsCloudTrailCheckRequirements,
+    AddAwsS3CheckRequirements,
+    AddDynamics365CheckRequirements,
+    AddMcasCheckRequirements,
+    AddMdatpCheckRequirements,
+    AddMstiCheckRequirements,
+    AddMtpCheckRequirements,
+    AddOfficeAtpCheckRequirements,
+    AddOfficeIrmCheckRequirements,
+    AddOffice365ProjectCheckRequirements,
+    AddOfficePowerBiCheckRequirements,
+    AddTiCheckRequirements,
+    AddTiTaxiiCheckRequirements,
+    AddIoTCheckRequirements
 )
 
 
@@ -47,47 +72,57 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('rule_id', type=str, help='Alert rule ID')
-        c.argument('action_id', type=str, help='Action ID')
-        c.argument('etag', type=str, help='Etag of the azure resource')
-        c.argument('logic_app_resource_id', type=str, help='Logic App Resource Id, /subscriptions/{my-subscription}/res'
-                   'ourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}.')
-        c.argument('trigger_uri', type=str, help='Logic App Callback URL for this specific workflow.')
-        c.argument('fusion_alert_rule', action=AddFusionAlertRule, nargs='*', help='Represents Fusion alert rule.',
-                   arg_group='AlertRule')
-        c.argument('microsoft_security_incident_creation_alert_rule',
-                   action=AddMicrosoftSecurityIncidentCreationAlertRule, nargs='*', help='Represents '
-                   'MicrosoftSecurityIncidentCreation rule.', arg_group='AlertRule')
-        c.argument('scheduled_alert_rule', action=AddScheduledAlertRule, nargs='*', help='Represents scheduled alert '
-                   'rule.', arg_group='AlertRule')
+        c.argument('alert_rule', type=validate_file_or_dict, help='The alert rule Expected value: '
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('sentinel alert-rule update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('rule_id', type=str, help='Alert rule ID', id_part='child_name_1')
-        c.argument('fusion_alert_rule', action=AddFusionAlertRule, nargs='*', help='Represents Fusion alert rule.',
-                   arg_group='AlertRule')
-        c.argument('microsoft_security_incident_creation_alert_rule',
-                   action=AddMicrosoftSecurityIncidentCreationAlertRule, nargs='*', help='Represents '
-                   'MicrosoftSecurityIncidentCreation rule.', arg_group='AlertRule')
-        c.argument('scheduled_alert_rule', action=AddScheduledAlertRule, nargs='*', help='Represents scheduled alert '
-                   'rule.', arg_group='AlertRule')
+        c.argument('alert_rule', type=validate_file_or_dict, help='The alert rule Expected value: '
+                   'json-string/json-file/@json-file.')
 
     with self.argument_context('sentinel alert-rule delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('rule_id', type=str, help='Alert rule ID', id_part='child_name_1')
-        c.argument('action_id', type=str, help='Action ID', id_part='child_name_2')
-
-    with self.argument_context('sentinel alert-rule get-action') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('rule_id', type=str, help='Alert rule ID', id_part='child_name_1')
-        c.argument('action_id', type=str, help='Action ID', id_part='child_name_2')
 
     with self.argument_context('sentinel action list') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('rule_id', type=str, help='Alert rule ID')
+
+    with self.argument_context('sentinel action show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('rule_id', type=str, help='Alert rule ID', id_part='child_name_1')
+        c.argument('action_id', type=str, help='Action ID', id_part='child_name_2')
+
+    with self.argument_context('sentinel action create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('rule_id', type=str, help='Alert rule ID')
+        c.argument('action_id', type=str, help='Action ID')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('logic_app_resource_id', type=str, help='Logic App Resource Id, /subscriptions/{my-subscription}/res'
+                   'ourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}.')
+        c.argument('trigger_uri', type=str, help='Logic App Callback URL for this specific workflow.')
+
+    with self.argument_context('sentinel action update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('rule_id', type=str, help='Alert rule ID', id_part='child_name_1')
+        c.argument('action_id', type=str, help='Action ID', id_part='child_name_2')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('logic_app_resource_id', type=str, help='Logic App Resource Id, /subscriptions/{my-subscription}/res'
+                   'ourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}.')
+        c.argument('trigger_uri', type=str, help='Logic App Callback URL for this specific workflow.')
+
+    with self.argument_context('sentinel action delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('rule_id', type=str, help='Alert rule ID', id_part='child_name_1')
+        c.argument('action_id', type=str, help='Action ID', id_part='child_name_2')
 
     with self.argument_context('sentinel alert-rule-template list') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -98,107 +133,56 @@ def load_arguments(self, _):
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('alert_rule_template_id', type=str, help='Alert rule template ID', id_part='child_name_1')
 
-    with self.argument_context('sentinel bookmark list') as c:
+    with self.argument_context('sentinel automation-rule list') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
 
-    with self.argument_context('sentinel bookmark show') as c:
+    with self.argument_context('sentinel automation-rule show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
+        c.argument('automation_rule_id', type=str, help='Automation rule ID', id_part='child_name_1')
 
-    with self.argument_context('sentinel bookmark create') as c:
+    with self.argument_context('sentinel automation-rule create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
-        c.argument('bookmark_id', type=str, help='Bookmark ID')
+        c.argument('automation_rule_id', type=str, help='Automation rule ID')
         c.argument('etag', type=str, help='Etag of the azure resource')
-        c.argument('created', help='The time the bookmark was created')
-        c.argument('display_name', type=str, help='The display name of the bookmark')
-        c.argument('labels', nargs='*', help='List of labels relevant to this bookmark')
-        c.argument('notes', type=str, help='The notes of the bookmark')
-        c.argument('query_content', options_list=['-q'], type=str, help='The query of the bookmark.')
-        c.argument('query_result', type=str, help='The query result of the bookmark.')
-        c.argument('updated', help='The last time the bookmark was updated')
-        c.argument('incident_info', action=AddIncidentInfo, nargs='*', help='Describes an incident that relates to '
-                   'bookmark')
-        c.argument('updated_by_object_id', help='The object id of the user.')
+        c.argument('display_name', type=str, help='The display name of the automation rule.')
+        c.argument('order', type=int, help='The order of execution of the automation rule.')
+        c.argument('actions', action=AddActions, nargs='+', help='The actions to execute when the automation rule is '
+                   'triggered.')
+        c.argument('is_enabled', arg_type=get_three_state_flag(), help='Determines whether the automation rule is '
+                   'enabled or disabled.', arg_group='Triggering Logic')
+        c.argument('expiration_time_utc', help='Determines when the automation rule should automatically expire and be '
+                   'disabled.', arg_group='Triggering Logic')
+        c.argument('triggers_when', arg_type=get_enum_type(['Created', 'Updated']), help='', arg_group='Triggering '
+                   'Logic')
+        c.argument('conditions', action=AddConditions, nargs='+', help='The conditions to evaluate to determine if the '
+                   'automation rule should be triggered on a given object.', arg_group='Triggering Logic')
 
-    with self.argument_context('sentinel bookmark update') as c:
+    with self.argument_context('sentinel automation-rule update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
+        c.argument('automation_rule_id', type=str, help='Automation rule ID', id_part='child_name_1')
         c.argument('etag', type=str, help='Etag of the azure resource')
-        c.argument('created', help='The time the bookmark was created')
-        c.argument('display_name', type=str, help='The display name of the bookmark')
-        c.argument('labels', nargs='*', help='List of labels relevant to this bookmark')
-        c.argument('notes', type=str, help='The notes of the bookmark')
-        c.argument('query_content', options_list=['-q'], type=str, help='The query of the bookmark.')
-        c.argument('query_result', type=str, help='The query result of the bookmark.')
-        c.argument('updated', help='The last time the bookmark was updated')
-        c.argument('incident_info', action=AddIncidentInfo, nargs='*', help='Describes an incident that relates to '
-                   'bookmark')
-        c.argument('updated_by_object_id', help='The object id of the user.')
+        c.argument('display_name', type=str, help='The display name of the automation rule.')
+        c.argument('order', type=int, help='The order of execution of the automation rule.')
+        c.argument('actions', action=AddActions, nargs='+', help='The actions to execute when the automation rule is '
+                   'triggered.')
+        c.argument('is_enabled', arg_type=get_three_state_flag(), help='Determines whether the automation rule is '
+                   'enabled or disabled.', arg_group='Triggering Logic')
+        c.argument('expiration_time_utc', help='Determines when the automation rule should automatically expire and be '
+                   'disabled.', arg_group='Triggering Logic')
+        c.argument('triggers_when', arg_type=get_enum_type(['Created', 'Updated']), help='', arg_group='Triggering '
+                   'Logic')
+        c.argument('conditions', action=AddConditions, nargs='+', help='The conditions to evaluate to determine if the '
+                   'automation rule should be triggered on a given object.', arg_group='Triggering Logic')
+        c.ignore('automation_rule_to_upsert')
 
-    with self.argument_context('sentinel bookmark delete') as c:
+    with self.argument_context('sentinel automation-rule delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
-
-    with self.argument_context('sentinel data-connector list') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('workspace_name', type=str, help='The name of the workspace.')
-
-    with self.argument_context('sentinel data-connector show') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('data_connector_id', type=str, help='Connector ID', id_part='child_name_1')
-
-    with self.argument_context('sentinel data-connector create') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('workspace_name', type=str, help='The name of the workspace.')
-        c.argument('data_connector_id', type=str, help='Connector ID')
-        c.argument('aad_data_connector', action=AddAadDataConnector, nargs='*', help='Represents AAD (Azure Active '
-                   'Directory) data connector.', arg_group='DataConnector')
-        c.argument('aatp_data_connector', action=AddAatpDataConnector, nargs='*', help='Represents AATP (Azure '
-                   'Advanced Threat Protection) data connector.', arg_group='DataConnector')
-        c.argument('asc_data_connector', action=AddAscDataConnector, nargs='*', help='Represents ASC (Azure Security '
-                   'Center) data connector.', arg_group='DataConnector')
-        c.argument('aws_cloud_trail_data_connector', action=AddAwsCloudTrailDataConnector, nargs='*', help='Represents '
-                   'Amazon Web Services CloudTrail data connector.', arg_group='DataConnector')
-        c.argument('mcas_data_connector', action=AddMcasDataConnector, nargs='*', help='Represents MCAS (Microsoft '
-                   'Cloud App Security) data connector.', arg_group='DataConnector')
-        c.argument('mdatp_data_connector', action=AddMdatpDataConnector, nargs='*', help='Represents MDATP (Microsoft '
-                   'Defender Advanced Threat Protection) data connector.', arg_group='DataConnector')
-        c.argument('office_data_connector', action=AddOfficeDataConnector, nargs='*', help='Represents office data '
-                   'connector.', arg_group='DataConnector')
-        c.argument('ti_data_connector', action=AddTiDataConnector, nargs='*', help='Represents threat intelligence '
-                   'data connector.', arg_group='DataConnector')
-
-    with self.argument_context('sentinel data-connector update') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('data_connector_id', type=str, help='Connector ID', id_part='child_name_1')
-        c.argument('aad_data_connector', action=AddAadDataConnector, nargs='*', help='Represents AAD (Azure Active '
-                   'Directory) data connector.', arg_group='DataConnector')
-        c.argument('aatp_data_connector', action=AddAatpDataConnector, nargs='*', help='Represents AATP (Azure '
-                   'Advanced Threat Protection) data connector.', arg_group='DataConnector')
-        c.argument('asc_data_connector', action=AddAscDataConnector, nargs='*', help='Represents ASC (Azure Security '
-                   'Center) data connector.', arg_group='DataConnector')
-        c.argument('aws_cloud_trail_data_connector', action=AddAwsCloudTrailDataConnector, nargs='*', help='Represents '
-                   'Amazon Web Services CloudTrail data connector.', arg_group='DataConnector')
-        c.argument('mcas_data_connector', action=AddMcasDataConnector, nargs='*', help='Represents MCAS (Microsoft '
-                   'Cloud App Security) data connector.', arg_group='DataConnector')
-        c.argument('mdatp_data_connector', action=AddMdatpDataConnector, nargs='*', help='Represents MDATP (Microsoft '
-                   'Defender Advanced Threat Protection) data connector.', arg_group='DataConnector')
-        c.argument('office_data_connector', action=AddOfficeDataConnector, nargs='*', help='Represents office data '
-                   'connector.', arg_group='DataConnector')
-        c.argument('ti_data_connector', action=AddTiDataConnector, nargs='*', help='Represents threat intelligence '
-                   'data connector.', arg_group='DataConnector')
-
-    with self.argument_context('sentinel data-connector delete') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('data_connector_id', type=str, help='Connector ID', id_part='child_name_1')
+        c.argument('automation_rule_id', type=str, help='Automation rule ID', id_part='child_name_1')
 
     with self.argument_context('sentinel incident list') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -222,18 +206,20 @@ def load_arguments(self, _):
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('incident_id', type=str, help='Incident ID')
         c.argument('etag', type=str, help='Etag of the azure resource')
-        c.argument('classification', arg_type=get_enum_type(['Undetermined', 'TruePositive', 'BenignPositive', ''
+        c.argument('classification', arg_type=get_enum_type(['Undetermined', 'TruePositive', 'BenignPositive',
                                                              'FalsePositive']), help='The reason the incident was '
                    'closed')
         c.argument('classification_comment', type=str, help='Describes the reason the incident was closed')
-        c.argument('classification_reason', arg_type=get_enum_type(['SuspiciousActivity', 'SuspiciousButExpected', ''
-                                                                    'IncorrectAlertLogic', 'InaccurateData']), help=''
-                   'The classification reason the incident was closed with')
+        c.argument('classification_reason', arg_type=get_enum_type(['SuspiciousActivity', 'SuspiciousButExpected',
+                                                                    'IncorrectAlertLogic', 'InaccurateData']),
+                   help='The classification reason the incident was closed with')
         c.argument('description', type=str, help='The description of the incident')
         c.argument('first_activity_time_utc', help='The time of the first activity in the incident')
-        c.argument('labels', action=AddLabels, nargs='*', help='List of labels relevant to this incident')
+        c.argument('labels', action=AddLabels, nargs='+', help='List of labels relevant to this incident')
+        c.argument('provider_name', type=str, help='The name of the source provider that generated the incident')
+        c.argument('provider_incident_id', type=str, help='The incident ID assigned by the incident provider')
         c.argument('last_activity_time_utc', help='The time of the last activity in the incident')
-        c.argument('owner', action=AddOwner, nargs='*', help='Describes a user that the incident is assigned to')
+        c.argument('owner', action=AddOwner, nargs='+', help='Describes a user that the incident is assigned to')
         c.argument('severity', arg_type=get_enum_type(['High', 'Medium', 'Low', 'Informational']), help='The severity '
                    'of the incident')
         c.argument('status', arg_type=get_enum_type(['New', 'Active', 'Closed']), help='The status of the incident')
@@ -244,27 +230,286 @@ def load_arguments(self, _):
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('incident_id', type=str, help='Incident ID', id_part='child_name_1')
         c.argument('etag', type=str, help='Etag of the azure resource')
-        c.argument('classification', arg_type=get_enum_type(['Undetermined', 'TruePositive', 'BenignPositive', ''
+        c.argument('classification', arg_type=get_enum_type(['Undetermined', 'TruePositive', 'BenignPositive',
                                                              'FalsePositive']), help='The reason the incident was '
                    'closed')
         c.argument('classification_comment', type=str, help='Describes the reason the incident was closed')
-        c.argument('classification_reason', arg_type=get_enum_type(['SuspiciousActivity', 'SuspiciousButExpected', ''
-                                                                    'IncorrectAlertLogic', 'InaccurateData']), help=''
-                   'The classification reason the incident was closed with')
+        c.argument('classification_reason', arg_type=get_enum_type(['SuspiciousActivity', 'SuspiciousButExpected',
+                                                                    'IncorrectAlertLogic', 'InaccurateData']),
+                   help='The classification reason the incident was closed with')
         c.argument('description', type=str, help='The description of the incident')
         c.argument('first_activity_time_utc', help='The time of the first activity in the incident')
-        c.argument('labels', action=AddLabels, nargs='*', help='List of labels relevant to this incident')
+        c.argument('labels', action=AddLabels, nargs='+', help='List of labels relevant to this incident')
+        c.argument('provider_name', type=str, help='The name of the source provider that generated the incident')
+        c.argument('provider_incident_id', type=str, help='The incident ID assigned by the incident provider')
         c.argument('last_activity_time_utc', help='The time of the last activity in the incident')
-        c.argument('owner', action=AddOwner, nargs='*', help='Describes a user that the incident is assigned to')
+        c.argument('owner', action=AddOwner, nargs='+', help='Describes a user that the incident is assigned to')
         c.argument('severity', arg_type=get_enum_type(['High', 'Medium', 'Low', 'Informational']), help='The severity '
                    'of the incident')
         c.argument('status', arg_type=get_enum_type(['New', 'Active', 'Closed']), help='The status of the incident')
         c.argument('title', type=str, help='The title of the incident')
+        c.ignore('incident')
 
     with self.argument_context('sentinel incident delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('incident_id', type=str, help='Incident ID', id_part='child_name_1')
+
+    with self.argument_context('sentinel incident create-team') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('incident_id', type=str, help='Incident ID')
+        c.argument('team_name', type=str, help='The name of the team')
+        c.argument('team_description', type=str, help='The description of the team')
+        c.argument('member_ids', nargs='+', help='List of member IDs to add to the team')
+        c.argument('group_ids', nargs='+', help='List of group IDs to add their members to the team')
+
+    with self.argument_context('sentinel incident list-alert') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('incident_id', type=str, help='Incident ID')
+
+    with self.argument_context('sentinel incident list-bookmark') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('incident_id', type=str, help='Incident ID')
+
+    with self.argument_context('sentinel incident list-entity') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('incident_id', type=str, help='Incident ID')
+
+    with self.argument_context('sentinel incident run-playbook') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('incident_identifier', type=str, help='', id_part='child_name_1')
+        c.argument('tenant_id', help='')
+        c.argument('logic_apps_resource_id', type=str, help='')
+
+    with self.argument_context('sentinel bookmark list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+
+    with self.argument_context('sentinel bookmark show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
+
+    with self.argument_context('sentinel bookmark create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('bookmark_id', type=str, help='Bookmark ID')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('created', help='The time the bookmark was created')
+        c.argument('display_name', type=str, help='The display name of the bookmark')
+        c.argument('labels', nargs='+', help='List of labels relevant to this bookmark')
+        c.argument('notes', type=str, help='The notes of the bookmark')
+        c.argument('query', type=str, help='The query of the bookmark.')
+        c.argument('query_result', type=str, help='The query result of the bookmark.')
+        c.argument('updated', help='The last time the bookmark was updated')
+        c.argument('event_time', help='The bookmark event time')
+        c.argument('query_start_time', help='The start time for the query')
+        c.argument('query_end_time', help='The end time for the query')
+        c.argument('incident_info', action=AddIncidentInfo, nargs='+', help='Describes an incident that relates to '
+                   'bookmark')
+        c.argument('entity_mappings', type=validate_file_or_dict, help='Describes the entity mappings of the bookmark '
+                   'Expected value: json-string/json-file/@json-file.')
+        c.argument('tactics', nargs='+', help='A list of relevant mitre attacks')
+        c.argument('techniques', nargs='+', help='A list of relevant mitre techniques')
+        c.argument('object_id', help='The object id of the user.', arg_group='Updated By')
+        c.argument('user_info_object_id', help='The object id of the user.', arg_group='Created By')
+
+    with self.argument_context('sentinel bookmark update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('created', help='The time the bookmark was created')
+        c.argument('display_name', type=str, help='The display name of the bookmark')
+        c.argument('labels', nargs='+', help='List of labels relevant to this bookmark')
+        c.argument('notes', type=str, help='The notes of the bookmark')
+        c.argument('query', type=str, help='The query of the bookmark.')
+        c.argument('query_result', type=str, help='The query result of the bookmark.')
+        c.argument('updated', help='The last time the bookmark was updated')
+        c.argument('event_time', help='The bookmark event time')
+        c.argument('query_start_time', help='The start time for the query')
+        c.argument('query_end_time', help='The end time for the query')
+        c.argument('incident_info', action=AddIncidentInfo, nargs='+', help='Describes an incident that relates to '
+                   'bookmark')
+        c.argument('entity_mappings', type=validate_file_or_dict, help='Describes the entity mappings of the bookmark '
+                   'Expected value: json-string/json-file/@json-file.')
+        c.argument('tactics', nargs='+', help='A list of relevant mitre attacks')
+        c.argument('techniques', nargs='+', help='A list of relevant mitre techniques')
+        c.argument('object_id', help='The object id of the user.', arg_group='Updated By')
+        c.argument('user_info_object_id', help='The object id of the user.', arg_group='Created By')
+        c.ignore('bookmark')
+
+    with self.argument_context('sentinel bookmark delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
+
+    with self.argument_context('sentinel bookmark relation list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('bookmark_id', type=str, help='Bookmark ID')
+        c.argument('filter_', options_list=['--filter'], type=str, help='Filters the results, based on a Boolean '
+                   'condition. Optional.')
+        c.argument('orderby', type=str, help='Sorts the results. Optional.')
+        c.argument('top', type=int, help='Returns only the first n results. Optional.')
+        c.argument('skip_token', type=str, help='Skiptoken is only used if a previous operation returned a partial '
+                   'result. If a previous response contains a nextLink element, the value of the nextLink element will '
+                   'include a skiptoken parameter that specifies a starting point to use for subsequent calls. '
+                   'Optional.')
+
+    with self.argument_context('sentinel bookmark relation show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
+        c.argument('relation_name', type=str, help='Relation Name', id_part='child_name_2')
+
+    with self.argument_context('sentinel bookmark relation create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('bookmark_id', type=str, help='Bookmark ID')
+        c.argument('relation_name', type=str, help='Relation Name')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('related_resource_id', type=str, help='The resource ID of the related resource')
+
+    with self.argument_context('sentinel bookmark relation update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
+        c.argument('relation_name', type=str, help='Relation Name', id_part='child_name_2')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('related_resource_id', type=str, help='The resource ID of the related resource')
+        c.ignore('relation')
+
+    with self.argument_context('sentinel bookmark relation delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
+        c.argument('relation_name', type=str, help='Relation Name', id_part='child_name_2')
+
+    with self.argument_context('sentinel bookmark expand') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
+        c.argument('end_time',
+                   help='The end date filter, so the only expansion results returned are before this date.')
+        c.argument('expansion_id', help='The Id of the expansion to perform.')
+        c.argument('start_time', help='The start date filter, so the only expansion results returned are after this '
+                   'date.')
+
+    with self.argument_context('sentinel ip-geodata show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('ip_address', type=str, help='IP address (v4 or v6) to be enriched')
+
+    with self.argument_context('sentinel domain-whois show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('domain', type=str, help='Domain name to be enriched')
+
+    with self.argument_context('sentinel entity list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+
+    with self.argument_context('sentinel entity show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('entity_id', type=str, help='entity ID', id_part='child_name_1')
+
+    with self.argument_context('sentinel entity expand') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('entity_id', type=str, help='entity ID', id_part='child_name_1')
+        c.argument('end_time',
+                   help='The end date filter, so the only expansion results returned are before this date.')
+        c.argument('expansion_id', help='The Id of the expansion to perform.')
+        c.argument('start_time', help='The start date filter, so the only expansion results returned are after this '
+                   'date.')
+
+    with self.argument_context('sentinel entity get-insight') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('entity_id', type=str, help='entity ID', id_part='child_name_1')
+        c.argument('start_time', help='The start timeline date, so the results returned are after this date.')
+        c.argument('end_time', help='The end timeline date, so the results returned are before this date.')
+        c.argument('add_default_extended_time_range', arg_type=get_three_state_flag(), help='Indicates if query time '
+                   'range should be extended with default time range of the query. Default value is false')
+        c.argument('insight_query_ids', nargs='+', help='List of Insights Query Id. If empty, default value is all '
+                   'insights of this entity')
+
+    with self.argument_context('sentinel entity query') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('entity_id', type=str, help='entity ID', id_part='child_name_1')
+
+    with self.argument_context('sentinel entity-get-timeline list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('entity_id', type=str, help='entity ID')
+        c.argument('kinds', nargs='+', help='Array of timeline Item kinds.')
+        c.argument('start_time', help='The start timeline date, so the results returned are after this date.')
+        c.argument('end_time', help='The end timeline date, so the results returned are before this date.')
+        c.argument('number_of_bucket', type=int, help='The number of bucket for timeline queries aggregation.')
+
+    with self.argument_context('sentinel entity-relation list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('entity_id', type=str, help='entity ID')
+        c.argument('filter_', options_list=['--filter'], type=str, help='Filters the results, based on a Boolean '
+                   'condition. Optional.')
+        c.argument('orderby', type=str, help='Sorts the results. Optional.')
+        c.argument('top', type=int, help='Returns only the first n results. Optional.')
+        c.argument('skip_token', type=str, help='Skiptoken is only used if a previous operation returned a partial '
+                   'result. If a previous response contains a nextLink element, the value of the nextLink element will '
+                   'include a skiptoken parameter that specifies a starting point to use for subsequent calls. '
+                   'Optional.')
+
+    with self.argument_context('sentinel entity-relation show-relation') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('entity_id', type=str, help='entity ID', id_part='child_name_1')
+        c.argument('relation_name', type=str, help='Relation Name', id_part='child_name_2')
+
+    with self.argument_context('sentinel entity-query list') as c:
+        c.argument('kind', arg_type=get_enum_type(['Expansion', 'Activity']), help='The entity query kind we want to '
+                   'fetch')
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+
+    with self.argument_context('sentinel entity-query show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('entity_query_id', type=str, help='entity query ID', id_part='child_name_1')
+
+    with self.argument_context('sentinel entity-query create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('entity_query_id', type=str, help='entity query ID')
+        c.argument('entity_query', type=validate_file_or_dict, help='The entity query we want to create or update '
+                   'Expected value: json-string/json-file/@json-file.')
+
+    with self.argument_context('sentinel entity-query update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('entity_query_id', type=str, help='entity query ID', id_part='child_name_1')
+        c.argument('entity_query', type=validate_file_or_dict, help='The entity query we want to create or update '
+                   'Expected value: json-string/json-file/@json-file.')
+
+    with self.argument_context('sentinel entity-query delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('entity_query_id', type=str, help='entity query ID', id_part='child_name_1')
+
+    with self.argument_context('sentinel entity-query-template list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+
+    with self.argument_context('sentinel entity-query-template show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('entity_query_template_id', type=str, help='entity query template ID', id_part='child_name_1')
 
     with self.argument_context('sentinel incident-comment list') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -290,4 +535,747 @@ def load_arguments(self, _):
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('incident_id', type=str, help='Incident ID')
         c.argument('incident_comment_id', type=str, help='Incident comment ID')
+        c.argument('etag', type=str, help='Etag of the azure resource')
         c.argument('message', type=str, help='The comment message')
+
+    with self.argument_context('sentinel incident-comment update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('incident_id', type=str, help='Incident ID', id_part='child_name_1')
+        c.argument('incident_comment_id', type=str, help='Incident comment ID', id_part='child_name_2')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('message', type=str, help='The comment message')
+        c.ignore('incident_comment')
+
+    with self.argument_context('sentinel incident-comment delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('incident_id', type=str, help='Incident ID', id_part='child_name_1')
+        c.argument('incident_comment_id', type=str, help='Incident comment ID', id_part='child_name_2')
+
+    with self.argument_context('sentinel incident-relation list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('incident_id', type=str, help='Incident ID')
+        c.argument('filter_', options_list=['--filter'], type=str, help='Filters the results, based on a Boolean '
+                   'condition. Optional.')
+        c.argument('orderby', type=str, help='Sorts the results. Optional.')
+        c.argument('top', type=int, help='Returns only the first n results. Optional.')
+        c.argument('skip_token', type=str, help='Skiptoken is only used if a previous operation returned a partial '
+                   'result. If a previous response contains a nextLink element, the value of the nextLink element will '
+                   'include a skiptoken parameter that specifies a starting point to use for subsequent calls. '
+                   'Optional.')
+
+    with self.argument_context('sentinel incident-relation show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('incident_id', type=str, help='Incident ID', id_part='child_name_1')
+        c.argument('relation_name', type=str, help='Relation Name', id_part='child_name_2')
+
+    with self.argument_context('sentinel incident-relation create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('incident_id', type=str, help='Incident ID')
+        c.argument('relation_name', type=str, help='Relation Name')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('related_resource_id', type=str, help='The resource ID of the related resource')
+
+    with self.argument_context('sentinel incident-relation update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('incident_id', type=str, help='Incident ID', id_part='child_name_1')
+        c.argument('relation_name', type=str, help='Relation Name', id_part='child_name_2')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('related_resource_id', type=str, help='The resource ID of the related resource')
+        c.ignore('relation')
+
+    with self.argument_context('sentinel incident-relation delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('incident_id', type=str, help='Incident ID', id_part='child_name_1')
+        c.argument('relation_name', type=str, help='Relation Name', id_part='child_name_2')
+
+    with self.argument_context('sentinel metadata list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('filter_', options_list=['--filter'], type=str, help='Filters the results, based on a Boolean '
+                   'condition. Optional.')
+        c.argument('orderby', type=str, help='Sorts the results. Optional.')
+        c.argument('top', type=int, help='Returns only the first n results. Optional.')
+        c.argument('skip', type=int, help='Used to skip n elements in the OData query (offset). Returns a nextLink to '
+                   'the next page of results if there are any left.')
+
+    with self.argument_context('sentinel metadata show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('metadata_name', options_list=['--name', '-n', '--metadata-name'], type=str, help='The Metadata '
+                   'name.', id_part='child_name_1')
+
+    with self.argument_context('sentinel metadata create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('metadata_name', options_list=['--name', '-n', '--metadata-name'], type=str, help='The Metadata '
+                   'name.')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('content_id', type=str, help='Static ID for the content.  Used to identify dependencies and content '
+                   'from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic '
+                   'for user-created.  This is the resource name')
+        c.argument('parent_id', type=str, help='Full parent resource ID of the content item the metadata is for.  This '
+                   'is the full resource ID including the scope (subscription and resource group)')
+        c.argument('version', type=str, help='Version of the content.  Default and recommended format is numeric (e.g. '
+                   '1, 1.0, 1.0.0, 1.0.0.0), following ARM template best practices.  Can also be any string, but then '
+                   'we cannot guarantee any version checks')
+        c.argument('kind', arg_type=get_enum_type(['DataConnector', 'DataType', 'Workbook', 'WorkbookTemplate',
+                                                   'Playbook', 'PlaybookTemplate', 'AnalyticsRuleTemplate',
+                                                   'AnalyticsRule', 'HuntingQuery', 'InvestigationQuery', 'Parser',
+                                                   'Watchlist', 'WatchlistTemplate', 'Solution', 'AzureFunction',
+                                                   'LogicAppsCustomConnector', 'AutomationRule']), help='The kind of '
+                   'content the metadata is for.')
+        c.argument('source', action=AddSource, nargs='+', help='Source of the content.  This is where/how it was '
+                   'created.')
+        c.argument('author', action=AddAuthor, nargs='+', help='The creator of the content item.')
+        c.argument('support', action=AddSupport, nargs='+', help='Support information for the metadata - type, name, '
+                   'contact information')
+        c.argument('dependencies', type=validate_file_or_dict, help='Dependencies for the content item, what other '
+                   'content items it requires to work.  Can describe more complex dependencies using a '
+                   'recursive/nested structure. For a single dependency an id/kind/version can be supplied or '
+                   'operator/criteria for complex formats. Expected value: json-string/json-file/@json-file.')
+        c.argument('categories', action=AddCategories, nargs='+', help='Categories for the solution content item')
+        c.argument('providers', nargs='+', help='Providers for the solution content item')
+        c.argument('first_publish_date', help='first publish date solution content item')
+        c.argument('last_publish_date', help='last publish date for the solution content item')
+        c.argument('custom_version', type=str, help='The custom version of the content. A optional free text')
+        c.argument('content_schema_version', type=str, help='Schema version of the content. Can be used to distinguish '
+                   'between different flow based on the schema version')
+        c.argument('icon', type=str, help='the icon identifier. this id can later be fetched from the solution '
+                   'template')
+        c.argument('threat_analysis_tactics', nargs='+', help='the tactics the resource covers')
+        c.argument('threat_analysis_techniques', nargs='+', help='the techniques the resource covers, these have to be '
+                   'aligned with the tactics being used')
+        c.argument('preview_images', nargs='+', help='preview image file names. These will be taken from the solution '
+                   'artifacts')
+        c.argument('preview_images_dark', nargs='+', help='preview image file names. These will be taken from the '
+                   'solution artifacts. used for dark theme support')
+
+    with self.argument_context('sentinel metadata update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('metadata_name', options_list=['--name', '-n', '--metadata-name'], type=str, help='The Metadata '
+                   'name.', id_part='child_name_1')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('content_id', type=str, help='Static ID for the content.  Used to identify dependencies and content '
+                   'from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic '
+                   'for user-created.  This is the resource name')
+        c.argument('parent_id', type=str, help='Full parent resource ID of the content item the metadata is for.  This '
+                   'is the full resource ID including the scope (subscription and resource group)')
+        c.argument('version', type=str, help='Version of the content.  Default and recommended format is numeric (e.g. '
+                   '1, 1.0, 1.0.0, 1.0.0.0), following ARM template best practices.  Can also be any string, but then '
+                   'we cannot guarantee any version checks')
+        c.argument('kind', arg_type=get_enum_type(['DataConnector', 'DataType', 'Workbook', 'WorkbookTemplate',
+                                                   'Playbook', 'PlaybookTemplate', 'AnalyticsRuleTemplate',
+                                                   'AnalyticsRule', 'HuntingQuery', 'InvestigationQuery', 'Parser',
+                                                   'Watchlist', 'WatchlistTemplate', 'Solution', 'AzureFunction',
+                                                   'LogicAppsCustomConnector', 'AutomationRule']), help='The kind of '
+                   'content the metadata is for.')
+        c.argument('source', action=AddSource, nargs='+', help='Source of the content.  This is where/how it was '
+                   'created.')
+        c.argument('author', action=AddAuthor, nargs='+', help='The creator of the content item.')
+        c.argument('support', action=AddSupport, nargs='+', help='Support information for the metadata - type, name, '
+                   'contact information')
+        c.argument('dependencies', type=validate_file_or_dict, help='Dependencies for the content item, what other '
+                   'content items it requires to work.  Can describe more complex dependencies using a '
+                   'recursive/nested structure. For a single dependency an id/kind/version can be supplied or '
+                   'operator/criteria for complex formats. Expected value: json-string/json-file/@json-file.')
+        c.argument('categories', action=AddCategories, nargs='+', help='Categories for the solution content item')
+        c.argument('providers', nargs='+', help='Providers for the solution content item')
+        c.argument('first_publish_date', help='first publish date solution content item')
+        c.argument('last_publish_date', help='last publish date for the solution content item')
+        c.argument('custom_version', type=str, help='The custom version of the content. A optional free text')
+        c.argument('content_schema_version', type=str, help='Schema version of the content. Can be used to distinguish '
+                   'between different flow based on the schema version')
+        c.argument('icon', type=str, help='the icon identifier. this id can later be fetched from the solution '
+                   'template')
+        c.argument('threat_analysis_tactics', nargs='+', help='the tactics the resource covers')
+        c.argument('threat_analysis_techniques', nargs='+', help='the techniques the resource covers, these have to be '
+                   'aligned with the tactics being used')
+        c.argument('preview_images', nargs='+', help='preview image file names. These will be taken from the solution '
+                   'artifacts')
+        c.argument('preview_images_dark', nargs='+', help='preview image file names. These will be taken from the '
+                   'solution artifacts. used for dark theme support')
+
+    with self.argument_context('sentinel metadata delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('metadata_name', options_list=['--name', '-n', '--metadata-name'], type=str, help='The Metadata '
+                   'name.', id_part='child_name_1')
+
+    with self.argument_context('sentinel office-consent list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+
+    with self.argument_context('sentinel office-consent show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('consent_id', type=str, help='consent ID', id_part='child_name_1')
+
+    with self.argument_context('sentinel office-consent delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('consent_id', type=str, help='consent ID', id_part='child_name_1')
+
+    with self.argument_context('sentinel sentinel-onboarding-state list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+
+    with self.argument_context('sentinel sentinel-onboarding-state show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('sentinel_onboarding_state_name', options_list=['--name', '-n', '--sentinel-onboarding-state-name'],
+                   type=str, help='The Sentinel onboarding state name. Supports - default', id_part='child_name_1')
+
+    with self.argument_context('sentinel sentinel-onboarding-state create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('sentinel_onboarding_state_name', options_list=['--name', '-n', '--sentinel-onboarding-state-name'],
+                   type=str, help='The Sentinel onboarding state name. Supports - default')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('customer_managed_key', arg_type=get_three_state_flag(), help='Flag that indicates the status of '
+                   'the CMK setting')
+
+    with self.argument_context('sentinel sentinel-onboarding-state delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('sentinel_onboarding_state_name', options_list=['--name', '-n', '--sentinel-onboarding-state-name'],
+                   type=str, help='The Sentinel onboarding state name. Supports - default', id_part='child_name_1')
+
+    with self.argument_context('sentinel security-ml-analytic-setting list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+
+    with self.argument_context('sentinel security-ml-analytic-setting show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('settings_resource_name', type=str, help='Security ML Analytics Settings resource name',
+                   id_part='child_name_1')
+
+    with self.argument_context('sentinel security-ml-analytic-setting create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('settings_resource_name', type=str, help='Security ML Analytics Settings resource name')
+        c.argument('security_ml_analytics_setting', type=validate_file_or_dict, help='The security ML Analytics '
+                   'setting Expected value: json-string/json-file/@json-file.')
+
+    with self.argument_context('sentinel security-ml-analytic-setting update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('settings_resource_name', type=str, help='Security ML Analytics Settings resource name',
+                   id_part='child_name_1')
+        c.argument('security_ml_analytics_setting', type=validate_file_or_dict, help='The security ML Analytics '
+                   'setting Expected value: json-string/json-file/@json-file.')
+
+    with self.argument_context('sentinel security-ml-analytic-setting delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('settings_resource_name', type=str, help='Security ML Analytics Settings resource name',
+                   id_part='child_name_1')
+
+    with self.argument_context('sentinel product-setting list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+
+    with self.argument_context('sentinel product-setting show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('settings_name', type=str, help='The setting name. Supports - Anomalies, EyesOn, EntityAnalytics, '
+                   'Ueba', id_part='child_name_1')
+
+    with self.argument_context('sentinel product-setting update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('settings_name', type=str, help='The setting name. Supports - Anomalies, EyesOn, EntityAnalytics, '
+                   'Ueba', id_part='child_name_1')
+        c.argument('anomalies', action=AddAnomalies, nargs='+', help='Settings with single toggle.',
+                   arg_group='Settings')
+        c.argument('eyes_on', action=AddEyesOn, nargs='+', help='Settings with single toggle.', arg_group='Settings')
+        c.argument('entity_analytics', action=AddEntityAnalytics, nargs='+', help='Settings with single toggle.',
+                   arg_group='Settings')
+        c.argument('ueba', action=AddUeba, nargs='+', help='Settings with single toggle.', arg_group='Settings')
+
+    with self.argument_context('sentinel product-setting delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('settings_name', type=str, help='The setting name. Supports - Anomalies, EyesOn, EntityAnalytics, '
+                   'Ueba', id_part='child_name_1')
+
+    with self.argument_context('sentinel source-control list-repository') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('repo_type', arg_type=get_enum_type(['Github', 'DevOps']), help='The repo type.')
+
+    with self.argument_context('sentinel source-control list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+
+    with self.argument_context('sentinel source-control show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('source_control_id', type=str, help='Source control Id', id_part='child_name_1')
+
+    with self.argument_context('sentinel source-control create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('source_control_id', type=str, help='Source control Id')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('id_properties_id', type=str, help='The id (a Guid) of the source control')
+        c.argument('version', arg_type=get_enum_type(['V1', 'V2']), help='The version number associated with the '
+                   'source control')
+        c.argument('display_name', type=str, help='The display name of the source control')
+        c.argument('description', type=str, help='A description of the source control')
+        c.argument('repo_type', arg_type=get_enum_type(['Github', 'DevOps']), help='The repository type of the source '
+                   'control')
+        c.argument('content_types', nargs='+', help='Array of source control content types.')
+        c.argument('deployment_fetch_status', arg_type=get_enum_type(['Success', 'Unauthorized', 'NotFound']),
+                   help='Status while fetching the last deployment.', arg_group='Last Deployment Info')
+        c.argument('deployment', action=AddDeployment, nargs='+', help='Deployment information.', arg_group='Last '
+                   'Deployment Info')
+        c.argument('message', type=str, help='Additional details about the deployment that can be shown to the user.',
+                   arg_group='Last Deployment Info')
+        c.argument('webhook', action=AddWebhook, nargs='+', help='The webhook object created for the source-control.',
+                   arg_group='Repository Resource Info')
+        c.argument('azure_dev_ops_resource_info', action=AddAzureDevOpsResourceInfo, nargs='+', help='Resources '
+                   'created in Azure DevOps for this source-control.', arg_group='Repository Resource Info')
+        c.argument('app_installation_id', type=str, help='GitHub application installation id.', arg_group='Repository '
+                   'Resource Info Git Hub Resource Info')
+        c.argument('url', type=str, help='Url of repository.', arg_group='Repository')
+        c.argument('branch', type=str, help='Branch name of repository.', arg_group='Repository')
+        c.argument('display_url', type=str, help='Display url of repository.', arg_group='Repository')
+        c.argument('deployment_logs_url', type=str, help='Url to access repository action logs.',
+                   arg_group='Repository')
+        c.argument('path_mapping', action=AddPathMapping, nargs='+', help='Dictionary of source control content type '
+                   'and path mapping.', arg_group='Repository')
+
+    with self.argument_context('sentinel source-control delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('source_control_id', type=str, help='Source control Id', id_part='child_name_1')
+
+    with self.argument_context('sentinel threat-intelligence-indicator show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('name', type=str, help='Threat intelligence indicator name field.', id_part='child_name_2')
+
+    with self.argument_context('sentinel threat-intelligence-indicator create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('name', type=str, help='Threat intelligence indicator name field.')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('threat_intelligence_tags', nargs='+', help='List of tags')
+        c.argument('last_updated_time_utc', type=str, help='Last updated time in UTC')
+        c.argument('source', type=str, help='Source of a threat intelligence entity')
+        c.argument('display_name', type=str, help='Display name of a threat intelligence entity')
+        c.argument('description', type=str, help='Description of a threat intelligence entity')
+        c.argument('indicator_types', nargs='+', help='Indicator types of threat intelligence entities')
+        c.argument('pattern', type=str, help='Pattern of a threat intelligence entity')
+        c.argument('pattern_type', type=str, help='Pattern type of a threat intelligence entity')
+        c.argument('pattern_version', type=str, help='Pattern version of a threat intelligence entity')
+        c.argument('kill_chain_phases', action=AddKillChainPhases, nargs='+', help='Kill chain phases')
+        c.argument('parsed_pattern', type=validate_file_or_dict, help='Parsed patterns Expected value: '
+                   'json-string/json-file/@json-file.')
+        c.argument('external_id', type=str, help='External ID of threat intelligence entity')
+        c.argument('created_by_ref', type=str, help='Created by reference of threat intelligence entity')
+        c.argument('defanged', arg_type=get_three_state_flag(), help='Is threat intelligence entity defanged')
+        c.argument('external_last_updated_time_utc', type=str, help='External last updated time in UTC')
+        c.argument('external_references', type=validate_file_or_dict, help='External References Expected value: '
+                   'json-string/json-file/@json-file.')
+        c.argument('granular_markings', action=AddGranularMarkings, nargs='+', help='Granular Markings')
+        c.argument('labels', nargs='+', help='Labels  of threat intelligence entity')
+        c.argument('revoked', arg_type=get_three_state_flag(), help='Is threat intelligence entity revoked')
+        c.argument('confidence', type=int, help='Confidence of threat intelligence entity')
+        c.argument('object_marking_refs', nargs='+', help='Threat intelligence entity object marking references')
+        c.argument('language', type=str, help='Language of threat intelligence entity')
+        c.argument('threat_types', nargs='+', help='Threat types')
+        c.argument('valid_from', type=str, help='Valid from')
+        c.argument('valid_until', type=str, help='Valid until')
+        c.argument('created', type=str, help='Created by')
+        c.argument('modified', type=str, help='Modified by')
+        c.argument('extensions', type=validate_file_or_dict, help='Extensions map Expected value: '
+                   'json-string/json-file/@json-file.')
+
+    with self.argument_context('sentinel threat-intelligence-indicator delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('name', type=str, help='Threat intelligence indicator name field.', id_part='child_name_2')
+
+    with self.argument_context('sentinel threat-intelligence-indicator append-tag') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('name', type=str, help='Threat intelligence indicator name field.', id_part='child_name_2')
+        c.argument('threat_intelligence_tags', nargs='+', help='List of tags to be appended.')
+
+    with self.argument_context('sentinel threat-intelligence-indicator create-indicator') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('threat_intelligence_tags', nargs='+', help='List of tags')
+        c.argument('last_updated_time_utc', type=str, help='Last updated time in UTC')
+        c.argument('source', type=str, help='Source of a threat intelligence entity')
+        c.argument('display_name', type=str, help='Display name of a threat intelligence entity')
+        c.argument('description', type=str, help='Description of a threat intelligence entity')
+        c.argument('indicator_types', nargs='+', help='Indicator types of threat intelligence entities')
+        c.argument('pattern', type=str, help='Pattern of a threat intelligence entity')
+        c.argument('pattern_type', type=str, help='Pattern type of a threat intelligence entity')
+        c.argument('pattern_version', type=str, help='Pattern version of a threat intelligence entity')
+        c.argument('kill_chain_phases', action=AddKillChainPhases, nargs='+', help='Kill chain phases')
+        c.argument('parsed_pattern', type=validate_file_or_dict, help='Parsed patterns Expected value: '
+                   'json-string/json-file/@json-file.')
+        c.argument('external_id', type=str, help='External ID of threat intelligence entity')
+        c.argument('created_by_ref', type=str, help='Created by reference of threat intelligence entity')
+        c.argument('defanged', arg_type=get_three_state_flag(), help='Is threat intelligence entity defanged')
+        c.argument('external_last_updated_time_utc', type=str, help='External last updated time in UTC')
+        c.argument('external_references', type=validate_file_or_dict, help='External References Expected value: '
+                   'json-string/json-file/@json-file.')
+        c.argument('granular_markings', action=AddGranularMarkings, nargs='+', help='Granular Markings')
+        c.argument('labels', nargs='+', help='Labels  of threat intelligence entity')
+        c.argument('revoked', arg_type=get_three_state_flag(), help='Is threat intelligence entity revoked')
+        c.argument('confidence', type=int, help='Confidence of threat intelligence entity')
+        c.argument('object_marking_refs', nargs='+', help='Threat intelligence entity object marking references')
+        c.argument('language', type=str, help='Language of threat intelligence entity')
+        c.argument('threat_types', nargs='+', help='Threat types')
+        c.argument('valid_from', type=str, help='Valid from')
+        c.argument('valid_until', type=str, help='Valid until')
+        c.argument('created', type=str, help='Created by')
+        c.argument('modified', type=str, help='Modified by')
+        c.argument('extensions', type=validate_file_or_dict, help='Extensions map Expected value: '
+                   'json-string/json-file/@json-file.')
+
+    with self.argument_context('sentinel threat-intelligence-indicator query-indicator') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('page_size', type=int, help='Page size')
+        c.argument('min_confidence', type=int, help='Minimum confidence.')
+        c.argument('max_confidence', type=int, help='Maximum confidence.')
+        c.argument('min_valid_until', type=str, help='Start time for ValidUntil filter.')
+        c.argument('max_valid_until', type=str, help='End time for ValidUntil filter.')
+        c.argument('include_disabled', arg_type=get_three_state_flag(), help='Parameter to include/exclude disabled '
+                   'indicators.')
+        c.argument('sort_by', action=AddSortBy, nargs='+', help='Columns to sort by and sorting order')
+        c.argument('sources', nargs='+', help='Sources of threat intelligence indicators')
+        c.argument('pattern_types', nargs='+', help='Pattern types')
+        c.argument('threat_types', nargs='+', help='Threat types of threat intelligence indicators')
+        c.argument('ids', nargs='+', help='Ids of threat intelligence indicators')
+        c.argument('keywords', nargs='+', help='Keywords for searching threat intelligence indicators')
+        c.argument('skip_token', type=str, help='Skip token.')
+
+    with self.argument_context('sentinel threat-intelligence-indicator replace-tag') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('name', type=str, help='Threat intelligence indicator name field.', id_part='child_name_2')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('threat_intelligence_tags', nargs='+', help='List of tags')
+        c.argument('last_updated_time_utc', type=str, help='Last updated time in UTC')
+        c.argument('source', type=str, help='Source of a threat intelligence entity')
+        c.argument('display_name', type=str, help='Display name of a threat intelligence entity')
+        c.argument('description', type=str, help='Description of a threat intelligence entity')
+        c.argument('indicator_types', nargs='+', help='Indicator types of threat intelligence entities')
+        c.argument('pattern', type=str, help='Pattern of a threat intelligence entity')
+        c.argument('pattern_type', type=str, help='Pattern type of a threat intelligence entity')
+        c.argument('pattern_version', type=str, help='Pattern version of a threat intelligence entity')
+        c.argument('kill_chain_phases', action=AddKillChainPhases, nargs='+', help='Kill chain phases')
+        c.argument('parsed_pattern', type=validate_file_or_dict, help='Parsed patterns Expected value: '
+                   'json-string/json-file/@json-file.')
+        c.argument('external_id', type=str, help='External ID of threat intelligence entity')
+        c.argument('created_by_ref', type=str, help='Created by reference of threat intelligence entity')
+        c.argument('defanged', arg_type=get_three_state_flag(), help='Is threat intelligence entity defanged')
+        c.argument('external_last_updated_time_utc', type=str, help='External last updated time in UTC')
+        c.argument('external_references', type=validate_file_or_dict, help='External References Expected value: '
+                   'json-string/json-file/@json-file.')
+        c.argument('granular_markings', action=AddGranularMarkings, nargs='+', help='Granular Markings')
+        c.argument('labels', nargs='+', help='Labels  of threat intelligence entity')
+        c.argument('revoked', arg_type=get_three_state_flag(), help='Is threat intelligence entity revoked')
+        c.argument('confidence', type=int, help='Confidence of threat intelligence entity')
+        c.argument('object_marking_refs', nargs='+', help='Threat intelligence entity object marking references')
+        c.argument('language', type=str, help='Language of threat intelligence entity')
+        c.argument('threat_types', nargs='+', help='Threat types')
+        c.argument('valid_from', type=str, help='Valid from')
+        c.argument('valid_until', type=str, help='Valid until')
+        c.argument('created', type=str, help='Created by')
+        c.argument('modified', type=str, help='Modified by')
+        c.argument('extensions', type=validate_file_or_dict, help='Extensions map Expected value: '
+                   'json-string/json-file/@json-file.')
+
+    with self.argument_context('sentinel threat-intelligence-indicator list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('filter_', options_list=['--filter'], type=str, help='Filters the results, based on a Boolean '
+                   'condition. Optional.')
+        c.argument('orderby', type=str, help='Sorts the results. Optional.')
+        c.argument('top', type=int, help='Returns only the first n results. Optional.')
+        c.argument('skip_token', type=str, help='Skiptoken is only used if a previous operation returned a partial '
+                   'result. If a previous response contains a nextLink element, the value of the nextLink element will '
+                   'include a skiptoken parameter that specifies a starting point to use for subsequent calls. '
+                   'Optional.')
+
+    with self.argument_context('sentinel threat-intelligence-indicator-metric list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+
+    with self.argument_context('sentinel watchlist list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('skip_token', type=str, help='Skiptoken is only used if a previous operation returned a partial '
+                   'result. If a previous response contains a nextLink element, the value of the nextLink element will '
+                   'include a skiptoken parameter that specifies a starting point to use for subsequent calls. '
+                   'Optional.')
+
+    with self.argument_context('sentinel watchlist show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
+
+    with self.argument_context('sentinel watchlist create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('watchlist_alias', type=str, help='Watchlist Alias')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('watchlist_id', type=str, help='The id (a Guid) of the watchlist')
+        c.argument('display_name', type=str, help='The display name of the watchlist')
+        c.argument('provider', type=str, help='The provider of the watchlist')
+        c.argument('source', type=str, help='The filename of the watchlist, called \'source\'')
+        c.argument('source_type', arg_type=get_enum_type(['Local file', 'Remote storage']), help='The sourceType of '
+                   'the watchlist')
+        c.argument('created', help='The time the watchlist was created')
+        c.argument('updated', help='The last time the watchlist was updated')
+        c.argument('description', type=str, help='A description of the watchlist')
+        c.argument('watchlist_type', type=str, help='The type of the watchlist')
+        c.argument('watchlist_properties_watchlist_alias', type=str, help='The alias of the watchlist')
+        c.argument('is_deleted', arg_type=get_three_state_flag(), help='A flag that indicates if the watchlist is '
+                   'deleted or not')
+        c.argument('labels', nargs='+', help='List of labels relevant to this watchlist')
+        c.argument('default_duration', help='The default duration of a watchlist (in ISO 8601 duration format)')
+        c.argument('tenant_id', type=str, help='The tenantId where the watchlist belongs to')
+        c.argument('number_of_lines_to_skip', type=int, help='The number of lines in a csv/tsv content to skip before '
+                   'the header')
+        c.argument('raw_content', type=str, help='The raw content that represents to watchlist items to create. In '
+                   'case of csv/tsv content type, it\'s the content of the file that will parsed by the endpoint')
+        c.argument('items_search_key', type=str, help='The search key is used to optimize query performance when using '
+                   'watchlists for joins with other data. For example, enable a column with IP addresses to be the '
+                   'designated SearchKey field, then use this field as the key field when joining to other event data '
+                   'by IP address.')
+        c.argument('content_type_', options_list=['--content-type'], type=str, help='The content type of the raw '
+                   'content. Example : text/csv or text/tsv')
+        c.argument('upload_status', type=str, help='The status of the Watchlist upload : New, InProgress or Complete. '
+                   'Pls note : When a Watchlist upload status is equal to InProgress, the Watchlist cannot be deleted')
+        c.argument('object_id', help='The object id of the user.', arg_group='Updated By')
+        c.argument('user_info_object_id', help='The object id of the user.', arg_group='Created By')
+
+    with self.argument_context('sentinel watchlist update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('watchlist_id', type=str, help='The id (a Guid) of the watchlist')
+        c.argument('display_name', type=str, help='The display name of the watchlist')
+        c.argument('provider', type=str, help='The provider of the watchlist')
+        c.argument('source', type=str, help='The filename of the watchlist, called \'source\'')
+        c.argument('source_type', arg_type=get_enum_type(['Local file', 'Remote storage']), help='The sourceType of '
+                   'the watchlist')
+        c.argument('created', help='The time the watchlist was created')
+        c.argument('updated', help='The last time the watchlist was updated')
+        c.argument('description', type=str, help='A description of the watchlist')
+        c.argument('watchlist_type', type=str, help='The type of the watchlist')
+        c.argument('watchlist_properties_watchlist_alias', type=str, help='The alias of the watchlist',
+                   id_part='child_name_1')
+        c.argument('is_deleted', arg_type=get_three_state_flag(), help='A flag that indicates if the watchlist is '
+                   'deleted or not')
+        c.argument('labels', nargs='+', help='List of labels relevant to this watchlist')
+        c.argument('default_duration', help='The default duration of a watchlist (in ISO 8601 duration format)')
+        c.argument('tenant_id', type=str, help='The tenantId where the watchlist belongs to')
+        c.argument('number_of_lines_to_skip', type=int, help='The number of lines in a csv/tsv content to skip before '
+                   'the header')
+        c.argument('raw_content', type=str, help='The raw content that represents to watchlist items to create. In '
+                   'case of csv/tsv content type, it\'s the content of the file that will parsed by the endpoint')
+        c.argument('items_search_key', type=str, help='The search key is used to optimize query performance when using '
+                   'watchlists for joins with other data. For example, enable a column with IP addresses to be the '
+                   'designated SearchKey field, then use this field as the key field when joining to other event data '
+                   'by IP address.')
+        c.argument('content_type_', options_list=['--content-type'], type=str, help='The content type of the raw '
+                   'content. Example : text/csv or text/tsv')
+        c.argument('upload_status', type=str, help='The status of the Watchlist upload : New, InProgress or Complete. '
+                   'Pls note : When a Watchlist upload status is equal to InProgress, the Watchlist cannot be deleted')
+        c.argument('object_id', help='The object id of the user.', arg_group='Updated By')
+        c.argument('user_info_object_id', help='The object id of the user.', arg_group='Created By')
+        c.ignore('watchlist')
+
+    with self.argument_context('sentinel watchlist delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
+
+    with self.argument_context('sentinel watchlist-item list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('skip_token', type=str, help='Skiptoken is only used if a previous operation returned a partial '
+                   'result. If a previous response contains a nextLink element, the value of the nextLink element will '
+                   'include a skiptoken parameter that specifies a starting point to use for subsequent calls. '
+                   'Optional.')
+        c.argument('watchlist_alias', type=str, help='Watchlist Alias')
+
+    with self.argument_context('sentinel watchlist-item show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
+        c.argument('watchlist_item_id', type=str, help='Watchlist Item Id (GUID)', id_part='child_name_2')
+
+    with self.argument_context('sentinel watchlist-item create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('watchlist_alias', type=str, help='Watchlist Alias')
+        c.argument('watchlist_item_id', type=str, help='Watchlist Item Id (GUID)')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('watchlist_item_type', type=str, help='The type of the watchlist item')
+        c.argument('watchlist_item_properties_watchlist_item_id_watchlist_item_id', type=str, help='The id (a Guid) of '
+                   'the watchlist item')
+        c.argument('tenant_id', type=str, help='The tenantId to which the watchlist item belongs to')
+        c.argument('is_deleted', arg_type=get_three_state_flag(), help='A flag that indicates if the watchlist item is '
+                   'deleted or not')
+        c.argument('created', help='The time the watchlist item was created')
+        c.argument('updated', help='The last time the watchlist item was updated')
+        c.argument('items_key_value', type=validate_file_or_dict, help='key-value pairs for a watchlist item Expected '
+                   'value: json-string/json-file/@json-file.')
+        c.argument('entity_mapping', type=validate_file_or_dict, help='key-value pairs for a watchlist item entity '
+                   'mapping Expected value: json-string/json-file/@json-file.')
+        c.argument('object_id', help='The object id of the user.', arg_group='Updated By')
+        c.argument('user_info_object_id', help='The object id of the user.', arg_group='Created By')
+
+    with self.argument_context('sentinel watchlist-item update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
+        c.argument('watchlist_item_id', type=str, help='Watchlist Item Id (GUID)', id_part='child_name_2')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('watchlist_item_type', type=str, help='The type of the watchlist item')
+        c.argument('watchlist_item_properties_watchlist_item_id_watchlist_item_id', type=str, help='The id (a Guid) of '
+                   'the watchlist item', id_part='child_name_2')
+        c.argument('tenant_id', type=str, help='The tenantId to which the watchlist item belongs to')
+        c.argument('is_deleted', arg_type=get_three_state_flag(), help='A flag that indicates if the watchlist item is '
+                   'deleted or not')
+        c.argument('created', help='The time the watchlist item was created')
+        c.argument('updated', help='The last time the watchlist item was updated')
+        c.argument('items_key_value', type=validate_file_or_dict, help='key-value pairs for a watchlist item Expected '
+                   'value: json-string/json-file/@json-file.')
+        c.argument('entity_mapping', type=validate_file_or_dict, help='key-value pairs for a watchlist item entity '
+                   'mapping Expected value: json-string/json-file/@json-file.')
+        c.argument('object_id', help='The object id of the user.', arg_group='Updated By')
+        c.argument('user_info_object_id', help='The object id of the user.', arg_group='Created By')
+        c.ignore('watchlist_item')
+
+    with self.argument_context('sentinel watchlist-item delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
+        c.argument('watchlist_item_id', type=str, help='Watchlist Item Id (GUID)', id_part='child_name_2')
+
+    with self.argument_context('sentinel data-connector list') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+
+    with self.argument_context('sentinel data-connector show') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('data_connector_id', type=str, help='Connector ID', id_part='child_name_1')
+
+    with self.argument_context('sentinel data-connector create') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.')
+        c.argument('data_connector_id', type=str, help='Connector ID')
+        c.argument('data_connector', type=validate_file_or_dict, help='The data connector Expected value: '
+                   'json-string/json-file/@json-file.')
+
+    with self.argument_context('sentinel data-connector update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('data_connector_id', type=str, help='Connector ID', id_part='child_name_1')
+        c.argument('data_connector', type=validate_file_or_dict, help='The data connector Expected value: '
+                   'json-string/json-file/@json-file.')
+
+    with self.argument_context('sentinel data-connector delete') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('data_connector_id', type=str, help='Connector ID', id_part='child_name_1')
+
+    with self.argument_context('sentinel data-connector connect') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('data_connector_id', type=str, help='Connector ID', id_part='child_name_1')
+        c.argument('kind', arg_type=get_enum_type(['Basic', 'OAuth2', 'APIKey']), help='The authentication kind used '
+                   'to poll the data')
+        c.argument('api_key', type=str, help='The API key of the audit server.')
+        c.argument('data_collection_endpoint', type=str, help='Used in v2 logs connector. Represents the data '
+                   'collection ingestion endpoint in log analytics.')
+        c.argument('data_collection_rule_immutable_id', type=str, help='Used in v2 logs connector. The data collection '
+                   'rule immutable id, the rule defines the transformation and data destination.')
+        c.argument('output_stream', type=str, help='Used in v2 logs connector. The stream we are sending the data to, '
+                   'this is the name of the streamDeclarations defined in the DCR.')
+        c.argument('client_secret', type=str, help='The client secret of the OAuth 2.0 application.')
+        c.argument('client_id', type=str, help='The client id of the OAuth 2.0 application.')
+        c.argument('authorization_code', type=str, help='The authorization code used in OAuth 2.0 code flow to issue a '
+                   'token.')
+        c.argument('user_name', type=str, help='The user name in the audit log server.')
+        c.argument('password', type=str, help='The user password in the audit log server.')
+        c.argument('request_config_user_input_values', type=validate_file_or_dict, help=' Expected value: '
+                   'json-string/json-file/@json-file.')
+
+    with self.argument_context('sentinel data-connector disconnect') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('data_connector_id', type=str, help='Connector ID', id_part='child_name_1')
+
+    with self.argument_context('sentinel data-connector-check-requirement post') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('aad_check_requirements', action=AddAadCheckRequirements, nargs='+', help='Represents AAD (Azure '
+                   'Active Directory) requirements check request.', arg_group='DataConnectorsCheckRequirements')
+        c.argument('aatp_check_requirements', action=AddAatpCheckRequirements, nargs='+', help='Represents AATP (Azure '
+                   'Advanced Threat Protection) requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements')
+        c.argument('asc_check_requirements', action=AddAscCheckRequirements, nargs='+', help='Represents ASC (Azure '
+                   'Security Center) requirements check request.', arg_group='DataConnectorsCheckRequirements')
+        c.argument('aws_cloud_trail_check_requirements', action=AddAwsCloudTrailCheckRequirements, nargs='+',
+                   help='Amazon Web Services CloudTrail requirements check request. Expect value: KEY1=VALUE1 '
+                   'KEY2=VALUE2 ...', arg_group='DataConnectorsCheckRequirements')
+        c.argument('aws_s3_check_requirements', action=AddAwsS3CheckRequirements, nargs='+', help='Amazon Web Services '
+                   'S3 requirements check request. Expect value: KEY1=VALUE1 KEY2=VALUE2 ...',
+                   arg_group='DataConnectorsCheckRequirements')
+        c.argument('dynamics365_check_requirements', action=AddDynamics365CheckRequirements, nargs='+',
+                   help='Represents Dynamics365 requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements')
+        c.argument('mcas_check_requirements', action=AddMcasCheckRequirements, nargs='+', help='Represents MCAS '
+                   '(Microsoft Cloud App Security) requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements')
+        c.argument('mdatp_check_requirements', action=AddMdatpCheckRequirements, nargs='+', help='Represents MDATP '
+                   '(Microsoft Defender Advanced Threat Protection) requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements')
+        c.argument('msti_check_requirements', action=AddMstiCheckRequirements, nargs='+', help='Represents Microsoft '
+                   'Threat Intelligence requirements check request.', arg_group='DataConnectorsCheckRequirements')
+        c.argument('mtp_check_requirements', action=AddMtpCheckRequirements, nargs='+', help='Represents MTP '
+                   '(Microsoft Threat Protection) requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements')
+        c.argument('office_atp_check_requirements', action=AddOfficeAtpCheckRequirements, nargs='+', help='Represents '
+                   'OfficeATP (Office 365 Advanced Threat Protection) requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements')
+        c.argument('office_irm_check_requirements', action=AddOfficeIrmCheckRequirements, nargs='+', help='Represents '
+                   'OfficeIRM (Microsoft Insider Risk Management) requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements')
+        c.argument('office365_project_check_requirements', action=AddOffice365ProjectCheckRequirements, nargs='+',
+                   help='Represents Office365 Project requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements')
+        c.argument('office_power_bi_check_requirements', action=AddOfficePowerBiCheckRequirements, nargs='+',
+                   help='Represents Office PowerBI requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements')
+        c.argument('ti_check_requirements', action=AddTiCheckRequirements, nargs='+', help='Threat Intelligence '
+                   'Platforms data connector check requirements', arg_group='DataConnectorsCheckRequirements')
+        c.argument('ti_taxii_check_requirements', action=AddTiTaxiiCheckRequirements, nargs='+', help='Threat '
+                   'Intelligence TAXII data connector check requirements',
+                   arg_group='DataConnectorsCheckRequirements')
+        c.argument('io_t_check_requirements', action=AddIoTCheckRequirements, nargs='+', help='Represents IoT '
+                   'requirements check request.', arg_group='DataConnectorsCheckRequirements')

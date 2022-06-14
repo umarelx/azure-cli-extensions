@@ -11,34 +11,134 @@
 
 def cf_sentinel_cl(cli_ctx, *_):
     from azure.cli.core.commands.client_factory import get_mgmt_service_client
-    from ..vendored_sdks.securityinsight import SecurityInsights
+    from azext_sentinel.vendored_sdks.securityinsight import SecurityInsights
     return get_mgmt_service_client(cli_ctx,
                                    SecurityInsights)
 
 
 def cf_alert_rule(cli_ctx, *_):
-    return cf_sentinel_cl(cli_ctx).alert_rule
+    return cf_sentinel_cl(cli_ctx).alert_rules
 
 
 def cf_action(cli_ctx, *_):
-    return cf_sentinel_cl(cli_ctx).action
+    return cf_sentinel_cl(cli_ctx).actions
 
 
 def cf_alert_rule_template(cli_ctx, *_):
-    return cf_sentinel_cl(cli_ctx).alert_rule_template
+    return cf_sentinel_cl(cli_ctx).alert_rule_templates
+
+
+def cf_automation_rule(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).automation_rules
+
+
+def cf_incident(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).incidents
+
+
+def cf_bookmark(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).bookmarks
+
+
+def cf_bookmark_relation(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).bookmark_relations
 
 
 def cf_bookmark(cli_ctx, *_):
     return cf_sentinel_cl(cli_ctx).bookmark
 
 
-def cf_data_connector(cli_ctx, *_):
-    return cf_sentinel_cl(cli_ctx).data_connector
+def cf_ip_geodata(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).ip_geodata
 
 
-def cf_incident(cli_ctx, *_):
-    return cf_sentinel_cl(cli_ctx).incident
+def cf_domain_whois(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).domain_whois
+
+
+def cf_entity(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).entities
+
+
+def cf_entity_get_timeline(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).entities_get_timeline
+
+
+def cf_entity_relation(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).entities_relations
+
+
+def cf_entity_relation(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).entity_relations
+
+
+def cf_entity_query(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).entity_queries
+
+
+def cf_entity_query_template(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).entity_query_templates
 
 
 def cf_incident_comment(cli_ctx, *_):
-    return cf_sentinel_cl(cli_ctx).incident_comment
+    return cf_sentinel_cl(cli_ctx).incident_comments
+
+
+def cf_incident_relation(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).incident_relations
+
+
+def cf_metadata(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).metadata
+
+
+def cf_office_consent(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).office_consents
+
+
+def cf_sentinel_onboarding_state(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).sentinel_onboarding_states
+
+
+def cf_security_ml_analytic_setting(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).security_ml_analytics_settings
+
+
+def cf_product_setting(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).product_settings
+
+
+def cf_source_control(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).source_control
+
+
+def cf_source_control(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).source_controls
+
+
+def cf_threat_intelligence_indicator(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).threat_intelligence_indicator
+
+
+def cf_threat_intelligence_indicator(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).threat_intelligence_indicators
+
+
+def cf_threat_intelligence_indicator_metric(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).threat_intelligence_indicator_metrics
+
+
+def cf_watchlist(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).watchlists
+
+
+def cf_watchlist_item(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).watchlist_items
+
+
+def cf_data_connector(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).data_connectors
+
+
+def cf_data_connector_check_requirement(cli_ctx, *_):
+    return cf_sentinel_cl(cli_ctx).data_connectors_check_requirements

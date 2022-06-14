@@ -10,246 +10,460 @@
 
 import os
 from azure.cli.testsdk import ScenarioTest
-from .. import try_manual, raise_if, calc_coverage
 from azure.cli.testsdk import ResourceGroupPreparer
-from azure.cli.testsdk.scenario_tests import AllowLargeResponse
+from .example_steps import step_action_create
+from .example_steps import step_action_list
+from .example_steps import step_action_show
+from .example_steps import step_automation_rule_create
+from .example_steps import step_action_delete
+from .example_steps import step_alert_rule_create
+from .example_steps import step_alert_rule_create2
+from .example_steps import step_alert_rule_create3
+from .example_steps import step_alert_rule_create4
+from .example_steps import step_alert_rule_create5
+from .example_steps import step_alert_rule_show
+from .example_steps import step_alert_rule_show2
+from .example_steps import step_alert_rule_show3
+from .example_steps import step_alert_rule_list
+from .example_steps import step_alert_rule_show4
+from .example_steps import step_alert_rule_delete
+from .example_steps import step_alert_rule_template_show
+from .example_steps import step_alert_rule_template_list
+from .example_steps import step_automation_rule_show
+from .example_steps import step_automation_rule_list
+from .example_steps import step_automation_rule_delete
+from .example_steps import step_bookmark_expand
+from .example_steps import step_bookmark_relation_create
+from .example_steps import step_bookmark_relation_show
+from .example_steps import step_bookmark_relation_list
+from .example_steps import step_bookmark_relation_delete
+from .example_steps import step_bookmark_create
+from .example_steps import step_bookmark_show
+from .example_steps import step_bookmark_list
+from .example_steps import step_bookmark_delete
+from .example_steps import step_data_connector_create
+from .example_steps import step_data_connector_create2
+from .example_steps import step_data_connector_create3
+from .example_steps import step_data_connector_create4
+from .example_steps import step_data_connector_create5
+from .example_steps import step_data_connector_create6
+from .example_steps import step_data_connector_create7
+from .example_steps import step_data_connector_create8
+from .example_steps import step_data_connector_show
+from .example_steps import step_data_connector_show2
+from .example_steps import step_data_connector_show3
+from .example_steps import step_data_connector_show4
+from .example_steps import step_data_connector_show5
+from .example_steps import step_data_connector_show6
+from .example_steps import step_data_connector_show7
+from .example_steps import step_data_connector_show8
+from .example_steps import step_data_connector_show9
+from .example_steps import step_data_connector_show10
+from .example_steps import step_data_connector_show11
+from .example_steps import step_data_connector_list
+from .example_steps import step_data_connector_show12
+from .example_steps import step_data_connector_show13
+from .example_steps import step_data_connector_show14
+from .example_steps import step_data_connector_show15
+from .example_steps import step_data_connector_show16
+from .example_steps import step_data_connector_show17
+from .example_steps import step_data_connector_show18
+from .example_steps import step_data_connector_show19
+from .example_steps import step_data_connector_show20
+from .example_steps import step_data_connector_connect
+from .example_steps import step_data_connector_connect2
+from .example_steps import step_data_connector_disconnect
+from .example_steps import step_data_connector_delete
+from .example_steps import step_data_connector_delete2
+from .example_steps import step_data_connector_delete3
+from .example_steps import step_data_connector_delete4
+from .example_steps import step_data_connector_delete5
+from .example_steps import step_data_connector_check_requirement_post
+from .example_steps import step_data_connector_check_requirement_post2
+from .example_steps import step_data_connector_check_requirement_post3
+from .example_steps import step_domain_whois_show
+from .example_steps import step_entity_show
+from .example_steps import step_entity_show2
+from .example_steps import step_entity_show3
+from .example_steps import step_entity_show4
+from .example_steps import step_entity_show5
+from .example_steps import step_entity_show6
+from .example_steps import step_entity_show7
+from .example_steps import step_entity_show8
+from .example_steps import step_entity_show9
+from .example_steps import step_entity_show10
+from .example_steps import step_entity_show11
+from .example_steps import step_entity_show12
+from .example_steps import step_entity_show13
+from .example_steps import step_entity_show14
+from .example_steps import step_entity_show15
+from .example_steps import step_entity_show16
+from .example_steps import step_entity_list
+from .example_steps import step_entity_show17
+from .example_steps import step_entity_show18
+from .example_steps import step_entity_show19
+from .example_steps import step_entity_show20
+from .example_steps import step_entity_query
+from .example_steps import step_entity_get_insight
+from .example_steps import step_entity_expand
+from .example_steps import step_entity_get_timeline_list
+from .example_steps import step_entity_relation_list
+from .example_steps import step_entity_query_create
+from .example_steps import step_entity_query_list
+from .example_steps import step_entity_query_show
+from .example_steps import step_entity_query_show2
+from .example_steps import step_entity_query_delete
+from .example_steps import step_entity_query_template_list
+from .example_steps import step_entity_query_template_show
+from .example_steps import step_entity_relation_show_relation
+from .example_steps import step_incident_comment_create
+from .example_steps import step_incident_comment_list
+from .example_steps import step_incident_comment_show
+from .example_steps import step_incident_comment_delete
+from .example_steps import step_incident_relation_create
+from .example_steps import step_incident_relation_list
+from .example_steps import step_incident_relation_show
+from .example_steps import step_incident_relation_delete
+from .example_steps import step_incident_create
+from .example_steps import step_incident_list
+from .example_steps import step_incident_show
+from .example_steps import step_incident_create_team
+from .example_steps import step_incident_list_alert
+from .example_steps import step_incident_list_bookmark
+from .example_steps import step_incident_list_entity
+from .example_steps import step_incident_run_playbook
+from .example_steps import step_incident_delete
+from .example_steps import step_ip_geodata_show
+from .example_steps import step_metadata_create
+from .example_steps import step_metadata_create2
+from .example_steps import step_metadata_list
+from .example_steps import step_metadata_list2
+from .example_steps import step_metadata_show
+from .example_steps import step_metadata_update
+from .example_steps import step_metadata_delete
+from .example_steps import step_office_consent_list
+from .example_steps import step_office_consent_show
+from .example_steps import step_office_consent_delete
+from .example_steps import step_product_setting_list
+from .example_steps import step_product_setting_show
+from .example_steps import step_product_setting_delete
+from .example_steps import step_security_ml_analytic_setting_create
+from .example_steps import step_security_ml_analytic_setting_show
+from .example_steps import step_security_ml_analytic_setting_list
+from .example_steps import step_security_ml_analytic_setting_delete
+from .example_steps import step_sentinel_onboarding_state_create
+from .example_steps import step_sentinel_onboarding_state_list
+from .example_steps import step_sentinel_onboarding_state_show
+from .example_steps import step_sentinel_onboarding_state_delete
+from .example_steps import step_source_control_list_repository
+from .example_steps import step_source_control_create
+from .example_steps import step_source_control_show
+from .example_steps import step_source_control_list
+from .example_steps import step_source_control_delete
+from .example_steps import step_threat_intelligence_indicator_create
+from .example_steps import step_threat_intelligence_indicator_show
+from .example_steps import step_threat_intelligence_indicator_append_tag
+from .example_steps import step_threat_intelligence_indicator
+from .example_steps import step_threat_intelligence_indicator_query_indicator
+from .example_steps import step_threat_intelligence_indicator_replace_tag
+from .example_steps import step_threat_intelligence_indicator_delete
+from .example_steps import step_threat_intelligence_indicator_metric_list
+from .example_steps import step_threat_intelligence_indicator_list
+from .example_steps import step_watchlist_item_create
+from .example_steps import step_watchlist_item_show
+from .example_steps import step_watchlist_item_list
+from .example_steps import step_watchlist_item_delete
+from .example_steps import step_watchlist_create
+from .example_steps import step_watchlist_create2
+from .example_steps import step_watchlist_show
+from .example_steps import step_watchlist_list
+from .example_steps import step_watchlist_delete
+from .. import (
+    try_manual,
+    raise_if,
+    calc_coverage
+)
 
 
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
+# Env setup_scenario
 @try_manual
-class SecurityInsightsScenarioTest(ScenarioTest):
+def setup_scenario(test):
+    pass
 
-    @AllowLargeResponse()
-    def setUp(self):
-        super(SecurityInsightsScenarioTest, self).setUp()
-        self.cmd('extension add -n log-analytics-solution')
 
-    def tearDown(self):
-        self.cmd('extension remove -n log-analytics-solution')
-        super(SecurityInsightsScenarioTest, self).tearDown()
+# Env cleanup_scenario
+@try_manual
+def cleanup_scenario(test):
+    pass
 
-    @ResourceGroupPreparer(name_prefix='clitestsentinel_myRg'[:7], key='rg', parameter_name='rg', location='westus')
-    @AllowLargeResponse()
-    def test_sentinel(self, rg):
-        workspace = self.create_random_name('clitestws-', 16)
+
+# Testcase: Scenario
+@try_manual
+def call_scenario(test):
+    setup_scenario(test)
+    step_action_create(test, checks=[])
+    step_action_list(test, checks=[])
+    step_action_show(test, checks=[])
+    step_automation_rule_create(test, checks=[])
+    step_action_delete(test, checks=[])
+    step_alert_rule_create(test, checks=[])
+    step_alert_rule_create2(test, checks=[])
+    step_alert_rule_create3(test, checks=[])
+    step_alert_rule_create4(test, checks=[])
+    step_alert_rule_create5(test, checks=[])
+    step_alert_rule_show(test, checks=[])
+    step_alert_rule_show2(test, checks=[])
+    step_alert_rule_show3(test, checks=[])
+    step_alert_rule_list(test, checks=[])
+    step_alert_rule_show4(test, checks=[])
+    step_alert_rule_delete(test, checks=[])
+    step_alert_rule_template_show(test, checks=[])
+    step_alert_rule_template_list(test, checks=[])
+    step_automation_rule_show(test, checks=[])
+    step_automation_rule_list(test, checks=[])
+    step_automation_rule_delete(test, checks=[])
+    step_bookmark_expand(test, checks=[])
+    step_bookmark_relation_create(test, checks=[])
+    step_bookmark_relation_show(test, checks=[])
+    step_bookmark_relation_list(test, checks=[])
+    step_bookmark_relation_delete(test, checks=[])
+    step_bookmark_create(test, checks=[])
+    step_bookmark_show(test, checks=[])
+    step_bookmark_list(test, checks=[])
+    step_bookmark_delete(test, checks=[])
+    step_data_connector_create(test, checks=[])
+    step_data_connector_create2(test, checks=[])
+    step_data_connector_create3(test, checks=[])
+    step_data_connector_create4(test, checks=[])
+    step_data_connector_create5(test, checks=[])
+    step_data_connector_create6(test, checks=[])
+    step_data_connector_create7(test, checks=[])
+    step_data_connector_create8(test, checks=[])
+    step_data_connector_show(test, checks=[])
+    step_data_connector_show2(test, checks=[])
+    step_data_connector_show3(test, checks=[])
+    step_data_connector_show4(test, checks=[])
+    step_data_connector_show5(test, checks=[])
+    step_data_connector_show6(test, checks=[])
+    step_data_connector_show7(test, checks=[])
+    step_data_connector_show8(test, checks=[])
+    step_data_connector_show9(test, checks=[])
+    step_data_connector_show10(test, checks=[])
+    step_data_connector_show11(test, checks=[])
+    step_data_connector_list(test, checks=[])
+    step_data_connector_show12(test, checks=[])
+    step_data_connector_show13(test, checks=[])
+    step_data_connector_show14(test, checks=[])
+    step_data_connector_show15(test, checks=[])
+    step_data_connector_show16(test, checks=[])
+    step_data_connector_show17(test, checks=[])
+    step_data_connector_show18(test, checks=[])
+    step_data_connector_show19(test, checks=[])
+    step_data_connector_show20(test, checks=[])
+    step_data_connector_connect(test, checks=[])
+    step_data_connector_connect2(test, checks=[])
+    step_data_connector_disconnect(test, checks=[])
+    step_data_connector_delete(test, checks=[])
+    step_data_connector_delete2(test, checks=[])
+    step_data_connector_delete3(test, checks=[])
+    step_data_connector_delete4(test, checks=[])
+    step_data_connector_delete5(test, checks=[])
+    step_data_connector_check_requirement_post(test, checks=[])
+    step_data_connector_check_requirement_post2(test, checks=[])
+    step_data_connector_check_requirement_post3(test, checks=[])
+    step_domain_whois_show(test, checks=[])
+    step_entity_show(test, checks=[])
+    step_entity_show2(test, checks=[])
+    step_entity_show3(test, checks=[])
+    step_entity_show4(test, checks=[])
+    step_entity_show5(test, checks=[])
+    step_entity_show6(test, checks=[])
+    step_entity_show7(test, checks=[])
+    step_entity_show8(test, checks=[])
+    step_entity_show9(test, checks=[])
+    step_entity_show10(test, checks=[])
+    step_entity_show11(test, checks=[])
+    step_entity_show12(test, checks=[])
+    step_entity_show13(test, checks=[])
+    step_entity_show14(test, checks=[])
+    step_entity_show15(test, checks=[])
+    step_entity_show16(test, checks=[])
+    step_entity_list(test, checks=[])
+    step_entity_show17(test, checks=[])
+    step_entity_show18(test, checks=[])
+    step_entity_show19(test, checks=[])
+    step_entity_show20(test, checks=[])
+    step_entity_query(test, checks=[])
+    step_entity_get_insight(test, checks=[])
+    step_entity_expand(test, checks=[])
+    step_entity_get_timeline_list(test, checks=[])
+    step_entity_relation_list(test, checks=[])
+    step_entity_query_create(test, checks=[])
+    step_entity_query_list(test, checks=[])
+    step_entity_query_show(test, checks=[])
+    step_entity_query_show2(test, checks=[])
+    step_entity_query_delete(test, checks=[])
+    step_entity_query_template_list(test, checks=[])
+    step_entity_query_template_show(test, checks=[])
+    step_entity_relation_show_relation(test, checks=[])
+    step_incident_comment_create(test, checks=[])
+    step_incident_comment_list(test, checks=[])
+    step_incident_comment_show(test, checks=[])
+    step_incident_comment_delete(test, checks=[])
+    step_incident_relation_create(test, checks=[])
+    step_incident_relation_list(test, checks=[])
+    step_incident_relation_show(test, checks=[])
+    step_incident_relation_delete(test, checks=[])
+    step_incident_create(test, checks=[])
+    step_incident_list(test, checks=[])
+    step_incident_show(test, checks=[])
+    step_incident_create_team(test, checks=[])
+    step_incident_list_alert(test, checks=[])
+    step_incident_list_bookmark(test, checks=[])
+    step_incident_list_entity(test, checks=[])
+    step_incident_run_playbook(test, checks=[])
+    step_incident_delete(test, checks=[])
+    step_ip_geodata_show(test, checks=[])
+    step_metadata_create(test, checks=[
+        test.check("author.name", "User Name", case_sensitive=False),
+        test.check("author.email", "email@microsoft.com", case_sensitive=False),
+        test.check("contentId", "c00ee137-7475-47c8-9cce-ec6f0f1bedd0", case_sensitive=False),
+        test.check("contentSchemaVersion", "2.0", case_sensitive=False),
+        test.check("customVersion", "1.0", case_sensitive=False),
+        test.check("firstPublishDate", "2021-05-18", case_sensitive=False),
+        test.check("kind", "AnalyticsRule", case_sensitive=False),
+        test.check("lastPublishDate", "2021-05-18", case_sensitive=False),
+        test.check("parentId", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.OperationalIns"
+                   "ights/workspaces/myWorkspace/providers/Microsoft.SecurityInsights/alertRules/{myAlertRule}",
+                   case_sensitive=False),
+        test.check("source.name", "Contoso Solution 1.0", case_sensitive=False),
+        test.check("source.kind", "Solution", case_sensitive=False),
+        test.check("source.sourceId", "b688a130-76f4-4a07-bf57-762222a3cadf", case_sensitive=False),
+        test.check("support.name", "Microsoft", case_sensitive=False),
+        test.check("support.email", "support@microsoft.com", case_sensitive=False),
+        test.check("support.link", "https://support.microsoft.com/", case_sensitive=False),
+        test.check("support.tier", "Partner", case_sensitive=False),
+        test.check("version", "1.0.0.0", case_sensitive=False),
+        test.check("name", "{myMetadata}", case_sensitive=False),
+    ])
+    step_metadata_create2(test, checks=[
+        test.check("kind", "AnalyticsRule", case_sensitive=False),
+        test.check("parentId", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.OperationalIns"
+                   "ights/workspaces/myWorkspace/providers/Microsoft.SecurityInsights/alertRules/{myAlertRule}",
+                   case_sensitive=False),
+        test.check("name", "{myMetadata}", case_sensitive=False),
+    ])
+    step_metadata_list(test, checks=[
+        test.check('length(@)', 1),
+    ])
+    step_metadata_list2(test, checks=[
+        test.check('length(@)', 1),
+    ])
+    step_metadata_show(test, checks=[
+        test.check("author.name", "User Name", case_sensitive=False),
+        test.check("author.email", "email@microsoft.com", case_sensitive=False),
+        test.check("contentId", "c00ee137-7475-47c8-9cce-ec6f0f1bedd0", case_sensitive=False),
+        test.check("contentSchemaVersion", "2.0", case_sensitive=False),
+        test.check("customVersion", "1.0", case_sensitive=False),
+        test.check("firstPublishDate", "2021-05-18", case_sensitive=False),
+        test.check("kind", "AnalyticsRule", case_sensitive=False),
+        test.check("lastPublishDate", "2021-05-18", case_sensitive=False),
+        test.check("parentId", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.OperationalIns"
+                   "ights/workspaces/myWorkspace/providers/Microsoft.SecurityInsights/alertRules/{myAlertRule}",
+                   case_sensitive=False),
+        test.check("source.name", "Contoso Solution 1.0", case_sensitive=False),
+        test.check("source.kind", "Solution", case_sensitive=False),
+        test.check("source.sourceId", "b688a130-76f4-4a07-bf57-762222a3cadf", case_sensitive=False),
+        test.check("support.name", "Microsoft", case_sensitive=False),
+        test.check("support.email", "support@microsoft.com", case_sensitive=False),
+        test.check("support.link", "https://support.microsoft.com/", case_sensitive=False),
+        test.check("support.tier", "Partner", case_sensitive=False),
+        test.check("version", "1.0.0.0", case_sensitive=False),
+        test.check("name", "{myMetadata}", case_sensitive=False),
+    ])
+    step_metadata_update(test, checks=[
+        test.check("author.name", "User Name", case_sensitive=False),
+        test.check("author.email", "email@microsoft.com", case_sensitive=False),
+        test.check("contentId", "c00ee137-7475-47c8-9cce-ec6f0f1bedd0", case_sensitive=False),
+        test.check("kind", "AnalyticsRule", case_sensitive=False),
+        test.check("parentId", "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.OperationalIns"
+                   "ights/workspaces/myWorkspace/providers/Microsoft.SecurityInsights/alertRules/{myAlertRule}",
+                   case_sensitive=False),
+        test.check("name", "{myMetadata}", case_sensitive=False),
+    ])
+    step_metadata_delete(test, checks=[])
+    step_office_consent_list(test, checks=[])
+    step_office_consent_show(test, checks=[])
+    step_office_consent_delete(test, checks=[])
+    step_product_setting_list(test, checks=[])
+    step_product_setting_show(test, checks=[])
+    step_product_setting_delete(test, checks=[])
+    step_security_ml_analytic_setting_create(test, checks=[])
+    step_security_ml_analytic_setting_show(test, checks=[])
+    step_security_ml_analytic_setting_list(test, checks=[])
+    step_security_ml_analytic_setting_delete(test, checks=[])
+    step_sentinel_onboarding_state_create(test, checks=[
+        test.check("name", "{mySentinelOnboardingState}", case_sensitive=False),
+        test.check("customerManagedKey", False),
+    ])
+    step_sentinel_onboarding_state_list(test, checks=[
+        test.check('length(@)', 1),
+    ])
+    step_sentinel_onboarding_state_show(test, checks=[
+        test.check("name", "{mySentinelOnboardingState}", case_sensitive=False),
+        test.check("customerManagedKey", False),
+    ])
+    step_sentinel_onboarding_state_delete(test, checks=[])
+    step_source_control_list_repository(test, checks=[])
+    step_source_control_create(test, checks=[])
+    step_source_control_show(test, checks=[])
+    step_source_control_list(test, checks=[])
+    step_source_control_delete(test, checks=[])
+    step_threat_intelligence_indicator_create(test, checks=[])
+    step_threat_intelligence_indicator_show(test, checks=[])
+    step_threat_intelligence_indicator_append_tag(test, checks=[])
+    step_threat_intelligence_indicator(test, checks=[])
+    step_threat_intelligence_indicator_query_indicator(test, checks=[])
+    step_threat_intelligence_indicator_replace_tag(test, checks=[])
+    step_threat_intelligence_indicator_delete(test, checks=[])
+    step_threat_intelligence_indicator_metric_list(test, checks=[])
+    step_threat_intelligence_indicator_list(test, checks=[])
+    step_watchlist_item_create(test, checks=[])
+    step_watchlist_item_show(test, checks=[])
+    step_watchlist_item_list(test, checks=[])
+    step_watchlist_item_delete(test, checks=[])
+    step_watchlist_create(test, checks=[])
+    step_watchlist_create2(test, checks=[])
+    step_watchlist_show(test, checks=[])
+    step_watchlist_list(test, checks=[])
+    step_watchlist_delete(test, checks=[])
+    cleanup_scenario(test)
+
+
+# Test class for Scenario
+@try_manual
+class SentinelScenarioTest(ScenarioTest):
+    def __init__(self, *args, **kwargs):
+        super(SentinelScenarioTest, self).__init__(*args, **kwargs)
         self.kwargs.update({
-            'subscription_id': self.get_subscription_id(),
-            'workspace': workspace,
-            'rg': rg
+            'subscription_id': self.get_subscription_id()
         })
 
-        self.cmd('monitor log-analytics workspace create -g {rg} -n {workspace} -l westus')
+        self.kwargs.update({
+            'myAlertRule': 'ruleName',
+            'myIncident': 'afbd324f-6c48-459c-8710-8d1e1cd03812',
+            'myBookmark': '2216d0e1-91e3-4902-89fd-d2df8c535096',
+            'myMetadata': 'metadataName',
+            'mySentinelOnboardingState': 'default',
+        })
 
-        self.cmd('monitor log-analytics solution create '
-                 '--resource-group "{rg}" '
-                 '--solution-type SecurityInsights '
-                 '--workspace {workspace} ')
-
-        # EXAMPLE: /AlertRules/put/Creates or updates a Fusion alert rule.
-        self.cmd('sentinel alert-rule create '
-                 '--fusion-alert-rule etag="3d00c3ca-0000-0100-0000-5d42d5010000" alert-rule-template-name="f71aba3d-28fb-4'
-                 '50b-b192-4e76a83015c8" enabled=true '
-                 '--resource-group "{rg}" '
-                 '--rule-id "myFirstFusionRule" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('enabled', True),
-                     self.check('kind', 'Fusion'),
-                     self.check('name', 'myFirstFusionRule')
-                 ])
-
-        # EXAMPLE: /AlertRules/put/Creates or updates a MicrosoftSecurityIncidentCreation rule.
-        self.cmd('sentinel alert-rule create '
-                 '--microsoft-security-incident-creation-alert-rule etag="260097e0-0000-0d00-0000-5d6fa88f0000" '
-                 'product-filter="Microsoft Cloud App Security" display-name="testing displayname" enabled=true '
-                 '--resource-group "{rg}" '
-                 '--rule-id "microsoftSecurityIncidentCreationRuleExample" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('enabled', True),
-                     self.check('kind', 'MicrosoftSecurityIncidentCreation'),
-                     self.check('name', 'microsoftSecurityIncidentCreationRuleExample'),
-                     self.check('productFilter', 'Microsoft Cloud App Security'),
-                     self.check('displayName', 'testing displayname')
-                 ])
-
-        # EXAMPLE: /AlertRules/get/Get a Fusion alert rule.
-        self.cmd('sentinel alert-rule show '
-                 '--resource-group "{rg}" '
-                 '--rule-id "myFirstFusionRule" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('enabled', True),
-                     self.check('kind', 'Fusion'),
-                     self.check('name', 'myFirstFusionRule')
-                 ])
-
-        # EXAMPLE: /AlertRules/get/Get a MicrosoftSecurityIncidentCreation rule.
-        self.cmd('sentinel alert-rule show '
-                 '--resource-group "{rg}" '
-                 '--rule-id "microsoftSecurityIncidentCreationRuleExample" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('enabled', True),
-                     self.check('kind', 'MicrosoftSecurityIncidentCreation'),
-                     self.check('name', 'microsoftSecurityIncidentCreationRuleExample'),
-                     self.check('productFilter', 'Microsoft Cloud App Security'),
-                     self.check('displayName', 'testing displayname')
-                 ])
-
-        # EXAMPLE: /AlertRules/get/Get all alert rules.
-        self.cmd('sentinel alert-rule list '
-                 '--resource-group "{rg}" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('length(@)', 2)
-                 ])
-
-        self.cmd('sentinel alert-rule delete -y '
-                 '--resource-group "{rg}" '
-                 '--rule-id "myFirstFusionRule" '
-                 '--workspace-name {workspace}')
-
-        # EXAMPLE: /AlertRuleTemplates/get/Get alert rule template by Id.
-        self.cmd('sentinel alert-rule-template show '
-                 '--alert-rule-template-id "65360bb0-8986-4ade-a89d-af3cf44d28aa" '
-                 '--resource-group "{rg}" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('kind', 'Scheduled'),
-                     self.check('name', '65360bb0-8986-4ade-a89d-af3cf44d28aa')
-                 ])
-
-        # EXAMPLE: /AlertRuleTemplates/get/Get all alert rule templates.
-        self.cmd('sentinel alert-rule-template list '
-                 '--resource-group "{rg}" '
-                 '--workspace-name {workspace}')
-
-        # EXAMPLE: /Bookmarks/put/Creates or updates a bookmark.
-        self.cmd('sentinel bookmark create '
-                 '--etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\"" '
-                 '--created "2019-01-01T13:15:30Z" '
-                 '--display-name "My bookmark" '
-                 '--labels "Tag1" '
-                 '--labels "Tag2" '
-                 '--notes "Found a suspicious activity" '
-                 '-q "SecurityEvent | where TimeGenerated > ago(1d) and TimeGenerated < ago(2d)" '
-                 '--query-result "Security Event query result" '
-                 '--updated "2019-01-01T13:15:30Z" '
-                 '--bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
-                 '--resource-group "{rg}" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('name', '73e01a99-5cd7-4139-a149-9f2736ff2ab5'),
-                     self.check('query', 'SecurityEvent | where TimeGenerated > ago(1d) and TimeGenerated < ago(2d)')
-                 ])
-
-        # EXAMPLE: /Bookmarks/get/Get a bookmark.
-        self.cmd('sentinel bookmark show '
-                 '--bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
-                 '--resource-group "{rg}" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('name', '73e01a99-5cd7-4139-a149-9f2736ff2ab5'),
-                     self.check('query', 'SecurityEvent | where TimeGenerated > ago(1d) and TimeGenerated < ago(2d)')
-                 ])
-
-        # EXAMPLE: /Bookmarks/get/Get all bookmarks.
-        self.cmd('sentinel bookmark list '
-                 '--resource-group "{rg}" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('length(@)', 1),
-                     self.check('[0].name', '73e01a99-5cd7-4139-a149-9f2736ff2ab5'),
-                     self.check('[0].query', 'SecurityEvent | where TimeGenerated > ago(1d) and TimeGenerated < ago(2d)')
-                 ])
-
-        # EXAMPLE: /Bookmarks/delete/Delete a bookmark.
-        self.cmd('sentinel bookmark delete -y '
-                 '--bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
-                 '--resource-group "{rg}" '
-                 '--workspace-name {workspace}')
-
-        # EXAMPLE: /Incidents/put/Creates or updates an incident.
-        self.cmd('sentinel incident create '
-                 '--etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\"" '
-                 '--description "This is a demo incident" '
-                 '--classification "FalsePositive" '
-                 '--classification-comment "Not a malicious activity" '
-                 '--classification-reason "IncorrectAlertLogic" '
-                 '--first-activity-time-utc "2019-01-01T13:00:30Z" '
-                 '--last-activity-time-utc "2019-01-01T13:05:30Z" '
-                 '--owner object-id="2046feea-040d-4a46-9e2b-91c2941bfa70" '
-                 '--severity "High" '
-                 '--status "Closed" '
-                 '--title "title" '
-                 '--incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
-                 '--resource-group "{rg}" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('classification', 'FalsePositive'),
-                     self.check('classificationReason', 'IncorrectAlertLogic'),
-                     self.check('classificationComment', 'Not a malicious activity'),
-                     self.check('severity', 'High'),
-                     self.check('title', 'title'),
-                     self.check('status', 'Closed')
-                 ])
-
-        # EXAMPLE: /Incidents/get/Get an incident.
-        self.cmd('sentinel incident show '
-                 '--incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
-                 '--resource-group "{rg}" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('classification', 'FalsePositive'),
-                     self.check('classificationReason', 'IncorrectAlertLogic'),
-                     self.check('classificationComment', 'Not a malicious activity'),
-                     self.check('severity', 'High'),
-                     self.check('title', 'title'),
-                     self.check('status', 'Closed')
-                 ])
-
-        # EXAMPLE: /IncidentComments/put/Creates an incident comment.
-        self.cmd('sentinel incident-comment create '
-                 '--message "Some message" '
-                 '--incident-comment-id "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" '
-                 '--incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
-                 '--resource-group "{rg}" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('message', 'Some message'),
-                     self.check('name', '4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014')
-                 ])
-
-        # EXAMPLE: /IncidentComments/get/Get all incident comments.
-        self.cmd('sentinel incident-comment list '
-                 '--incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
-                 '--resource-group "{rg}" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('length(@)', 1),
-                     self.check('[0].message', 'Some message'),
-                     self.check('[0].name', '4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014')
-                 ])
-
-        # EXAMPLE: /IncidentComments/get/Get an incident comment.
-        self.cmd('sentinel incident-comment show '
-                 '--incident-comment-id "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" '
-                 '--incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
-                 '--resource-group "{rg}" '
-                 '--workspace-name {workspace}',
-                 checks=[
-                     self.check('message', 'Some message'),
-                     self.check('name', '4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014')
-                 ])
-
-        # EXAMPLE: /Incidents/delete/Delete an incident.
-        self.cmd('sentinel incident delete -y '
-                 '--incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
-                 '--resource-group "{rg}" '
-                 '--workspace-name {workspace}')
-
+    @ResourceGroupPreparer(name_prefix='clitestsentinel_myRg'[:7], key='rg', parameter_name='rg')
+    @ResourceGroupPreparer(name_prefix='clitestsentinel_ambawolvese5resourcegroup'[:7], key='rg_2',
+                           parameter_name='rg_2')
+    def test_sentinel_Scenario(self, rg, rg_2):
+        call_scenario(self)
         calc_coverage(__file__)
         raise_if()

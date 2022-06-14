@@ -7,19 +7,24 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+
+
 # pylint: disable=protected-access
+
+# pylint: disable=no-self-use
+
 
 import argparse
 from collections import defaultdict
 from knack.util import CLIError
 
 
-class AddFusionAlertRule(argparse.Action):
+class AddActions(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-        namespace.fusion_alert_rule = action
+        super(AddActions, self).__call__(parser, namespace, action, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -31,22 +36,28 @@ class AddFusionAlertRule(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'alert-rule-template-name':
-                d['alert_rule_template_name'] = v[0]
-            elif kl == 'enabled':
-                d['enabled'] = v[0]
-            elif kl == 'etag':
-                d['etag'] = v[0]
-        d['kind'] = 'Fusion'
+
+            if kl == 'order':
+                d['order'] = v[0]
+
+            elif kl == 'action-type':
+                d['action_type'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter actions. All possible keys are: order, action-type'
+                    .format(k)
+                )
+
         return d
 
 
-class AddMicrosoftSecurityIncidentCreationAlertRule(argparse.Action):
+class AddConditions(argparse._AppendAction):
     def __call__(self, parser, namespace, values, option_string=None):
         action = self.get_action(values, option_string)
-        namespace.microsoft_security_incident_creation_alert_rule = action
+        super(AddConditions, self).__call__(parser, namespace, action, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -58,328 +69,16 @@ class AddMicrosoftSecurityIncidentCreationAlertRule(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
-            if kl == 'display-names-filter':
-                d['display_names_filter'] = v
-            elif kl == 'display-names-exclude-filter':
-                d['display_names_exclude_filter'] = v
-            elif kl == 'product-filter':
-                d['product_filter'] = v[0]
-            elif kl == 'severities-filter':
-                d['severities_filter'] = v
-            elif kl == 'alert-rule-template-name':
-                d['alert_rule_template_name'] = v[0]
-            elif kl == 'description':
-                d['description'] = v[0]
-            elif kl == 'display-name':
-                d['display_name'] = v[0]
-            elif kl == 'enabled':
-                d['enabled'] = v[0]
-            elif kl == 'etag':
-                d['etag'] = v[0]
-        d['kind'] = 'MicrosoftSecurityIncidentCreation'
-        return d
 
+            if kl == 'condition-type':
+                d['condition_type'] = v[0]
 
-class AddScheduledAlertRule(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        namespace.scheduled_alert_rule = action
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter conditions. All possible keys are: condition-type'
+                    .format(k)
+                )
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
-        try:
-            properties = defaultdict(list)
-            for (k, v) in (x.split('=', 1) for x in values):
-                properties[k].append(v)
-            properties = dict(properties)
-        except ValueError:
-            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
-        d = {}
-        for k in properties:
-            kl = k.lower()
-            v = properties[k]
-            if kl == 'query':
-                d['query'] = v[0]
-            elif kl == 'query-frequency':
-                d['query_frequency'] = v[0]
-            elif kl == 'query-period':
-                d['query_period'] = v[0]
-            elif kl == 'severity':
-                d['severity'] = v[0]
-            elif kl == 'trigger-operator':
-                d['trigger_operator'] = v[0]
-            elif kl == 'trigger-threshold':
-                d['trigger_threshold'] = v[0]
-            elif kl == 'alert-rule-template-name':
-                d['alert_rule_template_name'] = v[0]
-            elif kl == 'description':
-                d['description'] = v[0]
-            elif kl == 'display-name':
-                d['display_name'] = v[0]
-            elif kl == 'enabled':
-                d['enabled'] = v[0]
-            elif kl == 'suppression-duration':
-                d['suppression_duration'] = v[0]
-            elif kl == 'suppression-enabled':
-                d['suppression_enabled'] = v[0]
-            elif kl == 'tactics':
-                d['tactics'] = v
-            elif kl == 'etag':
-                d['etag'] = v[0]
-        d['kind'] = 'Scheduled'
-        return d
-
-
-class AddIncidentInfo(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        namespace.incident_info = action
-
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
-        try:
-            properties = defaultdict(list)
-            for (k, v) in (x.split('=', 1) for x in values):
-                properties[k].append(v)
-            properties = dict(properties)
-        except ValueError:
-            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
-        d = {}
-        for k in properties:
-            kl = k.lower()
-            v = properties[k]
-            if kl == 'incident-id':
-                d['incident_id'] = v[0]
-            elif kl == 'severity':
-                d['severity'] = v[0]
-            elif kl == 'title':
-                d['title'] = v[0]
-            elif kl == 'relation-name':
-                d['relation_name'] = v[0]
-        return d
-
-
-class AddAadDataConnector(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        namespace.aad_data_connector = action
-
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
-        try:
-            properties = defaultdict(list)
-            for (k, v) in (x.split('=', 1) for x in values):
-                properties[k].append(v)
-            properties = dict(properties)
-        except ValueError:
-            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
-        d = {}
-        for k in properties:
-            kl = k.lower()
-            v = properties[k]
-            if kl == 'tenant-id':
-                d['tenant_id'] = v[0]
-            elif kl == 'state':
-                d['state'] = v[0]
-            elif kl == 'etag':
-                d['etag'] = v[0]
-        d['kind'] = 'AzureActiveDirectory'
-        return d
-
-
-class AddAatpDataConnector(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        namespace.aatp_data_connector = action
-
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
-        try:
-            properties = defaultdict(list)
-            for (k, v) in (x.split('=', 1) for x in values):
-                properties[k].append(v)
-            properties = dict(properties)
-        except ValueError:
-            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
-        d = {}
-        for k in properties:
-            kl = k.lower()
-            v = properties[k]
-            if kl == 'tenant-id':
-                d['tenant_id'] = v[0]
-            elif kl == 'state':
-                d['state'] = v[0]
-            elif kl == 'etag':
-                d['etag'] = v[0]
-        d['kind'] = 'AzureAdvancedThreatProtection'
-        return d
-
-
-class AddAscDataConnector(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        namespace.asc_data_connector = action
-
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
-        try:
-            properties = defaultdict(list)
-            for (k, v) in (x.split('=', 1) for x in values):
-                properties[k].append(v)
-            properties = dict(properties)
-        except ValueError:
-            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
-        d = {}
-        for k in properties:
-            kl = k.lower()
-            v = properties[k]
-            if kl == 'subscription-id':
-                d['subscription_id'] = v[0]
-            elif kl == 'state':
-                d['state'] = v[0]
-            elif kl == 'etag':
-                d['etag'] = v[0]
-        d['kind'] = 'AzureSecurityCenter'
-        return d
-
-
-class AddAwsCloudTrailDataConnector(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        namespace.aws_cloud_trail_data_connector = action
-
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
-        try:
-            properties = defaultdict(list)
-            for (k, v) in (x.split('=', 1) for x in values):
-                properties[k].append(v)
-            properties = dict(properties)
-        except ValueError:
-            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
-        d = {}
-        for k in properties:
-            kl = k.lower()
-            v = properties[k]
-            if kl == 'aws-role-arn':
-                d['aws_role_arn'] = v[0]
-            elif kl == 'state':
-                d['state'] = v[0]
-            elif kl == 'etag':
-                d['etag'] = v[0]
-        d['kind'] = 'AmazonWebServicesCloudTrail'
-        return d
-
-
-class AddMcasDataConnector(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        namespace.mcas_data_connector = action
-
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
-        try:
-            properties = defaultdict(list)
-            for (k, v) in (x.split('=', 1) for x in values):
-                properties[k].append(v)
-            properties = dict(properties)
-        except ValueError:
-            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
-        d = {}
-        for k in properties:
-            kl = k.lower()
-            v = properties[k]
-            if kl == 'tenant-id':
-                d['tenant_id'] = v[0]
-            elif kl == 'state-data-types-alerts-state':
-                d['state_data_types_alerts_state'] = v[0]
-            elif kl == 'state-data-types-discovery-logs-state':
-                d['state_data_types_discovery_logs_state'] = v[0]
-            elif kl == 'etag':
-                d['etag'] = v[0]
-        d['kind'] = 'MicrosoftCloudAppSecurity'
-        return d
-
-
-class AddMdatpDataConnector(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        namespace.mdatp_data_connector = action
-
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
-        try:
-            properties = defaultdict(list)
-            for (k, v) in (x.split('=', 1) for x in values):
-                properties[k].append(v)
-            properties = dict(properties)
-        except ValueError:
-            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
-        d = {}
-        for k in properties:
-            kl = k.lower()
-            v = properties[k]
-            if kl == 'tenant-id':
-                d['tenant_id'] = v[0]
-            elif kl == 'state':
-                d['state'] = v[0]
-            elif kl == 'etag':
-                d['etag'] = v[0]
-        d['kind'] = 'MicrosoftDefenderAdvancedThreatProtection'
-        return d
-
-
-class AddOfficeDataConnector(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        namespace.office_data_connector = action
-
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
-        try:
-            properties = defaultdict(list)
-            for (k, v) in (x.split('=', 1) for x in values):
-                properties[k].append(v)
-            properties = dict(properties)
-        except ValueError:
-            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
-        d = {
-            'dataTypes': {
-                'sharePoint': {'state': 'Disabled'},
-                'exchange': {'state': 'Disabled'}
-            }
-        }
-        for k in properties:
-            kl = k.lower()
-            v = properties[k]
-            if kl == 'tenant-id':
-                d['tenantId'] = v[0]
-            elif kl == 'sharepoint-enabled':
-                d['dataTypes']['sharePoint']['state'] = 'Enabled'
-            elif kl == 'exchange-enabled':
-                d['dataTypes']['exchange']['state'] = 'Enabled'
-            elif kl == 'etag':
-                d['etag'] = v[0]
-        d['kind'] = 'Office365'
-        print(d)
-        return d
-
-
-class AddTiDataConnector(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        action = self.get_action(values, option_string)
-        namespace.ti_data_connector = action
-
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
-        try:
-            properties = defaultdict(list)
-            for (k, v) in (x.split('=', 1) for x in values):
-                properties[k].append(v)
-            properties = dict(properties)
-        except ValueError:
-            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
-        d = {}
-        for k in properties:
-            kl = k.lower()
-            v = properties[k]
-            if kl == 'tenant-id':
-                d['tenant_id'] = v[0]
-            elif kl == 'state':
-                d['state'] = v[0]
-            elif kl == 'etag':
-                d['etag'] = v[0]
-        d['kind'] = 'ThreatIntelligence'
         return d
 
 
@@ -388,7 +87,7 @@ class AddLabels(argparse._AppendAction):
         action = self.get_action(values, option_string)
         super(AddLabels, self).__call__(parser, namespace, action, option_string)
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -400,8 +99,15 @@ class AddLabels(argparse._AppendAction):
         for k in properties:
             kl = k.lower()
             v = properties[k]
+
             if kl == 'label-name':
                 d['label_name'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter labels. All possible keys are: label-name'.format(k)
+                )
+
         return d
 
 
@@ -410,7 +116,7 @@ class AddOwner(argparse.Action):
         action = self.get_action(values, option_string)
         namespace.owner = action
 
-    def get_action(self, values, option_string):  # pylint: disable=no-self-use
+    def get_action(self, values, option_string):
         try:
             properties = defaultdict(list)
             for (k, v) in (x.split('=', 1) for x in values):
@@ -422,12 +128,1116 @@ class AddOwner(argparse.Action):
         for k in properties:
             kl = k.lower()
             v = properties[k]
+
             if kl == 'email':
                 d['email'] = v[0]
+
             elif kl == 'assigned-to':
                 d['assigned_to'] = v[0]
+
             elif kl == 'object-id':
                 d['object_id'] = v[0]
+
             elif kl == 'user-principal-name':
                 d['user_principal_name'] = v[0]
+
+            elif kl == 'owner-type':
+                d['owner_type'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter owner. All possible keys are: email, assigned-to,'
+                    ' object-id, user-principal-name, owner-type'.format(k)
+                )
+
+        return d
+
+
+class AddIncidentInfo(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.incident_info = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'incident-id':
+                d['incident_id'] = v[0]
+
+            elif kl == 'severity':
+                d['severity'] = v[0]
+
+            elif kl == 'title':
+                d['title'] = v[0]
+
+            elif kl == 'relation-name':
+                d['relation_name'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter incident-info. All possible keys are: incident-id,'
+                    ' severity, title, relation-name'.format(k)
+                )
+
+        return d
+
+
+class AddSource(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.source = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'kind':
+                d['kind'] = v[0]
+
+            elif kl == 'name':
+                d['name'] = v[0]
+
+            elif kl == 'source-id':
+                d['source_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter source. All possible keys are: kind, name, source-id'
+                    .format(k)
+                )
+
+        return d
+
+
+class AddAuthor(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.author = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'name':
+                d['name'] = v[0]
+
+            elif kl == 'email':
+                d['email'] = v[0]
+
+            elif kl == 'link':
+                d['link'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter author. All possible keys are: name, email, link'
+                    .format(k)
+                )
+
+        return d
+
+
+class AddSupport(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.support = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tier':
+                d['tier'] = v[0]
+
+            elif kl == 'name':
+                d['name'] = v[0]
+
+            elif kl == 'email':
+                d['email'] = v[0]
+
+            elif kl == 'link':
+                d['link'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter support. All possible keys are: tier, name, email,'
+                    ' link'.format(k)
+                )
+
+        return d
+
+
+class AddCategories(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.categories = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'domains':
+                d['domains'] = v
+
+            elif kl == 'verticals':
+                d['verticals'] = v
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter categories. All possible keys are: domains, verticals'
+                    .format(k)
+                )
+
+        return d
+
+
+class AddAnomalies(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.anomalies = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'etag':
+                d['etag'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter anomalies. All possible keys are: etag'.format(k)
+                )
+
+        d['kind'] = 'Anomalies'
+
+        return d
+
+
+class AddEyesOn(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.eyes_on = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'etag':
+                d['etag'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter eyes-on. All possible keys are: etag'.format(k)
+                )
+
+        d['kind'] = 'EyesOn'
+
+        return d
+
+
+class AddEntityAnalytics(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.entity_analytics = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'entity-providers':
+                d['entity_providers'] = v
+
+            elif kl == 'etag':
+                d['etag'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter entity-analytics. All possible keys are:'
+                    ' entity-providers, etag'.format(k)
+                )
+
+        d['kind'] = 'EntityAnalytics'
+
+        return d
+
+
+class AddUeba(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.ueba = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'data-sources':
+                d['data_sources'] = v
+
+            elif kl == 'etag':
+                d['etag'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter ueba. All possible keys are: data-sources, etag'
+                    .format(k)
+                )
+
+        d['kind'] = 'Ueba'
+
+        return d
+
+
+class AddDeployment(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.deployment = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'deployment-id':
+                d['deployment_id'] = v[0]
+
+            elif kl == 'deployment-state':
+                d['deployment_state'] = v[0]
+
+            elif kl == 'deployment-result':
+                d['deployment_result'] = v[0]
+
+            elif kl == 'deployment-time':
+                d['deployment_time'] = v[0]
+
+            elif kl == 'deployment-logs-url':
+                d['deployment_logs_url'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter deployment. All possible keys are: deployment-id,'
+                    ' deployment-state, deployment-result, deployment-time, deployment-logs-url'.format(k)
+                )
+
+        return d
+
+
+class AddWebhook(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.webhook = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'webhook-id':
+                d['webhook_id'] = v[0]
+
+            elif kl == 'webhook-url':
+                d['webhook_url'] = v[0]
+
+            elif kl == 'webhook-secret-update-time':
+                d['webhook_secret_update_time'] = v[0]
+
+            elif kl == 'rotate-webhook-secret':
+                d['rotate_webhook_secret'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter webhook. All possible keys are: webhook-id,'
+                    ' webhook-url, webhook-secret-update-time, rotate-webhook-secret'.format(k)
+                )
+
+        return d
+
+
+class AddAzureDevOpsResourceInfo(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.azure_dev_ops_resource_info = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'pipeline-id':
+                d['pipeline_id'] = v[0]
+
+            elif kl == 'service-connection-id':
+                d['service_connection_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter azure-dev-ops-resource-info. All possible keys are:'
+                    ' pipeline-id, service-connection-id'.format(k)
+                )
+
+        return d
+
+
+class AddPathMapping(argparse._AppendAction):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        super(AddPathMapping, self).__call__(parser, namespace, action, option_string)
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'content-type':
+                d['content_type'] = v[0]
+
+            elif kl == 'path':
+                d['path'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter path-mapping. All possible keys are: content-type,'
+                    ' path'.format(k)
+                )
+
+        return d
+
+
+class AddKillChainPhases(argparse._AppendAction):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        super(AddKillChainPhases, self).__call__(parser, namespace, action, option_string)
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'kill-chain-name':
+                d['kill_chain_name'] = v[0]
+
+            elif kl == 'phase-name':
+                d['phase_name'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter kill-chain-phases. All possible keys are:'
+                    ' kill-chain-name, phase-name'.format(k)
+                )
+
+        return d
+
+
+class AddGranularMarkings(argparse._AppendAction):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        super(AddGranularMarkings, self).__call__(parser, namespace, action, option_string)
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'language':
+                d['language'] = v[0]
+
+            elif kl == 'marking-ref':
+                d['marking_ref'] = v[0]
+
+            elif kl == 'selectors':
+                d['selectors'] = v
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter granular-markings. All possible keys are: language,'
+                    ' marking-ref, selectors'.format(k)
+                )
+
+        return d
+
+
+class AddSortBy(argparse._AppendAction):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        super(AddSortBy, self).__call__(parser, namespace, action, option_string)
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'item-key':
+                d['item_key'] = v[0]
+
+            elif kl == 'sort-order':
+                d['sort_order'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter sort-by. All possible keys are: item-key, sort-order'
+                    .format(k)
+                )
+
+        return d
+
+
+class AddAadCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.aad_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tenant-id':
+                d['tenant_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter aad-check-requirements. All possible keys are:'
+                    ' tenant-id'.format(k)
+                )
+
+        d['kind'] = 'AzureActiveDirectory'
+
+        return d
+
+
+class AddAatpCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.aatp_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tenant-id':
+                d['tenant_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter aatp-check-requirements. All possible keys are:'
+                    ' tenant-id'.format(k)
+                )
+
+        d['kind'] = 'AzureAdvancedThreatProtection'
+
+        return d
+
+
+class AddAscCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.asc_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'subscription-id':
+                d['subscription_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter asc-check-requirements. All possible keys are:'
+                    ' subscription-id'.format(k)
+                )
+
+        d['kind'] = 'AzureSecurityCenter'
+
+        return d
+
+
+class AddAwsCloudTrailCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.aws_cloud_trail_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            k.lower()
+            v = properties[k]
+
+        d['kind'] = 'AmazonWebServicesCloudTrail'
+
+        return d
+
+
+class AddAwsS3CheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.aws_s3_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            k.lower()
+            v = properties[k]
+
+        d['kind'] = 'AmazonWebServicesS3'
+
+        return d
+
+
+class AddDynamics365CheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.dynamics365_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tenant-id':
+                d['tenant_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter dynamics365-check-requirements. All possible keys'
+                    ' are: tenant-id'.format(k)
+                )
+
+        d['kind'] = 'Dynamics365'
+
+        return d
+
+
+class AddMcasCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.mcas_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tenant-id':
+                d['tenant_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter mcas-check-requirements. All possible keys are:'
+                    ' tenant-id'.format(k)
+                )
+
+        d['kind'] = 'MicrosoftCloudAppSecurity'
+
+        return d
+
+
+class AddMdatpCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.mdatp_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tenant-id':
+                d['tenant_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter mdatp-check-requirements. All possible keys are:'
+                    ' tenant-id'.format(k)
+                )
+
+        d['kind'] = 'MicrosoftDefenderAdvancedThreatProtection'
+
+        return d
+
+
+class AddMstiCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.msti_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tenant-id':
+                d['tenant_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter msti-check-requirements. All possible keys are:'
+                    ' tenant-id'.format(k)
+                )
+
+        d['kind'] = 'MicrosoftThreatIntelligence'
+
+        return d
+
+
+class AddMtpCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.mtp_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tenant-id':
+                d['tenant_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter mtp-check-requirements. All possible keys are:'
+                    ' tenant-id'.format(k)
+                )
+
+        d['kind'] = 'MicrosoftThreatProtection'
+
+        return d
+
+
+class AddOfficeAtpCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.office_atp_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tenant-id':
+                d['tenant_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter office-atp-check-requirements. All possible keys are:'
+                    ' tenant-id'.format(k)
+                )
+
+        d['kind'] = 'OfficeATP'
+
+        return d
+
+
+class AddOfficeIrmCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.office_irm_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tenant-id':
+                d['tenant_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter office-irm-check-requirements. All possible keys are:'
+                    ' tenant-id'.format(k)
+                )
+
+        d['kind'] = 'OfficeIRM'
+
+        return d
+
+
+class AddOffice365ProjectCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.office365_project_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tenant-id':
+                d['tenant_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter office365-project-check-requirements. All possible'
+                    ' keys are: tenant-id'.format(k)
+                )
+
+        d['kind'] = 'Office365Project'
+
+        return d
+
+
+class AddOfficePowerBiCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.office_power_bi_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tenant-id':
+                d['tenant_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter office-power-bi-check-requirements. All possible keys'
+                    ' are: tenant-id'.format(k)
+                )
+
+        d['kind'] = 'OfficePowerBI'
+
+        return d
+
+
+class AddTiCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.ti_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tenant-id':
+                d['tenant_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter ti-check-requirements. All possible keys are:'
+                    ' tenant-id'.format(k)
+                )
+
+        d['kind'] = 'ThreatIntelligence'
+
+        return d
+
+
+class AddTiTaxiiCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.ti_taxii_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'tenant-id':
+                d['tenant_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter ti-taxii-check-requirements. All possible keys are:'
+                    ' tenant-id'.format(k)
+                )
+
+        d['kind'] = 'ThreatIntelligenceTaxii'
+
+        return d
+
+
+class AddIoTCheckRequirements(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        action = self.get_action(values, option_string)
+        namespace.io_t_check_requirements = action
+
+    def get_action(self, values, option_string):
+        try:
+            properties = defaultdict(list)
+            for (k, v) in (x.split('=', 1) for x in values):
+                properties[k].append(v)
+            properties = dict(properties)
+        except ValueError:
+            raise CLIError('usage error: {} [KEY=VALUE ...]'.format(option_string))
+        d = {}
+        for k in properties:
+            kl = k.lower()
+            v = properties[k]
+
+            if kl == 'subscription-id':
+                d['subscription_id'] = v[0]
+
+            else:
+                raise CLIError(
+                    'Unsupported Key {} is provided for parameter io-t-check-requirements. All possible keys are:'
+                    ' subscription-id'.format(k)
+                )
+
+        d['kind'] = 'IOT'
+
         return d
