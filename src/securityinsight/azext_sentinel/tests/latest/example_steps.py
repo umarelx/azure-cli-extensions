@@ -285,7 +285,7 @@ def step_alert_rule_delete(test, checks=None):
 def step_alert_rule_template_show(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel alert-rule-template show '
+    test.cmd('az sentinel alert-rule template show '
              '--alert-rule-template-id "65360bb0-8986-4ade-a89d-af3cf44d28aa" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -297,7 +297,7 @@ def step_alert_rule_template_show(test, checks=None):
 def step_alert_rule_template_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel alert-rule-template list '
+    test.cmd('az sentinel alert-rule template list '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
              checks=checks)
@@ -1032,7 +1032,7 @@ def step_data_connector_delete5(test, checks=None):
 def step_data_connector_check_requirement_post(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel data-connector-check-requirement post '
+    test.cmd('az sentinel data-connector check-requirement post '
              '--aad-check-requirements tenant-id="2070ecc9-b4d5-4ae4-adaa-936fa1954fa8" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -1283,7 +1283,7 @@ def step_entity_expand(test, checks=None):
 def step_entity_get_timeline_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity-get-timeline list '
+    test.cmd('az sentinel entity get-timeline list '
              '--entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" '
              '--end-time "2021-10-01T00:00:00.000Z" '
              '--number-of-bucket 4 '
@@ -1298,7 +1298,7 @@ def step_entity_get_timeline_list(test, checks=None):
 def step_entity_relation_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity-relation list '
+    test.cmd('az sentinel entity relation list '
              '--entity-id "{myIncident}" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -1310,7 +1310,7 @@ def step_entity_relation_list(test, checks=None):
 def step_entity_query_create(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity-query create '
+    test.cmd('az sentinel entity query create '
              '--entity-query "{{\\"etag\\":\\"\\\\\\"0300bf09-0000-0000-0000-5c37296e0000\\\\\\"\\",\\"kind\\":\\"Activ'
              'ity\\",\\"properties\\":{{\\"description\\":\\"Account deleted on host\\",\\"content\\":\\"On '
              '\'{{{{{{{{Computer}}}}}}}}\' the account \'{{{{{{{{TargetAccount}}}}}}}}\' was deleted by '
@@ -1349,7 +1349,7 @@ def step_entity_query_create(test, checks=None):
 def step_entity_query_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity-query list '
+    test.cmd('az sentinel entity query list '
              '--kind "Expansion" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -1361,7 +1361,7 @@ def step_entity_query_list(test, checks=None):
 def step_entity_query_show(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity-query show '
+    test.cmd('az sentinel entity query show '
              '--entity-query-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -1379,7 +1379,7 @@ def step_entity_query_show2(test, checks=None):
 def step_entity_query_delete(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity-query delete -y '
+    test.cmd('az sentinel entity query delete -y '
              '--entity-query-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -1391,7 +1391,7 @@ def step_entity_query_delete(test, checks=None):
 def step_entity_query_template_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity-query-template list '
+    test.cmd('az sentinel entity query-template list '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
              checks=checks)
@@ -1402,7 +1402,7 @@ def step_entity_query_template_list(test, checks=None):
 def step_entity_query_template_show(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity-query-template show '
+    test.cmd('az sentinel entity query-template show '
              '--entity-query-template-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -1414,7 +1414,7 @@ def step_entity_query_template_show(test, checks=None):
 def step_entity_relation_show_relation(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity-relation show-relation '
+    test.cmd('az sentinel entity relation show-relation '
              '--entity-id "{myIncident}" '
              '--relation-name "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" '
              '--resource-group "{rg}" '
@@ -1479,7 +1479,7 @@ def step_incident_comment_delete(test, checks=None):
 def step_incident_relation_create(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel incident-relation create '
+    test.cmd('az sentinel incident relation create '
              '--incident-id "{myIncident}" '
              '--related-resource-id "/subscriptions/{subscription_id}/resourceGroups/{rg}/providers/Microsoft.Operation'
              'alIinsights/workspaces/myWorkspace/providers/Microsoft.SecurityInsights/bookmarks/{myBookmark}" '
@@ -1494,7 +1494,7 @@ def step_incident_relation_create(test, checks=None):
 def step_incident_relation_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel incident-relation list '
+    test.cmd('az sentinel incident relation list '
              '--incident-id "{myIncident}" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -1506,7 +1506,7 @@ def step_incident_relation_list(test, checks=None):
 def step_incident_relation_show(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel incident-relation show '
+    test.cmd('az sentinel incident relation show '
              '--incident-id "{myIncident}" '
              '--relation-name "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" '
              '--resource-group "{rg}" '
@@ -1519,7 +1519,7 @@ def step_incident_relation_show(test, checks=None):
 def step_incident_relation_delete(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel incident-relation delete -y '
+    test.cmd('az sentinel incident relation delete -y '
              '--incident-id "{myIncident}" '
              '--relation-name "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" '
              '--resource-group "{rg}" '
@@ -2150,7 +2150,7 @@ def step_threat_intelligence_indicator_delete(test, checks=None):
 def step_threat_intelligence_indicator_metric_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel threat-intelligence-indicator-metric list '
+    test.cmd('az sentinel threat-intelligence-indicator metric list '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
              checks=checks)
@@ -2172,7 +2172,7 @@ def step_threat_intelligence_indicator_list(test, checks=None):
 def step_watchlist_item_create(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel watchlist-item create '
+    test.cmd('az sentinel watchlist item create '
              '--resource-group "{rg}" '
              '--watchlist-alias "highValueAsset" '
              '--etag "0300bf09-0000-0000-0000-5c37296e0000" '
@@ -2189,7 +2189,7 @@ def step_watchlist_item_create(test, checks=None):
 def step_watchlist_item_show(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel watchlist-item show '
+    test.cmd('az sentinel watchlist item show '
              '--resource-group "{rg}" '
              '--watchlist-alias "highValueAsset" '
              '--watchlist-item-id "3f8901fe-63d9-4875-9ad5-9fb3b8105797" '
@@ -2202,7 +2202,7 @@ def step_watchlist_item_show(test, checks=None):
 def step_watchlist_item_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel watchlist-item list '
+    test.cmd('az sentinel watchlist item list '
              '--resource-group "{rg}" '
              '--watchlist-alias "highValueAsset" '
              '--workspace-name "myWorkspace"',
@@ -2214,7 +2214,7 @@ def step_watchlist_item_list(test, checks=None):
 def step_watchlist_item_delete(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel watchlist-item delete -y '
+    test.cmd('az sentinel watchlist item delete -y '
              '--resource-group "{rg}" '
              '--watchlist-alias "highValueAsset" '
              '--watchlist-item-id "4008512e-1d30-48b2-9ee2-d3612ed9d3ea" '

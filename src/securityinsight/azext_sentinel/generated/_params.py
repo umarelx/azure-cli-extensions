@@ -124,11 +124,11 @@ def load_arguments(self, _):
         c.argument('rule_id', type=str, help='Alert rule ID', id_part='child_name_1')
         c.argument('action_id', type=str, help='Action ID', id_part='child_name_2')
 
-    with self.argument_context('sentinel alert-rule-template list') as c:
+    with self.argument_context('sentinel alert-rule template list') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
 
-    with self.argument_context('sentinel alert-rule-template show') as c:
+    with self.argument_context('sentinel alert-rule template show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('alert_rule_template_id', type=str, help='Alert rule template ID', id_part='child_name_1')
@@ -444,7 +444,7 @@ def load_arguments(self, _):
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('entity_id', type=str, help='entity ID', id_part='child_name_1')
 
-    with self.argument_context('sentinel entity-get-timeline list') as c:
+    with self.argument_context('sentinel entity get-timeline list') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('entity_id', type=str, help='entity ID')
@@ -453,7 +453,7 @@ def load_arguments(self, _):
         c.argument('end_time', help='The end timeline date, so the results returned are before this date.')
         c.argument('number_of_bucket', type=int, help='The number of bucket for timeline queries aggregation.')
 
-    with self.argument_context('sentinel entity-relation list') as c:
+    with self.argument_context('sentinel entity relation list') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('entity_id', type=str, help='entity ID')
@@ -466,47 +466,47 @@ def load_arguments(self, _):
                    'include a skiptoken parameter that specifies a starting point to use for subsequent calls. '
                    'Optional.')
 
-    with self.argument_context('sentinel entity-relation show-relation') as c:
+    with self.argument_context('sentinel entity relation show-relation') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('entity_id', type=str, help='entity ID', id_part='child_name_1')
         c.argument('relation_name', type=str, help='Relation Name', id_part='child_name_2')
 
-    with self.argument_context('sentinel entity-query list') as c:
+    with self.argument_context('sentinel entity query list') as c:
         c.argument('kind', arg_type=get_enum_type(['Expansion', 'Activity']), help='The entity query kind we want to '
                    'fetch')
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
 
-    with self.argument_context('sentinel entity-query show') as c:
+    with self.argument_context('sentinel entity query show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('entity_query_id', type=str, help='entity query ID', id_part='child_name_1')
 
-    with self.argument_context('sentinel entity-query create') as c:
+    with self.argument_context('sentinel entity query create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('entity_query_id', type=str, help='entity query ID')
         c.argument('entity_query', type=validate_file_or_dict, help='The entity query we want to create or update '
                    'Expected value: json-string/json-file/@json-file.')
 
-    with self.argument_context('sentinel entity-query update') as c:
+    with self.argument_context('sentinel entity query update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('entity_query_id', type=str, help='entity query ID', id_part='child_name_1')
         c.argument('entity_query', type=validate_file_or_dict, help='The entity query we want to create or update '
                    'Expected value: json-string/json-file/@json-file.')
 
-    with self.argument_context('sentinel entity-query delete') as c:
+    with self.argument_context('sentinel entity query delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('entity_query_id', type=str, help='entity query ID', id_part='child_name_1')
 
-    with self.argument_context('sentinel entity-query-template list') as c:
+    with self.argument_context('sentinel entity query-template list') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
 
-    with self.argument_context('sentinel entity-query-template show') as c:
+    with self.argument_context('sentinel entity query-template show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('entity_query_template_id', type=str, help='entity query template ID', id_part='child_name_1')
@@ -553,7 +553,7 @@ def load_arguments(self, _):
         c.argument('incident_id', type=str, help='Incident ID', id_part='child_name_1')
         c.argument('incident_comment_id', type=str, help='Incident comment ID', id_part='child_name_2')
 
-    with self.argument_context('sentinel incident-relation list') as c:
+    with self.argument_context('sentinel incident relation list') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('incident_id', type=str, help='Incident ID')
@@ -566,13 +566,13 @@ def load_arguments(self, _):
                    'include a skiptoken parameter that specifies a starting point to use for subsequent calls. '
                    'Optional.')
 
-    with self.argument_context('sentinel incident-relation show') as c:
+    with self.argument_context('sentinel incident relation show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('incident_id', type=str, help='Incident ID', id_part='child_name_1')
         c.argument('relation_name', type=str, help='Relation Name', id_part='child_name_2')
 
-    with self.argument_context('sentinel incident-relation create') as c:
+    with self.argument_context('sentinel incident relation create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('incident_id', type=str, help='Incident ID')
@@ -580,7 +580,7 @@ def load_arguments(self, _):
         c.argument('etag', type=str, help='Etag of the azure resource')
         c.argument('related_resource_id', type=str, help='The resource ID of the related resource')
 
-    with self.argument_context('sentinel incident-relation update') as c:
+    with self.argument_context('sentinel incident relation update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('incident_id', type=str, help='Incident ID', id_part='child_name_1')
@@ -589,7 +589,7 @@ def load_arguments(self, _):
         c.argument('related_resource_id', type=str, help='The resource ID of the related resource')
         c.ignore('relation')
 
-    with self.argument_context('sentinel incident-relation delete') as c:
+    with self.argument_context('sentinel incident relation delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('incident_id', type=str, help='Incident ID', id_part='child_name_1')
@@ -1015,7 +1015,7 @@ def load_arguments(self, _):
                    'include a skiptoken parameter that specifies a starting point to use for subsequent calls. '
                    'Optional.')
 
-    with self.argument_context('sentinel threat-intelligence-indicator-metric list') as c:
+    with self.argument_context('sentinel threat-intelligence-indicator metric list') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
 
@@ -1111,7 +1111,7 @@ def load_arguments(self, _):
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
 
-    with self.argument_context('sentinel watchlist-item list') as c:
+    with self.argument_context('sentinel watchlist item list') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('skip_token', type=str, help='Skiptoken is only used if a previous operation returned a partial '
@@ -1120,13 +1120,13 @@ def load_arguments(self, _):
                    'Optional.')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias')
 
-    with self.argument_context('sentinel watchlist-item show') as c:
+    with self.argument_context('sentinel watchlist item show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
         c.argument('watchlist_item_id', type=str, help='Watchlist Item Id (GUID)', id_part='child_name_2')
 
-    with self.argument_context('sentinel watchlist-item create') as c:
+    with self.argument_context('sentinel watchlist item create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias')
@@ -1147,7 +1147,7 @@ def load_arguments(self, _):
         c.argument('object_id', help='The object id of the user.', arg_group='Updated By')
         c.argument('user_info_object_id', help='The object id of the user.', arg_group='Created By')
 
-    with self.argument_context('sentinel watchlist-item update') as c:
+    with self.argument_context('sentinel watchlist item update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
@@ -1169,7 +1169,7 @@ def load_arguments(self, _):
         c.argument('user_info_object_id', help='The object id of the user.', arg_group='Created By')
         c.ignore('watchlist_item')
 
-    with self.argument_context('sentinel watchlist-item delete') as c:
+    with self.argument_context('sentinel watchlist item delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
@@ -1230,7 +1230,7 @@ def load_arguments(self, _):
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('data_connector_id', type=str, help='Connector ID', id_part='child_name_1')
 
-    with self.argument_context('sentinel data-connector-check-requirement post') as c:
+    with self.argument_context('sentinel data-connector check-requirement post') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('aad_check_requirements', action=AddAadCheckRequirements, nargs='+', help='Represents AAD (Azure '
