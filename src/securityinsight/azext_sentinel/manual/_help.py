@@ -8,174 +8,36 @@ from knack.help_files import helps
 
 helps['sentinel'] = """
     type: group
-    short-summary: Manage Security Insight
+    short-summary: Manage Microsoft Sentinel.
 """
 
-helps['sentinel data-connector create'] = """
+helps['sentinel automation-rule create'] = """
     type: command
-    short-summary: "Create the data connector."
+    short-summary: "Create the automation rule."
     parameters:
-      - name: --aad-data-connector
-        short-summary: "Represents AAD (Azure Active Directory) data connector."
+      - name: --actions
+        short-summary: "The actions to execute when the automation rule is triggered."
         long-summary: |
-            Usage: --aad-data-connector tenant-id=XX state=XX kind=XX etag=XX
+            Usage: --actions order=XX action-type=XX
 
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --aatp-data-connector
-        short-summary: "Represents Microsoft Defender for Identity data connector."
+            action-type: Required. The type of the automation rule action.
+
+            Multiple actions can be specified by using more than one --actions argument.
+      - name: --conditions
+        short-summary: "The conditions to evaluate to determine if the automation rule should be triggered on a given \
+object."
         long-summary: |
-            Usage: --aatp-data-connector tenant-id=XX state=XX kind=XX etag=XX
+            Usage: --conditions condition-type=XX
 
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --asc-data-connector
-        short-summary: "Represents Microsoft Defender for Cloud data connector."
-        long-summary: |
-            Usage: --asc-data-connector subscription-id=XX state=XX kind=XX etag=XX
 
-            subscription-id: The subscription id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --aws-cloud-trail-data-connector
-        short-summary: "Represents Amazon Web Services CloudTrail data connector."
-        long-summary: |
-            Usage: --aws-cloud-trail-data-connector aws-role-arn=XX state=XX kind=XX etag=XX
-
-            aws-role-arn: The Aws Role Arn (with CloudTrailReadOnly policy) that is used to access the Aws account.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --mcas-data-connector
-        short-summary: "Represents Microsoft Defender for Cloud Apps data connector."
-        long-summary: |
-            Usage: --mcas-data-connector tenant-id=XX state-data-types-alerts-state=XX state-data-types-discovery-logs-\
-state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state-data-types-alerts-state: Describe whether this data type connection is enabled or not.
-            state-data-types-discovery-logs-state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --mdatp-data-connector
-        short-summary: "Represents Microsoft Defender for Endpoint data connector."
-        long-summary: |
-            Usage: --mdatp-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --office-data-connector
-        short-summary: "Represents office data connector."
-        long-summary: |
-            Usage: --office-data-connector tenant-id=XX state-data-types-share-point-state=XX \
-state-data-types-exchange-state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state-data-types-share-point-state: Describe whether this data type connection is enabled or not.
-            state-data-types-exchange-state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --ti-data-connector
-        short-summary: "Represents threat intelligence data connector."
-        long-summary: |
-            Usage: --ti-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
+            Multiple actions can be specified by using more than one --conditions argument.
     examples:
-      - name: Creates or updates an Office365 data connector.
+      - name: AutomationRules_CreateOrUpdate
         text: |-
-               az sentinel data-connector create --office-data-connector etag="{etag}" \
-               tenant-id="{tenant-id}" --data-connector-id "{id}" --resource-group "myRg" --workspace-name "myWorkspace"
-"""
-
-helps['sentinel data-connector update'] = """
-    type: command
-    short-summary: "Update the data connector."
-    parameters:
-      - name: --aad-data-connector
-        short-summary: "Represents AAD (Azure Active Directory) data connector."
-        long-summary: |
-            Usage: --aad-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --aatp-data-connector
-        short-summary: "Represents Microsoft Defender for Identity data connector."
-        long-summary: |
-            Usage: --aatp-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --asc-data-connector
-        short-summary: "Represents Microsoft Defender for Cloud data connector."
-        long-summary: |
-            Usage: --asc-data-connector subscription-id=XX state=XX kind=XX etag=XX
-
-            subscription-id: The subscription id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --aws-cloud-trail-data-connector
-        short-summary: "Represents Amazon Web Services CloudTrail data connector."
-        long-summary: |
-            Usage: --aws-cloud-trail-data-connector aws-role-arn=XX state=XX kind=XX etag=XX
-
-            aws-role-arn: The Aws Role Arn (with CloudTrailReadOnly policy) that is used to access the Aws account.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --mcas-data-connector
-        short-summary: "Represents Microsoft Defender for Cloud Apps data connector."
-        long-summary: |
-            Usage: --mcas-data-connector tenant-id=XX state-data-types-alerts-state=XX state-data-types-discovery-logs-\
-state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state-data-types-alerts-state: Describe whether this data type connection is enabled or not.
-            state-data-types-discovery-logs-state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --mdatp-data-connector
-        short-summary: "Represents Microsoft Defender for Endpoint data connector."
-        long-summary: |
-            Usage: --mdatp-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --office-data-connector
-        short-summary: "Represents office data connector."
-        long-summary: |
-            Usage: --office-data-connector tenant-id=XX state-data-types-share-point-state=XX \
-state-data-types-exchange-state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state-data-types-share-point-state: Describe whether this data type connection is enabled or not.
-            state-data-types-exchange-state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
-      - name: --ti-data-connector
-        short-summary: "Represents threat intelligence data connector."
-        long-summary: |
-            Usage: --ti-data-connector tenant-id=XX state=XX kind=XX etag=XX
-
-            tenant-id: The tenant id to connect to, and get the data from.
-            state: Describe whether this data type connection is enabled or not.
-            kind: Required. The data connector kind
-            etag: Etag of the azure resource
+               az sentinel automation-rule create --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\"" --actions \
+action-type="ModifyProperties" order=1 --display-name "High severity incidents \
+escalation" --order 1 --conditions condition-type="Property" --conditions condition-type="PropertyChanged" --conditions \
+condition-type="PropertyArrayChanged" --is-enabled \
+true --triggers-when "Created" --automation-rule-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" \
+--workspace-name "myWorkspace"
 """

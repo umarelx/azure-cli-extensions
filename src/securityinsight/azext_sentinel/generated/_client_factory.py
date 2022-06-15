@@ -44,10 +44,6 @@ def cf_bookmark_relation(cli_ctx, *_):
     return cf_sentinel_cl(cli_ctx).bookmark_relations
 
 
-def cf_bookmark(cli_ctx, *_):
-    return cf_sentinel_cl(cli_ctx).bookmark
-
-
 def cf_ip_geodata(cli_ctx, *_):
     return cf_sentinel_cl(cli_ctx).ip_geodata
 

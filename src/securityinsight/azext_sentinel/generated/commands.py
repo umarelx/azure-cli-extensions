@@ -21,7 +21,6 @@ from azext_sentinel.generated._client_factory import (
     cf_incident,
     cf_bookmark,
     cf_bookmark_relation,
-    cf_bookmark,
     cf_ip_geodata,
     cf_domain_whois,
     cf_entity,
@@ -84,14 +83,6 @@ sentinel_automation_rule = CliCommandType(
 sentinel_bookmark = CliCommandType(
     operations_tmpl=(
         'azext_sentinel.vendored_sdks.securityinsight.operations._bookmarks_operations#BookmarksOperations.{}'
-    ),
-    client_factory=cf_bookmark,
-)
-
-
-sentinel_bookmark = CliCommandType(
-    operations_tmpl=(
-        'azext_sentinel.vendored_sdks.securityinsight.operations._bookmark_operations#BookmarkOperations.{}'
     ),
     client_factory=cf_bookmark,
 )
@@ -313,8 +304,6 @@ def load_command_table(self, _):
         g.custom_command('create', 'sentinel_bookmark_create')
         g.generic_update_command('update', custom_func_name='sentinel_bookmark_update', setter_arg_name='bookmark')
         g.custom_command('delete', 'sentinel_bookmark_delete', confirmation=True)
-
-    with self.command_group('sentinel bookmark', sentinel_bookmark, client_factory=cf_bookmark) as g:
         g.custom_command('expand', 'sentinel_bookmark_expand')
 
     with self.command_group(
@@ -462,10 +451,10 @@ def load_command_table(self, _):
     ) as g:
         g.custom_show_command('show', 'sentinel_threat_indicator_show')
         g.custom_command('create', 'sentinel_threat_indicator_create')
+        g.custom_command('update', 'sentinel_threat_indicator_update')
         g.custom_command('delete', 'sentinel_threat_indicator_delete', confirmation=True)
         g.custom_command('append-tag', 'sentinel_threat_indicator_append_tag')
-        g.custom_command('create-indicator', 'sentinel_threat_indicator_create_indicator')
-        g.custom_command('query-indicator', 'sentinel_threat_indicator_query_indicator')
+        g.custom_command('query', 'sentinel_threat_indicator_query')
         g.custom_command('replace-tag', 'sentinel_threat_indicator_replace_tag')
 
     with self.command_group(

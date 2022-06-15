@@ -536,10 +536,11 @@ helps['sentinel bookmark create'] = """
                az sentinel bookmark create --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\"" --created \
 "2021-09-01T13:15:30Z" --user-info-object-id "2046feea-040d-4a46-9e2b-91c2941bfa70" --display-name "My bookmark" \
 --entity-mappings "[{\\"entityType\\":\\"Account\\",\\"fieldMappings\\":[{\\"identifier\\":\\"Fullname\\",\\"value\\":\
-\\"johndoe@microsoft.com\\"}]}]" --labels "Tag1" "Tag2" --notes "Found a suspicious activity" --query "SecurityEvent | \
-where TimeGenerated > ago(1d) and TimeGenerated < ago(2d)" --query-result "Security Event query result" --tactics \
-"Execution" --techniques "T1609" --updated "2021-09-01T13:15:30Z" --object-id "2046feea-040d-4a46-9e2b-91c2941bfa70" \
---bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" --workspace-name "myWorkspace"
+\\"johndoe@microsoft.com\\"}]}]" --labels "Tag1" "Tag2" --notes "Found a suspicious activity" --query-content \
+"SecurityEvent | where TimeGenerated > ago(1d) and TimeGenerated < ago(2d)" --query-result "Security Event query \
+result" --tactics "Execution" --techniques "T1609" --updated "2021-09-01T13:15:30Z" --object-id \
+"2046feea-040d-4a46-9e2b-91c2941bfa70" --bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" \
+--workspace-name "myWorkspace"
 """
 
 helps['sentinel bookmark update'] = """
@@ -565,6 +566,17 @@ helps['sentinel bookmark delete'] = """
         text: |-
                az sentinel bookmark delete --bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group \
 "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel bookmark expand'] = """
+    type: command
+    short-summary: "Expand an bookmark."
+    examples:
+      - name: Expand an bookmark
+        text: |-
+               az sentinel bookmark expand --bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --end-time \
+"2020-01-24T17:21:00.000Z" --expansion-id "27f76e63-c41b-480f-bb18-12ad2e011d49" --start-time \
+"2019-12-25T17:21:00.000Z" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
 helps['sentinel bookmark relation'] = """
@@ -617,22 +629,6 @@ helps['sentinel bookmark relation delete'] = """
         text: |-
                az sentinel bookmark relation delete --bookmark-id "2216d0e1-91e3-4902-89fd-d2df8c535096" \
 --relation-name "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" --resource-group "myRg" --workspace-name "myWorkspace"
-"""
-
-helps['sentinel bookmark'] = """
-    type: group
-    short-summary: Manage bookmark with sentinel
-"""
-
-helps['sentinel bookmark expand'] = """
-    type: command
-    short-summary: "Expand an bookmark."
-    examples:
-      - name: Expand an bookmark
-        text: |-
-               az sentinel bookmark expand --bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --end-time \
-"2020-01-24T17:21:00.000Z" --expansion-id "27f76e63-c41b-480f-bb18-12ad2e011d49" --start-time \
-"2019-12-25T17:21:00.000Z" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
 helps['sentinel ip-geodata'] = """
@@ -1507,6 +1503,39 @@ helps['sentinel threat-indicator show'] = """
 
 helps['sentinel threat-indicator create'] = """
     type: command
+    short-summary: "Create a new threat intelligence indicator."
+    parameters:
+      - name: --kill-chain-phases
+        short-summary: "Kill chain phases"
+        long-summary: |
+            Usage: --kill-chain-phases kill-chain-name=XX phase-name=XX
+
+            kill-chain-name: Kill chainName name
+            phase-name: Phase name
+
+            Multiple actions can be specified by using more than one --kill-chain-phases argument.
+      - name: --granular-markings
+        short-summary: "Granular Markings"
+        long-summary: |
+            Usage: --granular-markings language=XX marking-ref=XX selectors=XX
+
+            language: Language granular marking model
+            marking-ref: marking reference granular marking model
+            selectors: granular marking model selectors
+
+            Multiple actions can be specified by using more than one --granular-markings argument.
+    examples:
+      - name: Create a new Threat Intelligence
+        text: |-
+               az sentinel threat-indicator create --description "debugging indicators" --confidence 78 \
+--created-by-ref "contoso@contoso.com" --display-name "new schema" --external-references "[]" --modified "" --pattern \
+"[url:value = \'https://www.contoso.com\']" --pattern-type "url" --revoked false --source "Azure Sentinel" \
+--threat-intelligence-tags "new schema" --threat-types "compromised" --valid-from "2021-09-15T17:44:00.114052Z" \
+--valid-until "" --resource-group "myRg" --workspace-name "myWorkspace"
+"""
+
+helps['sentinel threat-indicator update'] = """
+    type: command
     short-summary: "Update a threat Intelligence indicator."
     parameters:
       - name: --kill-chain-phases
@@ -1531,7 +1560,7 @@ helps['sentinel threat-indicator create'] = """
     examples:
       - name: Update a threat Intelligence indicator
         text: |-
-               az sentinel threat-indicator create --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" --description \
+               az sentinel threat-indicator update --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" --description \
 "debugging indicators" --confidence 78 --created-by-ref "contoso@contoso.com" --display-name "new schema" \
 --external-references "[]" --modified "" --pattern "[url:value = \'https://www.contoso.com\']" --pattern-type "url" \
 --revoked false --source "Azure Sentinel" --threat-intelligence-tags "new schema" --threat-types "compromised" \
@@ -1558,40 +1587,7 @@ helps['sentinel threat-indicator append-tag'] = """
 --threat-intelligence-tags "tag1" "tag2" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel threat-indicator create-indicator'] = """
-    type: command
-    short-summary: "Create a new threat intelligence indicator."
-    parameters:
-      - name: --kill-chain-phases
-        short-summary: "Kill chain phases"
-        long-summary: |
-            Usage: --kill-chain-phases kill-chain-name=XX phase-name=XX
-
-            kill-chain-name: Kill chainName name
-            phase-name: Phase name
-
-            Multiple actions can be specified by using more than one --kill-chain-phases argument.
-      - name: --granular-markings
-        short-summary: "Granular Markings"
-        long-summary: |
-            Usage: --granular-markings language=XX marking-ref=XX selectors=XX
-
-            language: Language granular marking model
-            marking-ref: marking reference granular marking model
-            selectors: granular marking model selectors
-
-            Multiple actions can be specified by using more than one --granular-markings argument.
-    examples:
-      - name: Create a new Threat Intelligence
-        text: |-
-               az sentinel threat-indicator create-indicator --description "debugging indicators" --confidence 78 \
---created-by-ref "contoso@contoso.com" --display-name "new schema" --external-references "[]" --modified "" --pattern \
-"[url:value = \'https://www.contoso.com\']" --pattern-type "url" --revoked false --source "Azure Sentinel" \
---threat-intelligence-tags "new schema" --threat-types "compromised" --valid-from "2021-09-15T17:44:00.114052Z" \
---valid-until "" --resource-group "myRg" --workspace-name "myWorkspace"
-"""
-
-helps['sentinel threat-indicator query-indicator'] = """
+helps['sentinel threat-indicator query'] = """
     type: command
     short-summary: "Query threat intelligence indicators as per filtering criteria."
     parameters:
@@ -1607,9 +1603,9 @@ helps['sentinel threat-indicator query-indicator'] = """
     examples:
       - name: Query threat intelligence indicators as per filtering criteria
         text: |-
-               az sentinel threat-indicator query-indicator --max-confidence 80 --max-valid-until \
-"2021-04-25T17:44:00.114052Z" --min-confidence 25 --min-valid-until "2021-04-05T17:44:00.114052Z" --page-size 100 \
---sort-by item-key="lastUpdatedTimeUtc" sort-order="descending" --sources "Azure Sentinel" --resource-group "myRg" \
+               az sentinel threat-indicator query --max-confidence 80 --max-valid-until "2021-04-25T17:44:00.114052Z" \
+--min-confidence 25 --min-valid-until "2021-04-05T17:44:00.114052Z" --page-size 100 --sort-by \
+item-key="lastUpdatedTimeUtc" sort-order="descending" --sources "Azure Sentinel" --resource-group "myRg" \
 --workspace-name "myWorkspace"
 """
 

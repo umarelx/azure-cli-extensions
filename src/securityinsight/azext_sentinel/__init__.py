@@ -21,7 +21,7 @@ class SecurityInsightsCommandsLoader(AzCommandsLoader):
         sentinel_custom = CliCommandType(
             operations_tmpl='azext_sentinel.custom#{}',
             client_factory=cf_sentinel_cl)
-        parent = super(SecurityInsightsCommandsLoader, self)
+        parent = super()
         parent.__init__(cli_ctx=cli_ctx, custom_command_type=sentinel_custom)
 
     def load_command_table(self, args):

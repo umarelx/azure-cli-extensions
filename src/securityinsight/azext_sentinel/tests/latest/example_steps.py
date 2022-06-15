@@ -338,21 +338,6 @@ def step_automation_rule_delete(test, checks=None):
              checks=checks)
 
 
-# EXAMPLE: /Bookmark/post/Expand an bookmark
-@try_manual
-def step_bookmark_expand(test, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az sentinel bookmark expand '
-             '--bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
-             '--end-time "2020-01-24T17:21:00.000Z" '
-             '--expansion-id "27f76e63-c41b-480f-bb18-12ad2e011d49" '
-             '--start-time "2019-12-25T17:21:00.000Z" '
-             '--resource-group "{rg}" '
-             '--workspace-name "myWorkspace"',
-             checks=checks)
-
-
 # EXAMPLE: /BookmarkRelations/put/Creates or updates a bookmark relation.
 @try_manual
 def step_bookmark_relation_create(test, checks=None):
@@ -420,7 +405,7 @@ def step_bookmark_create(test, checks=None):
              '\\",\\"value\\":\\"johndoe@microsoft.com\\"}}]}}]" '
              '--labels "Tag1" "Tag2" '
              '--notes "Found a suspicious activity" '
-             '--query "SecurityEvent | where TimeGenerated > ago(1d) and TimeGenerated < ago(2d)" '
+             '--query-content "SecurityEvent | where TimeGenerated > ago(1d) and TimeGenerated < ago(2d)" '
              '--query-result "Security Event query result" '
              '--tactics "Execution" '
              '--techniques "T1609" '
@@ -450,6 +435,21 @@ def step_bookmark_list(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az sentinel bookmark list '
+             '--resource-group "{rg}" '
+             '--workspace-name "myWorkspace"',
+             checks=checks)
+
+
+# EXAMPLE: /Bookmarks/post/Expand an bookmark
+@try_manual
+def step_bookmark_expand(test, checks=None):
+    if checks is None:
+        checks = []
+    test.cmd('az sentinel bookmark expand '
+             '--bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
+             '--end-time "2020-01-24T17:21:00.000Z" '
+             '--expansion-id "27f76e63-c41b-480f-bb18-12ad2e011d49" '
+             '--start-time "2019-12-25T17:21:00.000Z" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
              checks=checks)
@@ -2015,10 +2015,10 @@ def step_source_control_delete(test, checks=None):
 
 # EXAMPLE: /ThreatIntelligenceIndicator/put/Update a threat Intelligence indicator
 @try_manual
-def step_threat_indicator_create(test, checks=None):
+def step_threat_indicator_update(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel threat-indicator create '
+    test.cmd('az sentinel threat-indicator update '
              '--name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" '
              '--description "debugging indicators" '
              '--confidence 78 '
@@ -2066,10 +2066,10 @@ def step_threat_indicator_append_tag(test, checks=None):
 
 # EXAMPLE: /ThreatIntelligenceIndicator/post/Create a new Threat Intelligence
 @try_manual
-def step_threat_indicator_create_indicator(test, checks=None):
+def step_threat_indicator_create(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel threat-indicator create-indicator '
+    test.cmd('az sentinel threat-indicator create '
              '--description "debugging indicators" '
              '--confidence 78 '
              '--created-by-ref "contoso@contoso.com" '
@@ -2091,10 +2091,10 @@ def step_threat_indicator_create_indicator(test, checks=None):
 
 # EXAMPLE: /ThreatIntelligenceIndicator/post/Query threat intelligence indicators as per filtering criteria
 @try_manual
-def step_threat_indicator_query_indicator(test, checks=None):
+def step_threat_indicator_query(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel threat-indicator query-indicator '
+    test.cmd('az sentinel threat-indicator query '
              '--max-confidence 80 '
              '--max-valid-until "2021-04-25T17:44:00.114052Z" '
              '--min-confidence 25 '

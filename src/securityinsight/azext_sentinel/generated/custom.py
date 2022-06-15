@@ -464,7 +464,7 @@ def sentinel_bookmark_create(client,
                              display_name=None,
                              labels=None,
                              notes=None,
-                             query=None,
+                             query_content=None,
                              query_result=None,
                              updated=None,
                              event_time=None,
@@ -487,8 +487,8 @@ def sentinel_bookmark_create(client,
         bookmark['labels'] = labels
     if notes is not None:
         bookmark['notes'] = notes
-    if query is not None:
-        bookmark['query'] = query
+    if query_content is not None:
+        bookmark['query'] = query_content
     if query_result is not None:
         bookmark['query_result'] = query_result
     if updated is not None:
@@ -532,7 +532,7 @@ def sentinel_bookmark_update(instance,
                              display_name=None,
                              labels=None,
                              notes=None,
-                             query=None,
+                             query_content=None,
                              query_result=None,
                              updated=None,
                              event_time=None,
@@ -554,8 +554,8 @@ def sentinel_bookmark_update(instance,
         instance.labels = labels
     if notes is not None:
         instance.notes = notes
-    if query is not None:
-        instance.query = query
+    if query_content is not None:
+        instance.query = query_content
     if query_result is not None:
         instance.query_result = query_result
     if updated is not None:
@@ -588,6 +588,26 @@ def sentinel_bookmark_delete(client,
     return client.delete(resource_group_name=resource_group_name,
                          workspace_name=workspace_name,
                          bookmark_id=bookmark_id)
+
+
+def sentinel_bookmark_expand(client,
+                             resource_group_name,
+                             workspace_name,
+                             bookmark_id,
+                             end_time=None,
+                             expansion_id=None,
+                             start_time=None):
+    parameters = {}
+    if end_time is not None:
+        parameters['end_time'] = end_time
+    if expansion_id is not None:
+        parameters['expansion_id'] = expansion_id
+    if start_time is not None:
+        parameters['start_time'] = start_time
+    return client.expand(resource_group_name=resource_group_name,
+                         workspace_name=workspace_name,
+                         bookmark_id=bookmark_id,
+                         parameters=parameters)
 
 
 def sentinel_bookmark_relation_list(client,
@@ -660,26 +680,6 @@ def sentinel_bookmark_relation_delete(client,
                          workspace_name=workspace_name,
                          bookmark_id=bookmark_id,
                          relation_name=relation_name)
-
-
-def sentinel_bookmark_expand(client,
-                             resource_group_name,
-                             workspace_name,
-                             bookmark_id,
-                             end_time=None,
-                             expansion_id=None,
-                             start_time=None):
-    parameters = {}
-    if end_time is not None:
-        parameters['end_time'] = end_time
-    if expansion_id is not None:
-        parameters['expansion_id'] = expansion_id
-    if start_time is not None:
-        parameters['start_time'] = start_time
-    return client.expand(resource_group_name=resource_group_name,
-                         workspace_name=workspace_name,
-                         bookmark_id=bookmark_id,
-                         parameters=parameters)
 
 
 def sentinel_ip_geodata_show(client,
@@ -1476,6 +1476,103 @@ def sentinel_threat_indicator_show(client,
 def sentinel_threat_indicator_create(client,
                                      resource_group_name,
                                      workspace_name,
+                                     etag=None,
+                                     threat_intelligence_tags=None,
+                                     last_updated_time_utc=None,
+                                     source=None,
+                                     display_name=None,
+                                     description=None,
+                                     indicator_types=None,
+                                     pattern=None,
+                                     pattern_type=None,
+                                     pattern_version=None,
+                                     kill_chain_phases=None,
+                                     parsed_pattern=None,
+                                     external_id=None,
+                                     created_by_ref=None,
+                                     defanged=None,
+                                     external_last_updated_time_utc=None,
+                                     external_references=None,
+                                     granular_markings=None,
+                                     labels=None,
+                                     revoked=None,
+                                     confidence=None,
+                                     object_marking_refs=None,
+                                     language=None,
+                                     threat_types=None,
+                                     valid_from=None,
+                                     valid_until=None,
+                                     created=None,
+                                     modified=None,
+                                     extensions=None):
+    threat_intelligence_properties = {}
+    if etag is not None:
+        threat_intelligence_properties['etag'] = etag
+    threat_intelligence_properties['kind'] = 'indicator'
+    if threat_intelligence_tags is not None:
+        threat_intelligence_properties['threat_intelligence_tags'] = threat_intelligence_tags
+    if last_updated_time_utc is not None:
+        threat_intelligence_properties['last_updated_time_utc'] = last_updated_time_utc
+    if source is not None:
+        threat_intelligence_properties['source'] = source
+    if display_name is not None:
+        threat_intelligence_properties['display_name'] = display_name
+    if description is not None:
+        threat_intelligence_properties['description'] = description
+    if indicator_types is not None:
+        threat_intelligence_properties['indicator_types'] = indicator_types
+    if pattern is not None:
+        threat_intelligence_properties['pattern'] = pattern
+    if pattern_type is not None:
+        threat_intelligence_properties['pattern_type'] = pattern_type
+    if pattern_version is not None:
+        threat_intelligence_properties['pattern_version'] = pattern_version
+    if kill_chain_phases is not None:
+        threat_intelligence_properties['kill_chain_phases'] = kill_chain_phases
+    if parsed_pattern is not None:
+        threat_intelligence_properties['parsed_pattern'] = parsed_pattern
+    if external_id is not None:
+        threat_intelligence_properties['external_id'] = external_id
+    if created_by_ref is not None:
+        threat_intelligence_properties['created_by_ref'] = created_by_ref
+    if defanged is not None:
+        threat_intelligence_properties['defanged'] = defanged
+    if external_last_updated_time_utc is not None:
+        threat_intelligence_properties['external_last_updated_time_utc'] = external_last_updated_time_utc
+    if external_references is not None:
+        threat_intelligence_properties['external_references'] = external_references
+    if granular_markings is not None:
+        threat_intelligence_properties['granular_markings'] = granular_markings
+    if labels is not None:
+        threat_intelligence_properties['labels'] = labels
+    if revoked is not None:
+        threat_intelligence_properties['revoked'] = revoked
+    if confidence is not None:
+        threat_intelligence_properties['confidence'] = confidence
+    if object_marking_refs is not None:
+        threat_intelligence_properties['object_marking_refs'] = object_marking_refs
+    if language is not None:
+        threat_intelligence_properties['language'] = language
+    if threat_types is not None:
+        threat_intelligence_properties['threat_types'] = threat_types
+    if valid_from is not None:
+        threat_intelligence_properties['valid_from'] = valid_from
+    if valid_until is not None:
+        threat_intelligence_properties['valid_until'] = valid_until
+    if created is not None:
+        threat_intelligence_properties['created'] = created
+    if modified is not None:
+        threat_intelligence_properties['modified'] = modified
+    if extensions is not None:
+        threat_intelligence_properties['extensions'] = extensions
+    return client.create_indicator(resource_group_name=resource_group_name,
+                                   workspace_name=workspace_name,
+                                   threat_intelligence_properties=threat_intelligence_properties)
+
+
+def sentinel_threat_indicator_update(client,
+                                     resource_group_name,
+                                     workspace_name,
                                      name,
                                      etag=None,
                                      threat_intelligence_tags=None,
@@ -1595,119 +1692,22 @@ def sentinel_threat_indicator_append_tag(client,
                               threat_intelligence_append_tags=threat_intelligence_append_tags)
 
 
-def sentinel_threat_indicator_create_indicator(client,
-                                               resource_group_name,
-                                               workspace_name,
-                                               etag=None,
-                                               threat_intelligence_tags=None,
-                                               last_updated_time_utc=None,
-                                               source=None,
-                                               display_name=None,
-                                               description=None,
-                                               indicator_types=None,
-                                               pattern=None,
-                                               pattern_type=None,
-                                               pattern_version=None,
-                                               kill_chain_phases=None,
-                                               parsed_pattern=None,
-                                               external_id=None,
-                                               created_by_ref=None,
-                                               defanged=None,
-                                               external_last_updated_time_utc=None,
-                                               external_references=None,
-                                               granular_markings=None,
-                                               labels=None,
-                                               revoked=None,
-                                               confidence=None,
-                                               object_marking_refs=None,
-                                               language=None,
-                                               threat_types=None,
-                                               valid_from=None,
-                                               valid_until=None,
-                                               created=None,
-                                               modified=None,
-                                               extensions=None):
-    threat_intelligence_properties = {}
-    if etag is not None:
-        threat_intelligence_properties['etag'] = etag
-    threat_intelligence_properties['kind'] = 'indicator'
-    if threat_intelligence_tags is not None:
-        threat_intelligence_properties['threat_intelligence_tags'] = threat_intelligence_tags
-    if last_updated_time_utc is not None:
-        threat_intelligence_properties['last_updated_time_utc'] = last_updated_time_utc
-    if source is not None:
-        threat_intelligence_properties['source'] = source
-    if display_name is not None:
-        threat_intelligence_properties['display_name'] = display_name
-    if description is not None:
-        threat_intelligence_properties['description'] = description
-    if indicator_types is not None:
-        threat_intelligence_properties['indicator_types'] = indicator_types
-    if pattern is not None:
-        threat_intelligence_properties['pattern'] = pattern
-    if pattern_type is not None:
-        threat_intelligence_properties['pattern_type'] = pattern_type
-    if pattern_version is not None:
-        threat_intelligence_properties['pattern_version'] = pattern_version
-    if kill_chain_phases is not None:
-        threat_intelligence_properties['kill_chain_phases'] = kill_chain_phases
-    if parsed_pattern is not None:
-        threat_intelligence_properties['parsed_pattern'] = parsed_pattern
-    if external_id is not None:
-        threat_intelligence_properties['external_id'] = external_id
-    if created_by_ref is not None:
-        threat_intelligence_properties['created_by_ref'] = created_by_ref
-    if defanged is not None:
-        threat_intelligence_properties['defanged'] = defanged
-    if external_last_updated_time_utc is not None:
-        threat_intelligence_properties['external_last_updated_time_utc'] = external_last_updated_time_utc
-    if external_references is not None:
-        threat_intelligence_properties['external_references'] = external_references
-    if granular_markings is not None:
-        threat_intelligence_properties['granular_markings'] = granular_markings
-    if labels is not None:
-        threat_intelligence_properties['labels'] = labels
-    if revoked is not None:
-        threat_intelligence_properties['revoked'] = revoked
-    if confidence is not None:
-        threat_intelligence_properties['confidence'] = confidence
-    if object_marking_refs is not None:
-        threat_intelligence_properties['object_marking_refs'] = object_marking_refs
-    if language is not None:
-        threat_intelligence_properties['language'] = language
-    if threat_types is not None:
-        threat_intelligence_properties['threat_types'] = threat_types
-    if valid_from is not None:
-        threat_intelligence_properties['valid_from'] = valid_from
-    if valid_until is not None:
-        threat_intelligence_properties['valid_until'] = valid_until
-    if created is not None:
-        threat_intelligence_properties['created'] = created
-    if modified is not None:
-        threat_intelligence_properties['modified'] = modified
-    if extensions is not None:
-        threat_intelligence_properties['extensions'] = extensions
-    return client.create_indicator(resource_group_name=resource_group_name,
-                                   workspace_name=workspace_name,
-                                   threat_intelligence_properties=threat_intelligence_properties)
-
-
-def sentinel_threat_indicator_query_indicator(client,
-                                              resource_group_name,
-                                              workspace_name,
-                                              page_size=None,
-                                              min_confidence=None,
-                                              max_confidence=None,
-                                              min_valid_until=None,
-                                              max_valid_until=None,
-                                              include_disabled=None,
-                                              sort_by=None,
-                                              sources=None,
-                                              pattern_types=None,
-                                              threat_types=None,
-                                              ids=None,
-                                              keywords=None,
-                                              skip_token=None):
+def sentinel_threat_indicator_query(client,
+                                    resource_group_name,
+                                    workspace_name,
+                                    page_size=None,
+                                    min_confidence=None,
+                                    max_confidence=None,
+                                    min_valid_until=None,
+                                    max_valid_until=None,
+                                    include_disabled=None,
+                                    sort_by=None,
+                                    sources=None,
+                                    pattern_types=None,
+                                    threat_types=None,
+                                    ids=None,
+                                    keywords=None,
+                                    skip_token=None):
     threat_intelligence_filtering_criteria = {}
     if page_size is not None:
         threat_intelligence_filtering_criteria['page_size'] = page_size
@@ -2341,8 +2341,7 @@ def sentinel_data_connector_check_requirement(client,
                        'office_atp_check_requirements, office_irm_check_requirements, office365_project_check_requireme'
                        'nts, office_power_bi_check_requirements, ti_check_requirements, ti_taxii_check_requirements, '
                        'io_t_check_requirements is provided!')
-    data_connectors_check_requirements = all_data_connectors_check_requirements[0] if len(all_data_connectors_check_requirements)\
-    == 1 else None
+    data_connectors_check_requirements = all_data_connectors_check_requirements[0] if len(all_data_connectors_check_requirements) == 1 else None
     return client.post(resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        data_connectors_check_requirements=data_connectors_check_requirements)

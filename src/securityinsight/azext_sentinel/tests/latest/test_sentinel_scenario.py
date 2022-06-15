@@ -32,7 +32,6 @@ from .example_steps import step_alert_rule_template_list
 from .example_steps import step_automation_rule_show
 from .example_steps import step_automation_rule_list
 from .example_steps import step_automation_rule_delete
-from .example_steps import step_bookmark_expand
 from .example_steps import step_bookmark_relation_create
 from .example_steps import step_bookmark_relation_show
 from .example_steps import step_bookmark_relation_list
@@ -40,6 +39,7 @@ from .example_steps import step_bookmark_relation_delete
 from .example_steps import step_bookmark_create
 from .example_steps import step_bookmark_show
 from .example_steps import step_bookmark_list
+from .example_steps import step_bookmark_expand
 from .example_steps import step_bookmark_delete
 from .example_steps import step_data_connector_create
 from .example_steps import step_data_connector_create2
@@ -159,11 +159,11 @@ from .example_steps import step_source_control_create
 from .example_steps import step_source_control_show
 from .example_steps import step_source_control_list
 from .example_steps import step_source_control_delete
-from .example_steps import step_threat_indicator_create
+from .example_steps import step_threat_indicator_update
 from .example_steps import step_threat_indicator_show
 from .example_steps import step_threat_indicator_append_tag
-from .example_steps import step_threat_indicator_create_indicator
-from .example_steps import step_threat_indicator_query_indicator
+from .example_steps import step_threat_indicator_create
+from .example_steps import step_threat_indicator_query
 from .example_steps import step_threat_indicator_replace_tag
 from .example_steps import step_threat_indicator_delete
 from .example_steps import step_threat_indicator_metric_list
@@ -224,7 +224,6 @@ def call_scenario(test):
     step_automation_rule_show(test, checks=[])
     step_automation_rule_list(test, checks=[])
     step_automation_rule_delete(test, checks=[])
-    step_bookmark_expand(test, checks=[])
     step_bookmark_relation_create(test, checks=[])
     step_bookmark_relation_show(test, checks=[])
     step_bookmark_relation_list(test, checks=[])
@@ -232,6 +231,7 @@ def call_scenario(test):
     step_bookmark_create(test, checks=[])
     step_bookmark_show(test, checks=[])
     step_bookmark_list(test, checks=[])
+    step_bookmark_expand(test, checks=[])
     step_bookmark_delete(test, checks=[])
     step_data_connector_create(test, checks=[])
     step_data_connector_create2(test, checks=[])
@@ -420,11 +420,11 @@ def call_scenario(test):
     step_source_control_show(test, checks=[])
     step_source_control_list(test, checks=[])
     step_source_control_delete(test, checks=[])
-    step_threat_indicator_create(test, checks=[])
+    step_threat_indicator_update(test, checks=[])
     step_threat_indicator_show(test, checks=[])
     step_threat_indicator_append_tag(test, checks=[])
-    step_threat_indicator_create_indicator(test, checks=[])
-    step_threat_indicator_query_indicator(test, checks=[])
+    step_threat_indicator_create(test, checks=[])
+    step_threat_indicator_query(test, checks=[])
     step_threat_indicator_replace_tag(test, checks=[])
     step_threat_indicator_delete(test, checks=[])
     step_threat_indicator_metric_list(test, checks=[])

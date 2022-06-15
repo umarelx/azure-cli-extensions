@@ -13,7 +13,6 @@ from ._automation_rules_operations import AutomationRulesOperations
 from ._incidents_operations import IncidentsOperations
 from ._bookmarks_operations import BookmarksOperations
 from ._bookmark_relations_operations import BookmarkRelationsOperations
-from ._bookmark_operations import BookmarkOperations
 from ._ip_geodata_operations import IpGeodataOperations
 from ._domain_whois_operations import DomainWhoisOperations
 from ._entities_operations import EntitiesOperations
@@ -48,7 +47,6 @@ __all__ = [
     'IncidentsOperations',
     'BookmarksOperations',
     'BookmarkRelationsOperations',
-    'BookmarkOperations',
     'IpGeodataOperations',
     'DomainWhoisOperations',
     'EntitiesOperations',

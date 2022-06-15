@@ -23,7 +23,6 @@ from .operations import AutomationRulesOperations
 from .operations import IncidentsOperations
 from .operations import BookmarksOperations
 from .operations import BookmarkRelationsOperations
-from .operations import BookmarkOperations
 from .operations import IpGeodataOperations
 from .operations import DomainWhoisOperations
 from .operations import EntitiesOperations
@@ -69,8 +68,6 @@ class SecurityInsights(object):
     :vartype bookmarks: azure.mgmt.securityinsight.aio.operations.BookmarksOperations
     :ivar bookmark_relations: BookmarkRelationsOperations operations
     :vartype bookmark_relations: azure.mgmt.securityinsight.aio.operations.BookmarkRelationsOperations
-    :ivar bookmark: BookmarkOperations operations
-    :vartype bookmark: azure.mgmt.securityinsight.aio.operations.BookmarkOperations
     :ivar ip_geodata: IpGeodataOperations operations
     :vartype ip_geodata: azure.mgmt.securityinsight.aio.operations.IpGeodataOperations
     :ivar domain_whois: DomainWhoisOperations operations
@@ -158,8 +155,6 @@ class SecurityInsights(object):
         self.bookmarks = BookmarksOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.bookmark_relations = BookmarkRelationsOperations(
-            self._client, self._config, self._serialize, self._deserialize)
-        self.bookmark = BookmarkOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.ip_geodata = IpGeodataOperations(
             self._client, self._config, self._serialize, self._deserialize)

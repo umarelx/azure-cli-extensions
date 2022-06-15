@@ -304,7 +304,7 @@ def load_arguments(self, _):
         c.argument('display_name', type=str, help='The display name of the bookmark')
         c.argument('labels', nargs='+', help='List of labels relevant to this bookmark')
         c.argument('notes', type=str, help='The notes of the bookmark')
-        c.argument('query', type=str, help='The query of the bookmark.')
+        c.argument('query_content', type=str, help='The query of the bookmark.')
         c.argument('query_result', type=str, help='The query result of the bookmark.')
         c.argument('updated', help='The last time the bookmark was updated')
         c.argument('event_time', help='The bookmark event time')
@@ -328,7 +328,7 @@ def load_arguments(self, _):
         c.argument('display_name', type=str, help='The display name of the bookmark')
         c.argument('labels', nargs='+', help='List of labels relevant to this bookmark')
         c.argument('notes', type=str, help='The notes of the bookmark')
-        c.argument('query', type=str, help='The query of the bookmark.')
+        c.argument('query_content', type=str, help='The query of the bookmark.')
         c.argument('query_result', type=str, help='The query result of the bookmark.')
         c.argument('updated', help='The last time the bookmark was updated')
         c.argument('event_time', help='The bookmark event time')
@@ -348,6 +348,16 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
+
+    with self.argument_context('sentinel bookmark expand') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
+        c.argument('end_time',
+                   help='The end date filter, so the only expansion results returned are before this date.')
+        c.argument('expansion_id', help='The Id of the expansion to perform.')
+        c.argument('start_time', help='The start date filter, so the only expansion results returned are after this '
+                   'date.')
 
     with self.argument_context('sentinel bookmark relation list') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -390,16 +400,6 @@ def load_arguments(self, _):
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
         c.argument('relation_name', type=str, help='Relation Name', id_part='child_name_2')
-
-    with self.argument_context('sentinel bookmark expand') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('bookmark_id', type=str, help='Bookmark ID', id_part='child_name_1')
-        c.argument('end_time',
-                   help='The end date filter, so the only expansion results returned are before this date.')
-        c.argument('expansion_id', help='The Id of the expansion to perform.')
-        c.argument('start_time', help='The start date filter, so the only expansion results returned are after this '
-                   'date.')
 
     with self.argument_context('sentinel ip-geodata show') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -862,7 +862,43 @@ def load_arguments(self, _):
     with self.argument_context('sentinel threat-indicator create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
-        c.argument('name', type=str, help='Threat intelligence indicator name field.')
+        c.argument('etag', type=str, help='Etag of the azure resource')
+        c.argument('threat_intelligence_tags', nargs='+', help='List of tags')
+        c.argument('last_updated_time_utc', type=str, help='Last updated time in UTC')
+        c.argument('source', type=str, help='Source of a threat intelligence entity')
+        c.argument('display_name', type=str, help='Display name of a threat intelligence entity')
+        c.argument('description', type=str, help='Description of a threat intelligence entity')
+        c.argument('indicator_types', nargs='+', help='Indicator types of threat intelligence entities')
+        c.argument('pattern', type=str, help='Pattern of a threat intelligence entity')
+        c.argument('pattern_type', type=str, help='Pattern type of a threat intelligence entity')
+        c.argument('pattern_version', type=str, help='Pattern version of a threat intelligence entity')
+        c.argument('kill_chain_phases', action=AddKillChainPhases, nargs='+', help='Kill chain phases')
+        c.argument('parsed_pattern', type=validate_file_or_dict, help='Parsed patterns Expected value: '
+                   'json-string/json-file/@json-file.')
+        c.argument('external_id', type=str, help='External ID of threat intelligence entity')
+        c.argument('created_by_ref', type=str, help='Created by reference of threat intelligence entity')
+        c.argument('defanged', arg_type=get_three_state_flag(), help='Is threat intelligence entity defanged')
+        c.argument('external_last_updated_time_utc', type=str, help='External last updated time in UTC')
+        c.argument('external_references', type=validate_file_or_dict, help='External References Expected value: '
+                   'json-string/json-file/@json-file.')
+        c.argument('granular_markings', action=AddGranularMarkings, nargs='+', help='Granular Markings')
+        c.argument('labels', nargs='+', help='Labels  of threat intelligence entity')
+        c.argument('revoked', arg_type=get_three_state_flag(), help='Is threat intelligence entity revoked')
+        c.argument('confidence', type=int, help='Confidence of threat intelligence entity')
+        c.argument('object_marking_refs', nargs='+', help='Threat intelligence entity object marking references')
+        c.argument('language', type=str, help='Language of threat intelligence entity')
+        c.argument('threat_types', nargs='+', help='Threat types')
+        c.argument('valid_from', type=str, help='Valid from')
+        c.argument('valid_until', type=str, help='Valid until')
+        c.argument('created', type=str, help='Created by')
+        c.argument('modified', type=str, help='Modified by')
+        c.argument('extensions', type=validate_file_or_dict, help='Extensions map Expected value: '
+                   'json-string/json-file/@json-file.')
+
+    with self.argument_context('sentinel threat-indicator update') as c:
+        c.argument('resource_group_name', resource_group_name_type)
+        c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
+        c.argument('name', type=str, help='Threat intelligence indicator name field.', id_part='child_name_2')
         c.argument('etag', type=str, help='Etag of the azure resource')
         c.argument('threat_intelligence_tags', nargs='+', help='List of tags')
         c.argument('last_updated_time_utc', type=str, help='Last updated time in UTC')
@@ -907,43 +943,7 @@ def load_arguments(self, _):
         c.argument('name', type=str, help='Threat intelligence indicator name field.', id_part='child_name_2')
         c.argument('threat_intelligence_tags', nargs='+', help='List of tags to be appended.')
 
-    with self.argument_context('sentinel threat-indicator create-indicator') as c:
-        c.argument('resource_group_name', resource_group_name_type)
-        c.argument('workspace_name', type=str, help='The name of the workspace.')
-        c.argument('etag', type=str, help='Etag of the azure resource')
-        c.argument('threat_intelligence_tags', nargs='+', help='List of tags')
-        c.argument('last_updated_time_utc', type=str, help='Last updated time in UTC')
-        c.argument('source', type=str, help='Source of a threat intelligence entity')
-        c.argument('display_name', type=str, help='Display name of a threat intelligence entity')
-        c.argument('description', type=str, help='Description of a threat intelligence entity')
-        c.argument('indicator_types', nargs='+', help='Indicator types of threat intelligence entities')
-        c.argument('pattern', type=str, help='Pattern of a threat intelligence entity')
-        c.argument('pattern_type', type=str, help='Pattern type of a threat intelligence entity')
-        c.argument('pattern_version', type=str, help='Pattern version of a threat intelligence entity')
-        c.argument('kill_chain_phases', action=AddKillChainPhases, nargs='+', help='Kill chain phases')
-        c.argument('parsed_pattern', type=validate_file_or_dict, help='Parsed patterns Expected value: '
-                   'json-string/json-file/@json-file.')
-        c.argument('external_id', type=str, help='External ID of threat intelligence entity')
-        c.argument('created_by_ref', type=str, help='Created by reference of threat intelligence entity')
-        c.argument('defanged', arg_type=get_three_state_flag(), help='Is threat intelligence entity defanged')
-        c.argument('external_last_updated_time_utc', type=str, help='External last updated time in UTC')
-        c.argument('external_references', type=validate_file_or_dict, help='External References Expected value: '
-                   'json-string/json-file/@json-file.')
-        c.argument('granular_markings', action=AddGranularMarkings, nargs='+', help='Granular Markings')
-        c.argument('labels', nargs='+', help='Labels  of threat intelligence entity')
-        c.argument('revoked', arg_type=get_three_state_flag(), help='Is threat intelligence entity revoked')
-        c.argument('confidence', type=int, help='Confidence of threat intelligence entity')
-        c.argument('object_marking_refs', nargs='+', help='Threat intelligence entity object marking references')
-        c.argument('language', type=str, help='Language of threat intelligence entity')
-        c.argument('threat_types', nargs='+', help='Threat types')
-        c.argument('valid_from', type=str, help='Valid from')
-        c.argument('valid_until', type=str, help='Valid until')
-        c.argument('created', type=str, help='Created by')
-        c.argument('modified', type=str, help='Modified by')
-        c.argument('extensions', type=validate_file_or_dict, help='Extensions map Expected value: '
-                   'json-string/json-file/@json-file.')
-
-    with self.argument_context('sentinel threat-indicator query-indicator') as c:
+    with self.argument_context('sentinel threat-indicator query') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('page_size', type=int, help='Page size')
