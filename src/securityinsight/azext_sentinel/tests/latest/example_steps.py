@@ -2166,7 +2166,7 @@ def step_watchlist_item_create(test, checks=None):
              '--items-key-value "{{\\"Business tier\\":\\"10.0.2.0/24\\",\\"Data tier\\":\\"10.0.2.0/24\\",\\"Gateway '
              'subnet\\":\\"10.0.255.224/27\\",\\"Private DMZ in\\":\\"10.0.0.0/27\\",\\"Public DMZ '
              'out\\":\\"10.0.0.96/27\\",\\"Web Tier\\":\\"10.0.1.0/24\\"}}" '
-             '--guid "82ba292c-dc97-4dfc-969d-d4dd9e666842" '
+             '--watchlist-item-id "82ba292c-dc97-4dfc-969d-d4dd9e666842" '
              '--workspace-name "myWorkspace"',
              checks=checks)
 
@@ -2179,7 +2179,7 @@ def step_watchlist_item_show(test, checks=None):
     test.cmd('az sentinel watchlist item show '
              '--resource-group "{rg}" '
              '--watchlist-alias "highValueAsset" '
-             '--guid "3f8901fe-63d9-4875-9ad5-9fb3b8105797" '
+             '--watchlist-item-id "3f8901fe-63d9-4875-9ad5-9fb3b8105797" '
              '--workspace-name "myWorkspace"',
              checks=checks)
 
@@ -2204,7 +2204,7 @@ def step_watchlist_item_delete(test, checks=None):
     test.cmd('az sentinel watchlist item delete -y '
              '--resource-group "{rg}" '
              '--watchlist-alias "highValueAsset" '
-             '--guid "4008512e-1d30-48b2-9ee2-d3612ed9d3ea" '
+             '--watchlist-item-id "4008512e-1d30-48b2-9ee2-d3612ed9d3ea" '
              '--workspace-name "myWorkspace"',
              checks=checks)
 
@@ -2226,7 +2226,7 @@ def step_watchlist_create(test, checks=None):
              '--raw-content "This line will be skipped\\nheader1,header2\\nvalue1,value2" '
              '--source "watchlist.csv" '
              '--source-type "Local file" '
-             '--alias "highValueAsset" '
+             '--watchlist-alias "highValueAsset" '
              '--workspace-name "myWorkspace"',
              checks=checks)
 
@@ -2245,7 +2245,7 @@ def step_watchlist_create2(test, checks=None):
              '--provider "Microsoft" '
              '--source "watchlist.csv" '
              '--source-type "Local file" '
-             '--alias "highValueAsset" '
+             '--watchlist-alias "highValueAsset" '
              '--workspace-name "myWorkspace"',
              checks=checks)
 
@@ -2257,7 +2257,7 @@ def step_watchlist_show(test, checks=None):
         checks = []
     test.cmd('az sentinel watchlist show '
              '--resource-group "{rg}" '
-             '--alias "highValueAsset" '
+             '--watchlist-alias "highValueAsset" '
              '--workspace-name "myWorkspace"',
              checks=checks)
 
@@ -2280,6 +2280,6 @@ def step_watchlist_delete(test, checks=None):
         checks = []
     test.cmd('az sentinel watchlist delete -y '
              '--resource-group "{rg}" '
-             '--alias "highValueAsset" '
+             '--watchlist-alias "highValueAsset" '
              '--workspace-name "myWorkspace"',
              checks=checks)

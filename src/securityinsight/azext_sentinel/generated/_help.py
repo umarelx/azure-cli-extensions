@@ -1529,7 +1529,7 @@ helps['sentinel threat-indicator create'] = """
                az sentinel threat-indicator create --description "debugging indicators" --confidence 78 \
 --created-by-ref "contoso@contoso.com" --display-name "new schema" --external-references "[]" --modified "" --pattern \
 "[url:value = \'https://www.contoso.com\']" --pattern-type "url" --revoked false --source "Azure Sentinel" \
---threat-intelligence-tags "new schema" --threat-types "compromised" --valid-from "2021-09-15T17:44:00.114052Z" \
+--threat-tags "new schema" --threat-types "compromised" --valid-from "2021-09-15T17:44:00.114052Z" \
 --valid-until "" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
@@ -1562,7 +1562,7 @@ helps['sentinel threat-indicator update'] = """
                az sentinel threat-indicator update --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" --description \
 "debugging indicators" --confidence 78 --created-by-ref "contoso@contoso.com" --display-name "new schema" \
 --external-references "[]" --modified "" --pattern "[url:value = \'https://www.contoso.com\']" --pattern-type "url" \
---revoked false --source "Azure Sentinel" --threat-intelligence-tags "new schema" --threat-types "compromised" \
+--revoked false --source "Azure Sentinel" --threat-tags "new schema" --threat-types "compromised" \
 --valid-from "2020-04-15T17:44:00.114052Z" --valid-until "" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
@@ -1583,7 +1583,7 @@ helps['sentinel threat-indicator append-tag'] = """
       - name: Append tags to a threat intelligence indicator
         text: |-
                az sentinel threat-indicator append-tag --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" \
---threat-intelligence-tags "tag1" "tag2" --resource-group "myRg" --workspace-name "myWorkspace"
+--threat-tags "tag1" "tag2" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
 helps['sentinel threat-indicator query'] = """
@@ -1635,7 +1635,7 @@ helps['sentinel threat-indicator replace-tag'] = """
       - name: Replace tags to a Threat Intelligence
         text: |-
                az sentinel threat-indicator replace-tag --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" --etag \
-"\\"0000262c-0000-0800-0000-5e9767060000\\"" --threat-intelligence-tags "patching tags" --resource-group "myRg" \
+"\\"0000262c-0000-0800-0000-5e9767060000\\"" --threat-tags "patching tags" --resource-group "myRg" \
 --workspace-name "myWorkspace"
 """
 
@@ -1687,7 +1687,7 @@ helps['sentinel watchlist show'] = """
     examples:
       - name: Get a watchlist.
         text: |-
-               az sentinel watchlist show --resource-group "myRg" --alias "highValueAsset" --workspace-name \
+               az sentinel watchlist show --resource-group "myRg" --watchlist-alias "highValueAsset" --workspace-name \
 "myWorkspace"
 """
 
@@ -1704,14 +1704,14 @@ large file can be polled through the URL returned in Azure-AsyncOperation header
                az sentinel watchlist create --resource-group "myRg" --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\""\
  --description "Watchlist from CSV content" --content-type "text/csv" --display-name "High Value Assets Watchlist" \
 --items-search-key "header1" --skip-num 1 --provider "Microsoft" --raw-content "This line will be \
-skipped\\nheader1,header2\\nvalue1,value2" --source "watchlist.csv" --source-type "Local file" --alias \
+skipped\\nheader1,header2\\nvalue1,value2" --source "watchlist.csv" --source-type "Local file" --watchlist-alias \
 "highValueAsset" --workspace-name "myWorkspace"
       - name: Creates or updates a watchlist.
         text: |-
                az sentinel watchlist create --resource-group "myRg" --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\""\
  --description "Watchlist from CSV content" --display-name "High Value Assets Watchlist" --items-search-key "header1" \
---provider "Microsoft" --source "watchlist.csv" --source-type "Local file" --alias "highValueAsset" --workspace-name \
-"myWorkspace"
+--provider "Microsoft" --source "watchlist.csv" --source-type "Local file" --watchlist-alias "highValueAsset" \
+--workspace-name "myWorkspace"
 """
 
 helps['sentinel watchlist update'] = """
@@ -1729,8 +1729,8 @@ helps['sentinel watchlist delete'] = """
     examples:
       - name: Delete a watchlist.
         text: |-
-               az sentinel watchlist delete --resource-group "myRg" --alias "highValueAsset" --workspace-name \
-"myWorkspace"
+               az sentinel watchlist delete --resource-group "myRg" --watchlist-alias "highValueAsset" \
+--workspace-name "myWorkspace"
 """
 
 helps['sentinel watchlist item'] = """
@@ -1754,8 +1754,8 @@ helps['sentinel watchlist item show'] = """
     examples:
       - name: Get a watchlist item.
         text: |-
-               az sentinel watchlist item show --resource-group "myRg" --watchlist-alias "highValueAsset" --guid \
-"3f8901fe-63d9-4875-9ad5-9fb3b8105797" --workspace-name "myWorkspace"
+               az sentinel watchlist item show --resource-group "myRg" --watchlist-alias "highValueAsset" \
+--watchlist-item-id "3f8901fe-63d9-4875-9ad5-9fb3b8105797" --workspace-name "myWorkspace"
 """
 
 helps['sentinel watchlist item create'] = """
@@ -1767,8 +1767,8 @@ helps['sentinel watchlist item create'] = """
                az sentinel watchlist item create --resource-group "myRg" --watchlist-alias "highValueAsset" --etag \
 "0300bf09-0000-0000-0000-5c37296e0000" --items-key-value "{\\"Business tier\\":\\"10.0.2.0/24\\",\\"Data \
 tier\\":\\"10.0.2.0/24\\",\\"Gateway subnet\\":\\"10.0.255.224/27\\",\\"Private DMZ in\\":\\"10.0.0.0/27\\",\\"Public \
-DMZ out\\":\\"10.0.0.96/27\\",\\"Web Tier\\":\\"10.0.1.0/24\\"}" --guid "82ba292c-dc97-4dfc-969d-d4dd9e666842" \
---workspace-name "myWorkspace"
+DMZ out\\":\\"10.0.0.96/27\\",\\"Web Tier\\":\\"10.0.1.0/24\\"}" --watchlist-item-id "82ba292c-dc97-4dfc-969d-d4dd9e666\
+842" --workspace-name "myWorkspace"
 """
 
 helps['sentinel watchlist item update'] = """
@@ -1782,8 +1782,8 @@ helps['sentinel watchlist item delete'] = """
     examples:
       - name: Delete a watchlist Item.
         text: |-
-               az sentinel watchlist item delete --resource-group "myRg" --watchlist-alias "highValueAsset" --guid \
-"4008512e-1d30-48b2-9ee2-d3612ed9d3ea" --workspace-name "myWorkspace"
+               az sentinel watchlist item delete --resource-group "myRg" --watchlist-alias "highValueAsset" \
+--watchlist-item-id "4008512e-1d30-48b2-9ee2-d3612ed9d3ea" --workspace-name "myWorkspace"
 """
 
 helps['sentinel data-connector'] = """

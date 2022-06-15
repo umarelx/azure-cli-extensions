@@ -1032,13 +1032,12 @@ def load_arguments(self, _):
     with self.argument_context('sentinel watchlist show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('watchlist_alias', options_list=['--alias'], type=str, help='Watchlist Alias',
-                   id_part='child_name_1')
+        c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
 
     with self.argument_context('sentinel watchlist create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
-        c.argument('watchlist_alias', options_list=['--alias'], type=str, help='Watchlist Alias')
+        c.argument('watchlist_alias', type=str, help='Watchlist Alias')
         c.argument('etag', type=str, help='Etag of the azure resource')
         c.argument('watchlist_id', type=str, help='The id (a Guid) of the watchlist')
         c.argument('display_name', type=str, help='The display name of the watchlist')
@@ -1050,8 +1049,7 @@ def load_arguments(self, _):
         c.argument('updated', help='The last time the watchlist was updated')
         c.argument('description', type=str, help='A description of the watchlist')
         c.argument('watchlist_type', type=str, help='The type of the watchlist')
-        c.argument('watchlist_properties_watchlist_alias', options_list=['--alias'], type=str, help='The alias of the '
-                   'watchlist')
+        c.argument('watchlist_properties_watchlist_alias', type=str, help='The alias of the watchlist')
         c.argument('is_deleted', arg_type=get_three_state_flag(), help='A flag that indicates if the watchlist is '
                    'deleted or not')
         c.argument('labels', nargs='+', help='List of labels relevant to this watchlist')
@@ -1075,8 +1073,7 @@ def load_arguments(self, _):
     with self.argument_context('sentinel watchlist update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('watchlist_alias', options_list=['--alias'], type=str, help='Watchlist Alias',
-                   id_part='child_name_1')
+        c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
         c.argument('etag', type=str, help='Etag of the azure resource')
         c.argument('watchlist_id', type=str, help='The id (a Guid) of the watchlist')
         c.argument('display_name', type=str, help='The display name of the watchlist')
@@ -1088,8 +1085,8 @@ def load_arguments(self, _):
         c.argument('updated', help='The last time the watchlist was updated')
         c.argument('description', type=str, help='A description of the watchlist')
         c.argument('watchlist_type', type=str, help='The type of the watchlist')
-        c.argument('watchlist_properties_watchlist_alias', options_list=['--alias'], type=str, help='The alias of the '
-                   'watchlist', id_part='child_name_1')
+        c.argument('watchlist_properties_watchlist_alias', type=str, help='The alias of the watchlist',
+                   id_part='child_name_1')
         c.argument('is_deleted', arg_type=get_three_state_flag(), help='A flag that indicates if the watchlist is '
                    'deleted or not')
         c.argument('labels', nargs='+', help='List of labels relevant to this watchlist')
@@ -1114,8 +1111,7 @@ def load_arguments(self, _):
     with self.argument_context('sentinel watchlist delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('watchlist_alias', options_list=['--alias'], type=str, help='Watchlist Alias',
-                   id_part='child_name_1')
+        c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
 
     with self.argument_context('sentinel watchlist item list') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -1130,18 +1126,17 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
-        c.argument('watchlist_item_id', options_list=['--guid'], type=str, help='Watchlist Item Id (GUID)',
-                   id_part='child_name_2')
+        c.argument('watchlist_item_id', type=str, help='Watchlist Item Id (GUID)', id_part='child_name_2')
 
     with self.argument_context('sentinel watchlist item create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias')
-        c.argument('watchlist_item_id', options_list=['--guid'], type=str, help='Watchlist Item Id (GUID)')
+        c.argument('watchlist_item_id', type=str, help='Watchlist Item Id (GUID)')
         c.argument('etag', type=str, help='Etag of the azure resource')
         c.argument('watchlist_item_type', type=str, help='The type of the watchlist item')
-        c.argument('watchlist_item_properties_watchlist_item_id_watchlist_item_id', options_list=['--guid'], type=str,
-                   help='The id (a Guid) of the watchlist item')
+        c.argument('watchlist_item_properties_watchlist_item_id_watchlist_item_id', type=str, help='The id (a Guid) of '
+                   'the watchlist item')
         c.argument('tenant_id', type=str, help='The tenantId to which the watchlist item belongs to')
         c.argument('is_deleted', arg_type=get_three_state_flag(), help='A flag that indicates if the watchlist item is '
                    'deleted or not')
@@ -1158,12 +1153,11 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
-        c.argument('watchlist_item_id', options_list=['--guid'], type=str, help='Watchlist Item Id (GUID)',
-                   id_part='child_name_2')
+        c.argument('watchlist_item_id', type=str, help='Watchlist Item Id (GUID)', id_part='child_name_2')
         c.argument('etag', type=str, help='Etag of the azure resource')
         c.argument('watchlist_item_type', type=str, help='The type of the watchlist item')
-        c.argument('watchlist_item_properties_watchlist_item_id_watchlist_item_id', options_list=['--guid'], type=str,
-                   help='The id (a Guid) of the watchlist item', id_part='child_name_2')
+        c.argument('watchlist_item_properties_watchlist_item_id_watchlist_item_id', type=str, help='The id (a Guid) of '
+                   'the watchlist item', id_part='child_name_2')
         c.argument('tenant_id', type=str, help='The tenantId to which the watchlist item belongs to')
         c.argument('is_deleted', arg_type=get_three_state_flag(), help='A flag that indicates if the watchlist item is '
                    'deleted or not')
@@ -1181,8 +1175,7 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
-        c.argument('watchlist_item_id', options_list=['--guid'], type=str, help='Watchlist Item Id (GUID)',
-                   id_part='child_name_2')
+        c.argument('watchlist_item_id', type=str, help='Watchlist Item Id (GUID)', id_part='child_name_2')
 
     with self.argument_context('sentinel data-connector list') as c:
         c.argument('resource_group_name', resource_group_name_type)

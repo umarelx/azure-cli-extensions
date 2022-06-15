@@ -11,6 +11,25 @@
 # pylint: disable=too-many-statements
 
 from azure.cli.core.commands.parameters import get_enum_type
+from azext_sentinel.action import (
+    AddAadCheckRequirements,
+    AddAatpCheckRequirements,
+    AddAscCheckRequirements,
+    AddAwsCloudTrailCheckRequirements,
+    AddAwsS3CheckRequirements,
+    AddDynamics365CheckRequirements,
+    AddMcasCheckRequirements,
+    AddMdatpCheckRequirements,
+    AddMstiCheckRequirements,
+    AddMtpCheckRequirements,
+    AddOfficeAtpCheckRequirements,
+    AddOfficeIrmCheckRequirements,
+    AddOffice365ProjectCheckRequirements,
+    AddOfficePowerBiCheckRequirements,
+    AddTiCheckRequirements,
+    AddTiTaxiiCheckRequirements,
+    AddIoTCheckRequirements
+)
 
 
 def load_arguments(self, _):
@@ -26,3 +45,81 @@ def load_arguments(self, _):
         c.argument('incident_identifier', type=str, help='Identifier of incident.', id_part='child_name_1')
         c.argument('tenant_id', help='ID of tenant.')
         c.argument('logic_apps_resource_id', type=str, help='Resource ID of logic apps.')
+
+    with self.argument_context('sentinel data-connector check-requirement') as c:
+        c.argument('aad_check_requirements', action=AddAadCheckRequirements, nargs='+', help='Represents AAD (Azure '
+                   'Active Directory) requirements check request.', arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--aad'])
+        c.argument('aatp_check_requirements', action=AddAatpCheckRequirements, nargs='+', help='Represents AATP (Azure '
+                   'Advanced Threat Protection) requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--aatp'])
+        c.argument('asc_check_requirements', action=AddAscCheckRequirements, nargs='+', help='Represents ASC (Azure '
+                   'Security Center) requirements check request.', arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--asc'])
+        c.argument('aws_cloud_trail_check_requirements', action=AddAwsCloudTrailCheckRequirements, nargs='+',
+                   help='Amazon Web Services CloudTrail requirements check request. Expect value: KEY1=VALUE1 '
+                   'KEY2=VALUE2 ...', arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--aws-cloud-trail'])
+        c.argument('aws_s3_check_requirements', action=AddAwsS3CheckRequirements, nargs='+', help='Amazon Web Services '
+                   'S3 requirements check request. Expect value: KEY1=VALUE1 KEY2=VALUE2 ...',
+                   arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--aws-s3'])
+        c.argument('dynamics365_check_requirements', action=AddDynamics365CheckRequirements, nargs='+',
+                   help='Represents Dynamics365 requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--dynamics-365'])
+        c.argument('mcas_check_requirements', action=AddMcasCheckRequirements, nargs='+', help='Represents MCAS '
+                   '(Microsoft Cloud App Security) requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--mcas'])
+        c.argument('mdatp_check_requirements', action=AddMdatpCheckRequirements, nargs='+', help='Represents MDATP '
+                   '(Microsoft Defender Advanced Threat Protection) requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--mdatp'])
+        c.argument('msti_check_requirements', action=AddMstiCheckRequirements, nargs='+', help='Represents Microsoft '
+                   'Threat Intelligence requirements check request.', arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--msti'])
+        c.argument('mtp_check_requirements', action=AddMtpCheckRequirements, nargs='+', help='Represents MTP '
+                   '(Microsoft Threat Protection) requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--mtp'])
+        c.argument('office_atp_check_requirements', action=AddOfficeAtpCheckRequirements, nargs='+', help='Represents '
+                   'OfficeATP (Office 365 Advanced Threat Protection) requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--office-atp'])
+        c.argument('office_irm_check_requirements', action=AddOfficeIrmCheckRequirements, nargs='+', help='Represents '
+                   'OfficeIRM (Microsoft Insider Risk Management) requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--office-irm'])
+        c.argument('office365_project_check_requirements', action=AddOffice365ProjectCheckRequirements, nargs='+',
+                   help='Represents Office365 Project requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--office-365-project'])
+        c.argument('office_power_bi_check_requirements', action=AddOfficePowerBiCheckRequirements, nargs='+',
+                   help='Represents Office PowerBI requirements check request.',
+                   arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--office-power-bi'])
+        c.argument('ti_check_requirements', action=AddTiCheckRequirements, nargs='+', help='Threat Intelligence '
+                   'Platforms data connector check requirements', arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--ti'])
+        c.argument('ti_taxii_check_requirements', action=AddTiTaxiiCheckRequirements, nargs='+', help='Threat '
+                   'Intelligence TAXII data connector check requirements',
+                   arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--ti-taxii'])
+        c.argument('io_t_check_requirements', action=AddIoTCheckRequirements, nargs='+', help='Represents IoT '
+                   'requirements check request.', arg_group='DataConnectorsCheckRequirements',
+                   options_list=['--iot'])
+
+    with self.argument_context('sentinel threat-indicator') as c:
+        c.argument('threat_intelligence_tags', nargs='+', help='List of tags',
+                   options_list=['--threat-tags'])
+        c.argument('external_last_updated_time_utc', type=str, help='External last updated time in UTC',
+                   options_list=['--last-updated-time'])
+
+    with self.argument_context('sentinel watchlist') as c:
+        c.argument('watchlist_properties_watchlist_alias', type=str, help='The alias of the watchlist',
+                   options_list=['--props-alias'])
+        c.argument('watchlist_item_properties_watchlist_item_id_watchlist_item_id', type=str,
+                   help='The id (a Guid) of the watchlist item',
+                   options_list=['--props-id'])
