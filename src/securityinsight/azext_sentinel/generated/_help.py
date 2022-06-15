@@ -776,10 +776,9 @@ helps['sentinel entity list-insight'] = """
     examples:
       - name: Entity Insight
         text: |-
-               az sentinel entity list-insight --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" \
---add-default-extended-time-range false --end-time "2021-10-01T00:00:00.000Z" --insight-query-ids \
-"cae8d0aa-aa45-4d53-8d88-17dd64ffd4e4" --start-time "2021-09-01T00:00:00.000Z" --resource-group "myRg" \
---workspace-name "myWorkspace"
+               az sentinel entity list-insight --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --is-extended false \
+--end-time "2021-10-01T00:00:00.000Z" --insight-query-ids "cae8d0aa-aa45-4d53-8d88-17dd64ffd4e4" --start-time \
+"2021-09-01T00:00:00.000Z" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
 helps['sentinel entity'] = """
@@ -923,8 +922,8 @@ helps['sentinel entity template show'] = """
     examples:
       - name: Get an Activity entity query template.
         text: |-
-               az sentinel entity template show --entity-query-template-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b" \
---resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel entity template show --template-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b" --resource-group \
+"myRg" --workspace-name "myWorkspace"
 """
 
 helps['sentinel incident comment'] = """
@@ -1109,8 +1108,8 @@ perationalInsights/workspaces/myWorkspace/providers/Microsoft.SecurityInsights/a
 "firstImage.png" "secondImage.jpeg" --preview-images-dark "firstImageDark.png" "secondImageDark.jpeg" --providers \
 "Amazon" "Microsoft" --source name="Contoso Solution 1.0" kind="Solution" source-id="b688a130-76f4-4a07-bf57-762222a3ca\
 df" --support name="Microsoft" email="support@microsoft.com" link="https://support.microsoft.com/" tier="Partner" \
---threat-analysis-tactics "reconnaissance" "commandandcontrol" --threat-analysis-techniques "T1548" "T1548.001" \
---version "1.0.0.0" --name "metadataName" --resource-group "myRg" --workspace-name "myWorkspace"
+--tactics "reconnaissance" "commandandcontrol" --techniques "T1548" "T1548.001" --version "1.0.0.0" --name \
+"metadataName" --resource-group "myRg" --workspace-name "myWorkspace"
       - name: Create/update minimal metadata.
         text: |-
                az sentinel metadata create --content-id "c00ee137-7475-47c8-9cce-ec6f0f1bedd0" --kind "AnalyticsRule" \
@@ -1280,24 +1279,24 @@ helps['sentinel analytic-setting create'] = """
     examples:
       - name: Creates or updates a Anomaly Security ML Analytics Settings.
         text: |-
-               az sentinel analytic-setting create --resource-group "myRg" --security-ml-analytics-setting \
-"{\\"etag\\":\\"\\\\\\"260090e2-0000-0d00-0000-5d6fb8670000\\\\\\"\\",\\"kind\\":\\"Anomaly\\",\\"properties\\":{\\"des\
-cription\\":\\"When account logs from a source region that has rarely been logged in from during the last 14 days, an \
-anomaly is triggered.\\",\\"anomalySettingsVersion\\":0,\\"anomalyVersion\\":\\"1.0.5\\",\\"customizableObservations\\"\
-:{\\"multiSelectObservations\\":null,\\"prioritizeExcludeObservations\\":null,\\"singleSelectObservations\\":[{\\"name\
-\\":\\"Device vendor\\",\\"description\\":\\"Select device vendor of network connection logs from \
-CommonSecurityLog\\",\\"rerun\\":\\"RerunAlways\\",\\"sequenceNumber\\":1,\\"supportedValues\\":[\\"Palo Alto \
-Networks\\",\\"Fortinet\\",\\"Check Point\\"],\\"supportedValuesKql\\":null,\\"value\\":[\\"Palo Alto \
-Networks\\"],\\"valuesKql\\":null}],\\"singleValueObservations\\":null,\\"thresholdObservations\\":[{\\"name\\":\\"Dail\
-y data transfer threshold in MB\\",\\"description\\":\\"Suppress anomalies when daily data transfered (in MB) per hour \
-is less than the chosen value\\",\\"maximum\\":\\"100\\",\\"minimum\\":\\"1\\",\\"rerun\\":\\"RerunAlways\\",\\"sequenc\
-eNumber\\":1,\\"value\\":\\"25\\"},{\\"name\\":\\"Number of standard deviations\\",\\"description\\":\\"Triggers \
-anomalies when number of standard deviations is greater than the chosen value\\",\\"maximum\\":\\"10\\",\\"minimum\\":\
-\\"2\\",\\"rerun\\":\\"RerunAlways\\",\\"sequenceNumber\\":2,\\"value\\":\\"3\\"}]},\\"displayName\\":\\"Login from \
-unusual region\\",\\"enabled\\":true,\\"frequency\\":\\"PT1H\\",\\"isDefaultSettings\\":true,\\"requiredDataConnectors\
-\\":[{\\"connectorId\\":\\"AWS\\",\\"dataTypes\\":[\\"AWSCloudTrail\\"]}],\\"settingsDefinitionId\\":\\"f209187f-1d17-4\
-431-94af-c141bf5f23db\\",\\"settingsStatus\\":\\"Production\\",\\"tactics\\":[\\"Exfiltration\\",\\"CommandAndControl\\\
-"],\\"techniques\\":[\\"T1037\\",\\"T1021\\"]}}" --settings-resource-name "f209187f-1d17-4431-94af-c141bf5f23db" \
+               az sentinel analytic-setting create --resource-group "myRg" --settings "{\\"etag\\":\\"\\\\\\"260090e2-0\
+000-0d00-0000-5d6fb8670000\\\\\\"\\",\\"kind\\":\\"Anomaly\\",\\"properties\\":{\\"description\\":\\"When account logs \
+from a source region that has rarely been logged in from during the last 14 days, an anomaly is \
+triggered.\\",\\"anomalySettingsVersion\\":0,\\"anomalyVersion\\":\\"1.0.5\\",\\"customizableObservations\\":{\\"multiS\
+electObservations\\":null,\\"prioritizeExcludeObservations\\":null,\\"singleSelectObservations\\":[{\\"name\\":\\"Devic\
+e vendor\\",\\"description\\":\\"Select device vendor of network connection logs from CommonSecurityLog\\",\\"rerun\\":\
+\\"RerunAlways\\",\\"sequenceNumber\\":1,\\"supportedValues\\":[\\"Palo Alto Networks\\",\\"Fortinet\\",\\"Check \
+Point\\"],\\"supportedValuesKql\\":null,\\"value\\":[\\"Palo Alto Networks\\"],\\"valuesKql\\":null}],\\"singleValueObs\
+ervations\\":null,\\"thresholdObservations\\":[{\\"name\\":\\"Daily data transfer threshold in \
+MB\\",\\"description\\":\\"Suppress anomalies when daily data transfered (in MB) per hour is less than the chosen \
+value\\",\\"maximum\\":\\"100\\",\\"minimum\\":\\"1\\",\\"rerun\\":\\"RerunAlways\\",\\"sequenceNumber\\":1,\\"value\\"\
+:\\"25\\"},{\\"name\\":\\"Number of standard deviations\\",\\"description\\":\\"Triggers anomalies when number of \
+standard deviations is greater than the chosen value\\",\\"maximum\\":\\"10\\",\\"minimum\\":\\"2\\",\\"rerun\\":\\"Rer\
+unAlways\\",\\"sequenceNumber\\":2,\\"value\\":\\"3\\"}]},\\"displayName\\":\\"Login from unusual \
+region\\",\\"enabled\\":true,\\"frequency\\":\\"PT1H\\",\\"isDefaultSettings\\":true,\\"requiredDataConnectors\\":[{\\"\
+connectorId\\":\\"AWS\\",\\"dataTypes\\":[\\"AWSCloudTrail\\"]}],\\"settingsDefinitionId\\":\\"f209187f-1d17-4431-94af-\
+c141bf5f23db\\",\\"settingsStatus\\":\\"Production\\",\\"tactics\\":[\\"Exfiltration\\",\\"CommandAndControl\\"],\\"tec\
+hniques\\":[\\"T1037\\",\\"T1021\\"]}}" --settings-resource-name "f209187f-1d17-4431-94af-c141bf5f23db" \
 --workspace-name "myWorkspace"
 """
 
@@ -1449,10 +1448,10 @@ deployment-logs-url=XX
             webhook-url: URL that gets invoked by the webhook.
             webhook-secret-update-time: Time when the webhook secret was updated.
             rotate-webhook-secret: A flag to instruct the backend service to rotate webhook secret.
-      - name: --azure-dev-ops-resource-info
+      - name: --resource-info
         short-summary: "Resources created in Azure DevOps for this source-control."
         long-summary: |
-            Usage: --azure-dev-ops-resource-info pipeline-id=XX service-connection-id=XX
+            Usage: --resource-info pipeline-id=XX service-connection-id=XX
 
             pipeline-id: Id of the pipeline created for the source-control.
             service-connection-id: Id of the service-connection created for the source-control.
@@ -1688,7 +1687,7 @@ helps['sentinel watchlist show'] = """
     examples:
       - name: Get a watchlist.
         text: |-
-               az sentinel watchlist show --resource-group "myRg" --watchlist-alias "highValueAsset" --workspace-name \
+               az sentinel watchlist show --resource-group "myRg" --alias "highValueAsset" --workspace-name \
 "myWorkspace"
 """
 
@@ -1704,15 +1703,15 @@ large file can be polled through the URL returned in Azure-AsyncOperation header
         text: |-
                az sentinel watchlist create --resource-group "myRg" --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\""\
  --description "Watchlist from CSV content" --content-type "text/csv" --display-name "High Value Assets Watchlist" \
---items-search-key "header1" --number-of-lines-to-skip 1 --provider "Microsoft" --raw-content "This line will be \
-skipped\\nheader1,header2\\nvalue1,value2" --source "watchlist.csv" --source-type "Local file" --watchlist-alias \
+--items-search-key "header1" --skip-num 1 --provider "Microsoft" --raw-content "This line will be \
+skipped\\nheader1,header2\\nvalue1,value2" --source "watchlist.csv" --source-type "Local file" --alias \
 "highValueAsset" --workspace-name "myWorkspace"
       - name: Creates or updates a watchlist.
         text: |-
                az sentinel watchlist create --resource-group "myRg" --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\""\
  --description "Watchlist from CSV content" --display-name "High Value Assets Watchlist" --items-search-key "header1" \
---provider "Microsoft" --source "watchlist.csv" --source-type "Local file" --watchlist-alias "highValueAsset" \
---workspace-name "myWorkspace"
+--provider "Microsoft" --source "watchlist.csv" --source-type "Local file" --alias "highValueAsset" --workspace-name \
+"myWorkspace"
 """
 
 helps['sentinel watchlist update'] = """
@@ -1730,8 +1729,8 @@ helps['sentinel watchlist delete'] = """
     examples:
       - name: Delete a watchlist.
         text: |-
-               az sentinel watchlist delete --resource-group "myRg" --watchlist-alias "highValueAsset" \
---workspace-name "myWorkspace"
+               az sentinel watchlist delete --resource-group "myRg" --alias "highValueAsset" --workspace-name \
+"myWorkspace"
 """
 
 helps['sentinel watchlist item'] = """
@@ -1755,8 +1754,8 @@ helps['sentinel watchlist item show'] = """
     examples:
       - name: Get a watchlist item.
         text: |-
-               az sentinel watchlist item show --resource-group "myRg" --watchlist-alias "highValueAsset" \
---watchlist-item-id "3f8901fe-63d9-4875-9ad5-9fb3b8105797" --workspace-name "myWorkspace"
+               az sentinel watchlist item show --resource-group "myRg" --watchlist-alias "highValueAsset" --guid \
+"3f8901fe-63d9-4875-9ad5-9fb3b8105797" --workspace-name "myWorkspace"
 """
 
 helps['sentinel watchlist item create'] = """
@@ -1768,8 +1767,8 @@ helps['sentinel watchlist item create'] = """
                az sentinel watchlist item create --resource-group "myRg" --watchlist-alias "highValueAsset" --etag \
 "0300bf09-0000-0000-0000-5c37296e0000" --items-key-value "{\\"Business tier\\":\\"10.0.2.0/24\\",\\"Data \
 tier\\":\\"10.0.2.0/24\\",\\"Gateway subnet\\":\\"10.0.255.224/27\\",\\"Private DMZ in\\":\\"10.0.0.0/27\\",\\"Public \
-DMZ out\\":\\"10.0.0.96/27\\",\\"Web Tier\\":\\"10.0.1.0/24\\"}" --watchlist-item-id "82ba292c-dc97-4dfc-969d-d4dd9e666\
-842" --workspace-name "myWorkspace"
+DMZ out\\":\\"10.0.0.96/27\\",\\"Web Tier\\":\\"10.0.1.0/24\\"}" --guid "82ba292c-dc97-4dfc-969d-d4dd9e666842" \
+--workspace-name "myWorkspace"
 """
 
 helps['sentinel watchlist item update'] = """
@@ -1783,8 +1782,8 @@ helps['sentinel watchlist item delete'] = """
     examples:
       - name: Delete a watchlist Item.
         text: |-
-               az sentinel watchlist item delete --resource-group "myRg" --watchlist-alias "highValueAsset" \
---watchlist-item-id "4008512e-1d30-48b2-9ee2-d3612ed9d3ea" --workspace-name "myWorkspace"
+               az sentinel watchlist item delete --resource-group "myRg" --watchlist-alias "highValueAsset" --guid \
+"4008512e-1d30-48b2-9ee2-d3612ed9d3ea" --workspace-name "myWorkspace"
 """
 
 helps['sentinel data-connector'] = """
@@ -2100,18 +2099,17 @@ helps['sentinel data-connector connect'] = """
     examples:
       - name: Connect an APIPolling V2 logs data connector
         text: |-
-               az sentinel data-connector connect --api-key "123456789" --data-collection-endpoint \
-"https://test.eastus.ingest.monitor.azure.com" --data-collection-rule-immutable-id "dcr-34adsj9o7d6f9de204478b9cgb43b63\
-1" --kind "APIKey" --output-stream "Custom-MyTableRawData" --request-config-user-input-values \
+               az sentinel data-connector connect --api-key "123456789" --endpoint "https://test.eastus.ingest.monitor.\
+azure.com" --rule-immutable-id "dcr-34adsj9o7d6f9de204478b9cgb43b631" --kind "APIKey" --output-stream \
+"Custom-MyTableRawData" --input-values "[{\\"displayText\\":\\"Organization Name\\",\\"placeHolderName\\":\\"{{placeHol\
+der1}}\\",\\"placeHolderValue\\":\\"somePlaceHolderValue\\",\\"requestObjectKey\\":\\"apiEndpoint\\"}]" \
+--data-connector-id "316ec55e-7138-4d63-ab18-90c8a60fd1c8" --resource-group "myRg" --workspace-name "myWorkspace"
+      - name: Connect an APIPolling data connector
+        text: |-
+               az sentinel data-connector connect --api-key "123456789" --kind "APIKey" --input-values \
 "[{\\"displayText\\":\\"Organization Name\\",\\"placeHolderName\\":\\"{{placeHolder1}}\\",\\"placeHolderValue\\":\\"som\
 ePlaceHolderValue\\",\\"requestObjectKey\\":\\"apiEndpoint\\"}]" --data-connector-id "316ec55e-7138-4d63-ab18-90c8a60fd\
 1c8" --resource-group "myRg" --workspace-name "myWorkspace"
-      - name: Connect an APIPolling data connector
-        text: |-
-               az sentinel data-connector connect --api-key "123456789" --kind "APIKey" --request-config-user-input-val\
-ues "[{\\"displayText\\":\\"Organization Name\\",\\"placeHolderName\\":\\"{{placeHolder1}}\\",\\"placeHolderValue\\":\\\
-"somePlaceHolderValue\\",\\"requestObjectKey\\":\\"apiEndpoint\\"}]" --data-connector-id \
-"316ec55e-7138-4d63-ab18-90c8a60fd1c8" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
 helps['sentinel data-connector disconnect'] = """

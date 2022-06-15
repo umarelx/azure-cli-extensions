@@ -7,6 +7,7 @@
 # Changes may cause incorrect behavior and will be lost if the code is
 # regenerated.
 # --------------------------------------------------------------------------
+# pylint: disable=line-too-long
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-statements
 
@@ -434,8 +435,9 @@ def load_arguments(self, _):
         c.argument('entity_id', type=str, help='entity ID')
         c.argument('start_time', help='The start timeline date, so the results returned are after this date.')
         c.argument('end_time', help='The end timeline date, so the results returned are before this date.')
-        c.argument('add_default_extended_time_range', arg_type=get_three_state_flag(), help='Indicates if query time '
-                   'range should be extended with default time range of the query. Default value is false')
+        c.argument('add_default_extended_time_range', options_list=['--is-extended'], arg_type=get_three_state_flag(),
+                   help='Indicates if query time range should be extended with default time range of the query. '
+                   'Default value is false')
         c.argument('insight_query_ids', nargs='+', help='List of Insights Query Id. If empty, default value is all '
                    'insights of this entity')
 
@@ -504,7 +506,8 @@ def load_arguments(self, _):
     with self.argument_context('sentinel entity template show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('entity_query_template_id', type=str, help='entity query template ID', id_part='child_name_1')
+        c.argument('entity_query_template_id', options_list=['--template-id'], type=str, help='entity query template '
+                   'ID', id_part='child_name_1')
 
     with self.argument_context('sentinel incident comment list') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -644,9 +647,10 @@ def load_arguments(self, _):
                    'between different flow based on the schema version')
         c.argument('icon', type=str, help='the icon identifier. this id can later be fetched from the solution '
                    'template')
-        c.argument('threat_analysis_tactics', nargs='+', help='the tactics the resource covers')
-        c.argument('threat_analysis_techniques', nargs='+', help='the techniques the resource covers, these have to be '
-                   'aligned with the tactics being used')
+        c.argument('threat_analysis_tactics', options_list=['--tactics'], nargs='+', help='the tactics the resource '
+                   'covers')
+        c.argument('threat_analysis_techniques', options_list=['--techniques'], nargs='+', help='the techniques the '
+                   'resource covers, these have to be aligned with the tactics being used')
         c.argument('preview_images', nargs='+', help='preview image file names. These will be taken from the solution '
                    'artifacts')
         c.argument('preview_images_dark', nargs='+', help='preview image file names. These will be taken from the '
@@ -690,9 +694,10 @@ def load_arguments(self, _):
                    'between different flow based on the schema version')
         c.argument('icon', type=str, help='the icon identifier. this id can later be fetched from the solution '
                    'template')
-        c.argument('threat_analysis_tactics', nargs='+', help='the tactics the resource covers')
-        c.argument('threat_analysis_techniques', nargs='+', help='the techniques the resource covers, these have to be '
-                   'aligned with the tactics being used')
+        c.argument('threat_analysis_tactics', options_list=['--tactics'], nargs='+', help='the tactics the resource '
+                   'covers')
+        c.argument('threat_analysis_techniques', options_list=['--techniques'], nargs='+', help='the techniques the '
+                   'resource covers, these have to be aligned with the tactics being used')
         c.argument('preview_images', nargs='+', help='preview image file names. These will be taken from the solution '
                    'artifacts')
         c.argument('preview_images_dark', nargs='+', help='preview image file names. These will be taken from the '
@@ -757,16 +762,16 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('settings_resource_name', type=str, help='Security ML Analytics Settings resource name')
-        c.argument('security_ml_analytics_setting', type=validate_file_or_dict, help='The security ML Analytics '
-                   'setting Expected value: json-string/json-file/@json-file.')
+        c.argument('security_ml_analytics_setting', options_list=['--settings'], type=validate_file_or_dict, help='The '
+                   'security ML Analytics setting Expected value: json-string/json-file/@json-file.')
 
     with self.argument_context('sentinel analytic-setting update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('settings_resource_name', type=str, help='Security ML Analytics Settings resource name',
                    id_part='child_name_1')
-        c.argument('security_ml_analytics_setting', type=validate_file_or_dict, help='The security ML Analytics '
-                   'setting Expected value: json-string/json-file/@json-file.')
+        c.argument('security_ml_analytics_setting', options_list=['--settings'], type=validate_file_or_dict, help='The '
+                   'security ML Analytics setting Expected value: json-string/json-file/@json-file.')
 
     with self.argument_context('sentinel analytic-setting delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -829,7 +834,8 @@ def load_arguments(self, _):
         c.argument('repo_type', arg_type=get_enum_type(['Github', 'DevOps']), help='The repository type of the source '
                    'control')
         c.argument('content_types', nargs='+', help='Array of source control content types.')
-        c.argument('deployment_fetch_status', arg_type=get_enum_type(['Success', 'Unauthorized', 'NotFound']),
+        c.argument('deployment_fetch_status', options_list=['--deployment-status'],
+                   arg_type=get_enum_type(['Success', 'Unauthorized', 'NotFound']),
                    help='Status while fetching the last deployment.', arg_group='Last Deployment Info')
         c.argument('deployment', action=AddDeployment, nargs='+', help='Deployment information.', arg_group='Last '
                    'Deployment Info')
@@ -837,8 +843,9 @@ def load_arguments(self, _):
                    arg_group='Last Deployment Info')
         c.argument('webhook', action=AddWebhook, nargs='+', help='The webhook object created for the source-control.',
                    arg_group='Repository Resource Info')
-        c.argument('azure_dev_ops_resource_info', action=AddAzureDevOpsResourceInfo, nargs='+', help='Resources '
-                   'created in Azure DevOps for this source-control.', arg_group='Repository Resource Info')
+        c.argument('azure_dev_ops_resource_info', options_list=['--resource-info'], action=AddAzureDevOpsResourceInfo,
+                   nargs='+', help='Resources created in Azure DevOps for this source-control.', arg_group='Repository '
+                   'Resource Info')
         c.argument('app_installation_id', type=str, help='GitHub application installation id.', arg_group='Repository '
                    'Resource Info Git Hub Resource Info')
         c.argument('url', type=str, help='Url of repository.', arg_group='Repository')
@@ -1025,12 +1032,13 @@ def load_arguments(self, _):
     with self.argument_context('sentinel watchlist show') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
+        c.argument('watchlist_alias', options_list=['--alias'], type=str, help='Watchlist Alias',
+                   id_part='child_name_1')
 
     with self.argument_context('sentinel watchlist create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
-        c.argument('watchlist_alias', type=str, help='Watchlist Alias')
+        c.argument('watchlist_alias', options_list=['--alias'], type=str, help='Watchlist Alias')
         c.argument('etag', type=str, help='Etag of the azure resource')
         c.argument('watchlist_id', type=str, help='The id (a Guid) of the watchlist')
         c.argument('display_name', type=str, help='The display name of the watchlist')
@@ -1042,14 +1050,15 @@ def load_arguments(self, _):
         c.argument('updated', help='The last time the watchlist was updated')
         c.argument('description', type=str, help='A description of the watchlist')
         c.argument('watchlist_type', type=str, help='The type of the watchlist')
-        c.argument('watchlist_properties_watchlist_alias', type=str, help='The alias of the watchlist')
+        c.argument('watchlist_properties_watchlist_alias', options_list=['--alias'], type=str, help='The alias of the '
+                   'watchlist')
         c.argument('is_deleted', arg_type=get_three_state_flag(), help='A flag that indicates if the watchlist is '
                    'deleted or not')
         c.argument('labels', nargs='+', help='List of labels relevant to this watchlist')
         c.argument('default_duration', help='The default duration of a watchlist (in ISO 8601 duration format)')
         c.argument('tenant_id', type=str, help='The tenantId where the watchlist belongs to')
-        c.argument('number_of_lines_to_skip', type=int, help='The number of lines in a csv/tsv content to skip before '
-                   'the header')
+        c.argument('number_of_lines_to_skip', options_list=['--skip-num'], type=int, help='The number of lines in a '
+                   'csv/tsv content to skip before the header')
         c.argument('raw_content', type=str, help='The raw content that represents to watchlist items to create. In '
                    'case of csv/tsv content type, it\'s the content of the file that will parsed by the endpoint')
         c.argument('items_search_key', type=str, help='The search key is used to optimize query performance when using '
@@ -1066,7 +1075,8 @@ def load_arguments(self, _):
     with self.argument_context('sentinel watchlist update') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
+        c.argument('watchlist_alias', options_list=['--alias'], type=str, help='Watchlist Alias',
+                   id_part='child_name_1')
         c.argument('etag', type=str, help='Etag of the azure resource')
         c.argument('watchlist_id', type=str, help='The id (a Guid) of the watchlist')
         c.argument('display_name', type=str, help='The display name of the watchlist')
@@ -1078,15 +1088,15 @@ def load_arguments(self, _):
         c.argument('updated', help='The last time the watchlist was updated')
         c.argument('description', type=str, help='A description of the watchlist')
         c.argument('watchlist_type', type=str, help='The type of the watchlist')
-        c.argument('watchlist_properties_watchlist_alias', type=str, help='The alias of the watchlist',
-                   id_part='child_name_1')
+        c.argument('watchlist_properties_watchlist_alias', options_list=['--alias'], type=str, help='The alias of the '
+                   'watchlist', id_part='child_name_1')
         c.argument('is_deleted', arg_type=get_three_state_flag(), help='A flag that indicates if the watchlist is '
                    'deleted or not')
         c.argument('labels', nargs='+', help='List of labels relevant to this watchlist')
         c.argument('default_duration', help='The default duration of a watchlist (in ISO 8601 duration format)')
         c.argument('tenant_id', type=str, help='The tenantId where the watchlist belongs to')
-        c.argument('number_of_lines_to_skip', type=int, help='The number of lines in a csv/tsv content to skip before '
-                   'the header')
+        c.argument('number_of_lines_to_skip', options_list=['--skip-num'], type=int, help='The number of lines in a '
+                   'csv/tsv content to skip before the header')
         c.argument('raw_content', type=str, help='The raw content that represents to watchlist items to create. In '
                    'case of csv/tsv content type, it\'s the content of the file that will parsed by the endpoint')
         c.argument('items_search_key', type=str, help='The search key is used to optimize query performance when using '
@@ -1104,7 +1114,8 @@ def load_arguments(self, _):
     with self.argument_context('sentinel watchlist delete') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
-        c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
+        c.argument('watchlist_alias', options_list=['--alias'], type=str, help='Watchlist Alias',
+                   id_part='child_name_1')
 
     with self.argument_context('sentinel watchlist item list') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -1119,17 +1130,18 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
-        c.argument('watchlist_item_id', type=str, help='Watchlist Item Id (GUID)', id_part='child_name_2')
+        c.argument('watchlist_item_id', options_list=['--guid'], type=str, help='Watchlist Item Id (GUID)',
+                   id_part='child_name_2')
 
     with self.argument_context('sentinel watchlist item create') as c:
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias')
-        c.argument('watchlist_item_id', type=str, help='Watchlist Item Id (GUID)')
+        c.argument('watchlist_item_id', options_list=['--guid'], type=str, help='Watchlist Item Id (GUID)')
         c.argument('etag', type=str, help='Etag of the azure resource')
         c.argument('watchlist_item_type', type=str, help='The type of the watchlist item')
-        c.argument('watchlist_item_properties_watchlist_item_id_watchlist_item_id', type=str, help='The id (a Guid) of '
-                   'the watchlist item')
+        c.argument('watchlist_item_properties_watchlist_item_id_watchlist_item_id', options_list=['--guid'], type=str,
+                   help='The id (a Guid) of the watchlist item')
         c.argument('tenant_id', type=str, help='The tenantId to which the watchlist item belongs to')
         c.argument('is_deleted', arg_type=get_three_state_flag(), help='A flag that indicates if the watchlist item is '
                    'deleted or not')
@@ -1146,11 +1158,12 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
-        c.argument('watchlist_item_id', type=str, help='Watchlist Item Id (GUID)', id_part='child_name_2')
+        c.argument('watchlist_item_id', options_list=['--guid'], type=str, help='Watchlist Item Id (GUID)',
+                   id_part='child_name_2')
         c.argument('etag', type=str, help='Etag of the azure resource')
         c.argument('watchlist_item_type', type=str, help='The type of the watchlist item')
-        c.argument('watchlist_item_properties_watchlist_item_id_watchlist_item_id', type=str, help='The id (a Guid) of '
-                   'the watchlist item', id_part='child_name_2')
+        c.argument('watchlist_item_properties_watchlist_item_id_watchlist_item_id', options_list=['--guid'], type=str,
+                   help='The id (a Guid) of the watchlist item', id_part='child_name_2')
         c.argument('tenant_id', type=str, help='The tenantId to which the watchlist item belongs to')
         c.argument('is_deleted', arg_type=get_three_state_flag(), help='A flag that indicates if the watchlist item is '
                    'deleted or not')
@@ -1168,7 +1181,8 @@ def load_arguments(self, _):
         c.argument('resource_group_name', resource_group_name_type)
         c.argument('workspace_name', type=str, help='The name of the workspace.', id_part='name')
         c.argument('watchlist_alias', type=str, help='Watchlist Alias', id_part='child_name_1')
-        c.argument('watchlist_item_id', type=str, help='Watchlist Item Id (GUID)', id_part='child_name_2')
+        c.argument('watchlist_item_id', options_list=['--guid'], type=str, help='Watchlist Item Id (GUID)',
+                   id_part='child_name_2')
 
     with self.argument_context('sentinel data-connector list') as c:
         c.argument('resource_group_name', resource_group_name_type)
@@ -1205,10 +1219,11 @@ def load_arguments(self, _):
         c.argument('kind', arg_type=get_enum_type(['Basic', 'OAuth2', 'APIKey']), help='The authentication kind used '
                    'to poll the data')
         c.argument('api_key', type=str, help='The API key of the audit server.')
-        c.argument('data_collection_endpoint', type=str, help='Used in v2 logs connector. Represents the data '
-                   'collection ingestion endpoint in log analytics.')
-        c.argument('data_collection_rule_immutable_id', type=str, help='Used in v2 logs connector. The data collection '
-                   'rule immutable id, the rule defines the transformation and data destination.')
+        c.argument('data_collection_endpoint', options_list=['--endpoint'], type=str, help='Used in v2 logs connector. '
+                   'Represents the data collection ingestion endpoint in log analytics.')
+        c.argument('data_collection_rule_immutable_id', options_list=['--rule-immutable-id'], type=str, help='Used in '
+                   'v2 logs connector. The data collection rule immutable id, the rule defines the transformation and '
+                   'data destination.')
         c.argument('output_stream', type=str, help='Used in v2 logs connector. The stream we are sending the data to, '
                    'this is the name of the streamDeclarations defined in the DCR.')
         c.argument('client_secret', type=str, help='The client secret of the OAuth 2.0 application.')
@@ -1217,8 +1232,8 @@ def load_arguments(self, _):
                    'token.')
         c.argument('user_name', type=str, help='The user name in the audit log server.')
         c.argument('password', type=str, help='The user password in the audit log server.')
-        c.argument('request_config_user_input_values', type=validate_file_or_dict, help=' Expected value: '
-                   'json-string/json-file/@json-file.')
+        c.argument('request_config_user_input_values', options_list=['--input-values'], type=validate_file_or_dict,
+                   help=' Expected value: json-string/json-file/@json-file.')
 
     with self.argument_context('sentinel data-connector disconnect') as c:
         c.argument('resource_group_name', resource_group_name_type)

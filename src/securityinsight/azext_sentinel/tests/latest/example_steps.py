@@ -944,9 +944,9 @@ def step_data_connector_connect(test, checks=None):
     test.cmd('az sentinel data-connector connect '
              '--api-key "123456789" '
              '--kind "APIKey" '
-             '--request-config-user-input-values "[{{\\"displayText\\":\\"Organization Name\\",\\"placeHolderName\\":\\'
-             '"{{{{{{{{placeHolder1}}}}}}}}\\",\\"placeHolderValue\\":\\"somePlaceHolderValue\\",\\"requestObjectKey\\"'
-             ':\\"apiEndpoint\\"}}]" '
+             '--input-values "[{{\\"displayText\\":\\"Organization Name\\",\\"placeHolderName\\":\\"{{{{{{{{placeHolder'
+             '1}}}}}}}}\\",\\"placeHolderValue\\":\\"somePlaceHolderValue\\",\\"requestObjectKey\\":\\"apiEndpoint\\"}}'
+             ']" '
              '--data-connector-id "316ec55e-7138-4d63-ab18-90c8a60fd1c8" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -960,13 +960,13 @@ def step_data_connector_connect2(test, checks=None):
         checks = []
     test.cmd('az sentinel data-connector connect '
              '--api-key "123456789" '
-             '--data-collection-endpoint "https://test.eastus.ingest.monitor.azure.com" '
-             '--data-collection-rule-immutable-id "dcr-34adsj9o7d6f9de204478b9cgb43b631" '
+             '--endpoint "https://test.eastus.ingest.monitor.azure.com" '
+             '--rule-immutable-id "dcr-34adsj9o7d6f9de204478b9cgb43b631" '
              '--kind "APIKey" '
              '--output-stream "Custom-MyTableRawData" '
-             '--request-config-user-input-values "[{{\\"displayText\\":\\"Organization Name\\",\\"placeHolderName\\":\\'
-             '"{{{{{{{{placeHolder1}}}}}}}}\\",\\"placeHolderValue\\":\\"somePlaceHolderValue\\",\\"requestObjectKey\\"'
-             ':\\"apiEndpoint\\"}}]" '
+             '--input-values "[{{\\"displayText\\":\\"Organization Name\\",\\"placeHolderName\\":\\"{{{{{{{{placeHolder'
+             '1}}}}}}}}\\",\\"placeHolderValue\\":\\"somePlaceHolderValue\\",\\"requestObjectKey\\":\\"apiEndpoint\\"}}'
+             ']" '
              '--data-connector-id "316ec55e-7138-4d63-ab18-90c8a60fd1c8" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -1242,7 +1242,7 @@ def step_entity_list_insight(test, checks=None):
         checks = []
     test.cmd('az sentinel entity list-insight '
              '--entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" '
-             '--add-default-extended-time-range false '
+             '--is-extended false '
              '--end-time "2021-10-01T00:00:00.000Z" '
              '--insight-query-ids "cae8d0aa-aa45-4d53-8d88-17dd64ffd4e4" '
              '--start-time "2021-09-01T00:00:00.000Z" '
@@ -1391,7 +1391,7 @@ def step_entity_template_show(test, checks=None):
     if checks is None:
         checks = []
     test.cmd('az sentinel entity template show '
-             '--entity-query-template-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b" '
+             '--template-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
              checks=checks)
@@ -1680,8 +1680,8 @@ def step_metadata_create(test, checks=None):
              '--source name="Contoso Solution 1.0" kind="Solution" source-id="b688a130-76f4-4a07-bf57-762222a3cadf" '
              '--support name="Microsoft" email="support@microsoft.com" link="https://support.microsoft.com/" '
              'tier="Partner" '
-             '--threat-analysis-tactics "reconnaissance" "commandandcontrol" '
-             '--threat-analysis-techniques "T1548" "T1548.001" '
+             '--tactics "reconnaissance" "commandandcontrol" '
+             '--techniques "T1548" "T1548.001" '
              '--version "1.0.0.0" '
              '--name "{myMetadata}" '
              '--resource-group "{rg}" '
@@ -1836,26 +1836,25 @@ def step_analytic_setting_create(test, checks=None):
         checks = []
     test.cmd('az sentinel analytic-setting create '
              '--resource-group "{rg}" '
-             '--security-ml-analytics-setting "{{\\"etag\\":\\"\\\\\\"260090e2-0000-0d00-0000-5d6fb8670000\\\\\\"\\",\\'
-             '"kind\\":\\"Anomaly\\",\\"properties\\":{{\\"description\\":\\"When account logs from a source region '
-             'that has rarely been logged in from during the last 14 days, an anomaly is '
-             'triggered.\\",\\"anomalySettingsVersion\\":0,\\"anomalyVersion\\":\\"1.0.5\\",\\"customizableObservations'
-             '\\":{{\\"multiSelectObservations\\":null,\\"prioritizeExcludeObservations\\":null,\\"singleSelectObservat'
-             'ions\\":[{{\\"name\\":\\"Device vendor\\",\\"description\\":\\"Select device vendor of network '
-             'connection logs from CommonSecurityLog\\",\\"rerun\\":\\"RerunAlways\\",\\"sequenceNumber\\":1,\\"support'
-             'edValues\\":[\\"Palo Alto Networks\\",\\"Fortinet\\",\\"Check Point\\"],\\"supportedValuesKql\\":null,\\"'
-             'value\\":[\\"Palo Alto Networks\\"],\\"valuesKql\\":null}}],\\"singleValueObservations\\":null,\\"thresho'
-             'ldObservations\\":[{{\\"name\\":\\"Daily data transfer threshold in MB\\",\\"description\\":\\"Suppress '
-             'anomalies when daily data transfered (in MB) per hour is less than the chosen '
-             'value\\",\\"maximum\\":\\"100\\",\\"minimum\\":\\"1\\",\\"rerun\\":\\"RerunAlways\\",\\"sequenceNumber\\"'
-             ':1,\\"value\\":\\"25\\"}},{{\\"name\\":\\"Number of standard deviations\\",\\"description\\":\\"Triggers '
-             'anomalies when number of standard deviations is greater than the chosen value\\",\\"maximum\\":\\"10\\",'
-             '\\"minimum\\":\\"2\\",\\"rerun\\":\\"RerunAlways\\",\\"sequenceNumber\\":2,\\"value\\":\\"3\\"}}]}},\\"di'
-             'splayName\\":\\"Login from unusual region\\",\\"enabled\\":true,\\"frequency\\":\\"PT1H\\",\\"isDefaultSe'
-             'ttings\\":true,\\"requiredDataConnectors\\":[{{\\"connectorId\\":\\"AWS\\",\\"dataTypes\\":[\\"AWSCloudTr'
-             'ail\\"]}}],\\"settingsDefinitionId\\":\\"f209187f-1d17-4431-94af-c141bf5f23db\\",\\"settingsStatus\\":\\"'
-             'Production\\",\\"tactics\\":[\\"Exfiltration\\",\\"CommandAndControl\\"],\\"techniques\\":[\\"T1037\\",\\'
-             '"T1021\\"]}}}}" '
+             '--settings "{{\\"etag\\":\\"\\\\\\"260090e2-0000-0d00-0000-5d6fb8670000\\\\\\"\\",\\"kind\\":\\"Anomaly\\'
+             '",\\"properties\\":{{\\"description\\":\\"When account logs from a source region that has rarely been '
+             'logged in from during the last 14 days, an anomaly is triggered.\\",\\"anomalySettingsVersion\\":0,\\"ano'
+             'malyVersion\\":\\"1.0.5\\",\\"customizableObservations\\":{{\\"multiSelectObservations\\":null,\\"priorit'
+             'izeExcludeObservations\\":null,\\"singleSelectObservations\\":[{{\\"name\\":\\"Device '
+             'vendor\\",\\"description\\":\\"Select device vendor of network connection logs from '
+             'CommonSecurityLog\\",\\"rerun\\":\\"RerunAlways\\",\\"sequenceNumber\\":1,\\"supportedValues\\":[\\"Palo '
+             'Alto Networks\\",\\"Fortinet\\",\\"Check Point\\"],\\"supportedValuesKql\\":null,\\"value\\":[\\"Palo '
+             'Alto Networks\\"],\\"valuesKql\\":null}}],\\"singleValueObservations\\":null,\\"thresholdObservations\\":'
+             '[{{\\"name\\":\\"Daily data transfer threshold in MB\\",\\"description\\":\\"Suppress anomalies when '
+             'daily data transfered (in MB) per hour is less than the chosen value\\",\\"maximum\\":\\"100\\",\\"minimu'
+             'm\\":\\"1\\",\\"rerun\\":\\"RerunAlways\\",\\"sequenceNumber\\":1,\\"value\\":\\"25\\"}},{{\\"name\\":\\"'
+             'Number of standard deviations\\",\\"description\\":\\"Triggers anomalies when number of standard '
+             'deviations is greater than the chosen value\\",\\"maximum\\":\\"10\\",\\"minimum\\":\\"2\\",\\"rerun\\":'
+             '\\"RerunAlways\\",\\"sequenceNumber\\":2,\\"value\\":\\"3\\"}}]}},\\"displayName\\":\\"Login from '
+             'unusual region\\",\\"enabled\\":true,\\"frequency\\":\\"PT1H\\",\\"isDefaultSettings\\":true,\\"requiredD'
+             'ataConnectors\\":[{{\\"connectorId\\":\\"AWS\\",\\"dataTypes\\":[\\"AWSCloudTrail\\"]}}],\\"settingsDefin'
+             'itionId\\":\\"f209187f-1d17-4431-94af-c141bf5f23db\\",\\"settingsStatus\\":\\"Production\\",\\"tactics\\"'
+             ':[\\"Exfiltration\\",\\"CommandAndControl\\"],\\"techniques\\":[\\"T1037\\",\\"T1021\\"]}}}}" '
              '--settings-resource-name "f209187f-1d17-4431-94af-c141bf5f23db" '
              '--workspace-name "myWorkspace"',
              checks=checks)
@@ -2167,7 +2166,7 @@ def step_watchlist_item_create(test, checks=None):
              '--items-key-value "{{\\"Business tier\\":\\"10.0.2.0/24\\",\\"Data tier\\":\\"10.0.2.0/24\\",\\"Gateway '
              'subnet\\":\\"10.0.255.224/27\\",\\"Private DMZ in\\":\\"10.0.0.0/27\\",\\"Public DMZ '
              'out\\":\\"10.0.0.96/27\\",\\"Web Tier\\":\\"10.0.1.0/24\\"}}" '
-             '--watchlist-item-id "82ba292c-dc97-4dfc-969d-d4dd9e666842" '
+             '--guid "82ba292c-dc97-4dfc-969d-d4dd9e666842" '
              '--workspace-name "myWorkspace"',
              checks=checks)
 
@@ -2180,7 +2179,7 @@ def step_watchlist_item_show(test, checks=None):
     test.cmd('az sentinel watchlist item show '
              '--resource-group "{rg}" '
              '--watchlist-alias "highValueAsset" '
-             '--watchlist-item-id "3f8901fe-63d9-4875-9ad5-9fb3b8105797" '
+             '--guid "3f8901fe-63d9-4875-9ad5-9fb3b8105797" '
              '--workspace-name "myWorkspace"',
              checks=checks)
 
@@ -2205,7 +2204,7 @@ def step_watchlist_item_delete(test, checks=None):
     test.cmd('az sentinel watchlist item delete -y '
              '--resource-group "{rg}" '
              '--watchlist-alias "highValueAsset" '
-             '--watchlist-item-id "4008512e-1d30-48b2-9ee2-d3612ed9d3ea" '
+             '--guid "4008512e-1d30-48b2-9ee2-d3612ed9d3ea" '
              '--workspace-name "myWorkspace"',
              checks=checks)
 
@@ -2222,12 +2221,12 @@ def step_watchlist_create(test, checks=None):
              '--content-type "text/csv" '
              '--display-name "High Value Assets Watchlist" '
              '--items-search-key "header1" '
-             '--number-of-lines-to-skip 1 '
+             '--skip-num 1 '
              '--provider "Microsoft" '
              '--raw-content "This line will be skipped\\nheader1,header2\\nvalue1,value2" '
              '--source "watchlist.csv" '
              '--source-type "Local file" '
-             '--watchlist-alias "highValueAsset" '
+             '--alias "highValueAsset" '
              '--workspace-name "myWorkspace"',
              checks=checks)
 
@@ -2246,7 +2245,7 @@ def step_watchlist_create2(test, checks=None):
              '--provider "Microsoft" '
              '--source "watchlist.csv" '
              '--source-type "Local file" '
-             '--watchlist-alias "highValueAsset" '
+             '--alias "highValueAsset" '
              '--workspace-name "myWorkspace"',
              checks=checks)
 
@@ -2258,7 +2257,7 @@ def step_watchlist_show(test, checks=None):
         checks = []
     test.cmd('az sentinel watchlist show '
              '--resource-group "{rg}" '
-             '--watchlist-alias "highValueAsset" '
+             '--alias "highValueAsset" '
              '--workspace-name "myWorkspace"',
              checks=checks)
 
@@ -2281,6 +2280,6 @@ def step_watchlist_delete(test, checks=None):
         checks = []
     test.cmd('az sentinel watchlist delete -y '
              '--resource-group "{rg}" '
-             '--watchlist-alias "highValueAsset" '
+             '--alias "highValueAsset" '
              '--workspace-name "myWorkspace"',
              checks=checks)
