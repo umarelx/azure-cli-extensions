@@ -732,14 +732,14 @@ def sentinel_entity_expand(client,
                          parameters=parameters)
 
 
-def sentinel_entity_get_insight(client,
-                                resource_group_name,
-                                workspace_name,
-                                entity_id,
-                                start_time,
-                                end_time,
-                                add_default_extended_time_range=None,
-                                insight_query_ids=None):
+def sentinel_entity_list_insight(client,
+                                 resource_group_name,
+                                 workspace_name,
+                                 entity_id,
+                                 start_time,
+                                 end_time,
+                                 add_default_extended_time_range=None,
+                                 insight_query_ids=None):
     parameters = {}
     parameters['start_time'] = start_time
     parameters['end_time'] = end_time
@@ -753,24 +753,14 @@ def sentinel_entity_get_insight(client,
                                parameters=parameters)
 
 
-def sentinel_entity_query(client,
-                          resource_group_name,
-                          workspace_name,
-                          entity_id):
-    return client.queries(resource_group_name=resource_group_name,
-                          workspace_name=workspace_name,
-                          entity_id=entity_id,
-                          kind="Insight")
-
-
-def sentinel_entity_get_timeline_list(client,
-                                      resource_group_name,
-                                      workspace_name,
-                                      entity_id,
-                                      start_time,
-                                      end_time,
-                                      kinds=None,
-                                      number_of_bucket=None):
+def sentinel_entity_list_timeline(client,
+                                  resource_group_name,
+                                  workspace_name,
+                                  entity_id,
+                                  start_time,
+                                  end_time,
+                                  kinds=None,
+                                  number_of_bucket=None):
     parameters = {}
     if kinds is not None:
         parameters['kinds'] = kinds
@@ -801,11 +791,11 @@ def sentinel_entity_relation_list(client,
                        skip_token=skip_token)
 
 
-def sentinel_entity_relation_show_relation(client,
-                                           resource_group_name,
-                                           workspace_name,
-                                           entity_id,
-                                           relation_name):
+def sentinel_entity_relation_show(client,
+                                  resource_group_name,
+                                  workspace_name,
+                                  entity_id,
+                                  relation_name):
     return client.get_relation(resource_group_name=resource_group_name,
                                workspace_name=workspace_name,
                                entity_id=entity_id,
@@ -861,17 +851,17 @@ def sentinel_entity_query_delete(client,
                          entity_query_id=entity_query_id)
 
 
-def sentinel_entity_query_template_list(client,
-                                        resource_group_name,
-                                        workspace_name):
+def sentinel_entity_template_list(client,
+                                  resource_group_name,
+                                  workspace_name):
     return client.list(resource_group_name=resource_group_name,
                        workspace_name=workspace_name)
 
 
-def sentinel_entity_query_template_show(client,
-                                        resource_group_name,
-                                        workspace_name,
-                                        entity_query_template_id):
+def sentinel_entity_template_show(client,
+                                  resource_group_name,
+                                  workspace_name,
+                                  entity_query_template_id):
     return client.get(resource_group_name=resource_group_name,
                       workspace_name=workspace_name,
                       entity_query_template_id=entity_query_template_id)
@@ -1221,28 +1211,28 @@ def sentinel_office_consent_delete(client,
                          consent_id=consent_id)
 
 
-def sentinel_sentinel_onboarding_state_list(client,
-                                            resource_group_name,
-                                            workspace_name):
+def sentinel_onboarding_state_list(client,
+                                   resource_group_name,
+                                   workspace_name):
     return client.list(resource_group_name=resource_group_name,
                        workspace_name=workspace_name)
 
 
-def sentinel_sentinel_onboarding_state_show(client,
-                                            resource_group_name,
-                                            workspace_name,
-                                            sentinel_onboarding_state_name):
+def sentinel_onboarding_state_show(client,
+                                   resource_group_name,
+                                   workspace_name,
+                                   sentinel_onboarding_state_name):
     return client.get(resource_group_name=resource_group_name,
                       workspace_name=workspace_name,
                       sentinel_onboarding_state_name=sentinel_onboarding_state_name)
 
 
-def sentinel_sentinel_onboarding_state_create(client,
-                                              resource_group_name,
-                                              workspace_name,
-                                              sentinel_onboarding_state_name,
-                                              etag=None,
-                                              customer_managed_key=None):
+def sentinel_onboarding_state_create(client,
+                                     resource_group_name,
+                                     workspace_name,
+                                     sentinel_onboarding_state_name,
+                                     etag=None,
+                                     customer_managed_key=None):
     sentinel_onboarding_state_parameter = {}
     if etag is not None:
         sentinel_onboarding_state_parameter['etag'] = etag
@@ -1254,57 +1244,57 @@ def sentinel_sentinel_onboarding_state_create(client,
                          sentinel_onboarding_state_parameter=sentinel_onboarding_state_parameter)
 
 
-def sentinel_sentinel_onboarding_state_delete(client,
-                                              resource_group_name,
-                                              workspace_name,
-                                              sentinel_onboarding_state_name):
+def sentinel_onboarding_state_delete(client,
+                                     resource_group_name,
+                                     workspace_name,
+                                     sentinel_onboarding_state_name):
     return client.delete(resource_group_name=resource_group_name,
                          workspace_name=workspace_name,
                          sentinel_onboarding_state_name=sentinel_onboarding_state_name)
 
 
-def sentinel_security_ml_analytic_setting_list(client,
-                                               resource_group_name,
-                                               workspace_name):
+def sentinel_analytic_setting_list(client,
+                                   resource_group_name,
+                                   workspace_name):
     return client.list(resource_group_name=resource_group_name,
                        workspace_name=workspace_name)
 
 
-def sentinel_security_ml_analytic_setting_show(client,
-                                               resource_group_name,
-                                               workspace_name,
-                                               settings_resource_name):
+def sentinel_analytic_setting_show(client,
+                                   resource_group_name,
+                                   workspace_name,
+                                   settings_resource_name):
     return client.get(resource_group_name=resource_group_name,
                       workspace_name=workspace_name,
                       settings_resource_name=settings_resource_name)
 
 
-def sentinel_security_ml_analytic_setting_create(client,
-                                                 resource_group_name,
-                                                 workspace_name,
-                                                 settings_resource_name,
-                                                 security_ml_analytics_setting):
+def sentinel_analytic_setting_create(client,
+                                     resource_group_name,
+                                     workspace_name,
+                                     settings_resource_name,
+                                     security_ml_analytics_setting):
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
                                    settings_resource_name=settings_resource_name,
                                    security_ml_analytics_setting=security_ml_analytics_setting)
 
 
-def sentinel_security_ml_analytic_setting_update(client,
-                                                 resource_group_name,
-                                                 workspace_name,
-                                                 settings_resource_name,
-                                                 security_ml_analytics_setting):
+def sentinel_analytic_setting_update(client,
+                                     resource_group_name,
+                                     workspace_name,
+                                     settings_resource_name,
+                                     security_ml_analytics_setting):
     return client.create_or_update(resource_group_name=resource_group_name,
                                    workspace_name=workspace_name,
                                    settings_resource_name=settings_resource_name,
                                    security_ml_analytics_setting=security_ml_analytics_setting)
 
 
-def sentinel_security_ml_analytic_setting_delete(client,
-                                                 resource_group_name,
-                                                 workspace_name,
-                                                 settings_resource_name):
+def sentinel_analytic_setting_delete(client,
+                                     resource_group_name,
+                                     workspace_name,
+                                     settings_resource_name):
     return client.delete(resource_group_name=resource_group_name,
                          workspace_name=workspace_name,
                          settings_resource_name=settings_resource_name)
@@ -1474,48 +1464,48 @@ def sentinel_source_control_delete(client,
                          source_control_id=source_control_id)
 
 
-def sentinel_threat_intelligence_indicator_show(client,
-                                                resource_group_name,
-                                                workspace_name,
-                                                name):
+def sentinel_threat_indicator_show(client,
+                                   resource_group_name,
+                                   workspace_name,
+                                   name):
     return client.get(resource_group_name=resource_group_name,
                       workspace_name=workspace_name,
                       name=name)
 
 
-def sentinel_threat_intelligence_indicator_create(client,
-                                                  resource_group_name,
-                                                  workspace_name,
-                                                  name,
-                                                  etag=None,
-                                                  threat_intelligence_tags=None,
-                                                  last_updated_time_utc=None,
-                                                  source=None,
-                                                  display_name=None,
-                                                  description=None,
-                                                  indicator_types=None,
-                                                  pattern=None,
-                                                  pattern_type=None,
-                                                  pattern_version=None,
-                                                  kill_chain_phases=None,
-                                                  parsed_pattern=None,
-                                                  external_id=None,
-                                                  created_by_ref=None,
-                                                  defanged=None,
-                                                  external_last_updated_time_utc=None,
-                                                  external_references=None,
-                                                  granular_markings=None,
-                                                  labels=None,
-                                                  revoked=None,
-                                                  confidence=None,
-                                                  object_marking_refs=None,
-                                                  language=None,
-                                                  threat_types=None,
-                                                  valid_from=None,
-                                                  valid_until=None,
-                                                  created=None,
-                                                  modified=None,
-                                                  extensions=None):
+def sentinel_threat_indicator_create(client,
+                                     resource_group_name,
+                                     workspace_name,
+                                     name,
+                                     etag=None,
+                                     threat_intelligence_tags=None,
+                                     last_updated_time_utc=None,
+                                     source=None,
+                                     display_name=None,
+                                     description=None,
+                                     indicator_types=None,
+                                     pattern=None,
+                                     pattern_type=None,
+                                     pattern_version=None,
+                                     kill_chain_phases=None,
+                                     parsed_pattern=None,
+                                     external_id=None,
+                                     created_by_ref=None,
+                                     defanged=None,
+                                     external_last_updated_time_utc=None,
+                                     external_references=None,
+                                     granular_markings=None,
+                                     labels=None,
+                                     revoked=None,
+                                     confidence=None,
+                                     object_marking_refs=None,
+                                     language=None,
+                                     threat_types=None,
+                                     valid_from=None,
+                                     valid_until=None,
+                                     created=None,
+                                     modified=None,
+                                     extensions=None):
     threat_intelligence_properties = {}
     if etag is not None:
         threat_intelligence_properties['etag'] = etag
@@ -1582,20 +1572,20 @@ def sentinel_threat_intelligence_indicator_create(client,
                          threat_intelligence_properties=threat_intelligence_properties)
 
 
-def sentinel_threat_intelligence_indicator_delete(client,
-                                                  resource_group_name,
-                                                  workspace_name,
-                                                  name):
+def sentinel_threat_indicator_delete(client,
+                                     resource_group_name,
+                                     workspace_name,
+                                     name):
     return client.delete(resource_group_name=resource_group_name,
                          workspace_name=workspace_name,
                          name=name)
 
 
-def sentinel_threat_intelligence_indicator_append_tag(client,
-                                                      resource_group_name,
-                                                      workspace_name,
-                                                      name,
-                                                      threat_intelligence_tags=None):
+def sentinel_threat_indicator_append_tag(client,
+                                         resource_group_name,
+                                         workspace_name,
+                                         name,
+                                         threat_intelligence_tags=None):
     threat_intelligence_append_tags = {}
     if threat_intelligence_tags is not None:
         threat_intelligence_append_tags['threat_intelligence_tags'] = threat_intelligence_tags
@@ -1605,38 +1595,38 @@ def sentinel_threat_intelligence_indicator_append_tag(client,
                               threat_intelligence_append_tags=threat_intelligence_append_tags)
 
 
-def sentinel_threat_intelligence_indicator_create_indicator(client,
-                                                            resource_group_name,
-                                                            workspace_name,
-                                                            etag=None,
-                                                            threat_intelligence_tags=None,
-                                                            last_updated_time_utc=None,
-                                                            source=None,
-                                                            display_name=None,
-                                                            description=None,
-                                                            indicator_types=None,
-                                                            pattern=None,
-                                                            pattern_type=None,
-                                                            pattern_version=None,
-                                                            kill_chain_phases=None,
-                                                            parsed_pattern=None,
-                                                            external_id=None,
-                                                            created_by_ref=None,
-                                                            defanged=None,
-                                                            external_last_updated_time_utc=None,
-                                                            external_references=None,
-                                                            granular_markings=None,
-                                                            labels=None,
-                                                            revoked=None,
-                                                            confidence=None,
-                                                            object_marking_refs=None,
-                                                            language=None,
-                                                            threat_types=None,
-                                                            valid_from=None,
-                                                            valid_until=None,
-                                                            created=None,
-                                                            modified=None,
-                                                            extensions=None):
+def sentinel_threat_indicator_create_indicator(client,
+                                               resource_group_name,
+                                               workspace_name,
+                                               etag=None,
+                                               threat_intelligence_tags=None,
+                                               last_updated_time_utc=None,
+                                               source=None,
+                                               display_name=None,
+                                               description=None,
+                                               indicator_types=None,
+                                               pattern=None,
+                                               pattern_type=None,
+                                               pattern_version=None,
+                                               kill_chain_phases=None,
+                                               parsed_pattern=None,
+                                               external_id=None,
+                                               created_by_ref=None,
+                                               defanged=None,
+                                               external_last_updated_time_utc=None,
+                                               external_references=None,
+                                               granular_markings=None,
+                                               labels=None,
+                                               revoked=None,
+                                               confidence=None,
+                                               object_marking_refs=None,
+                                               language=None,
+                                               threat_types=None,
+                                               valid_from=None,
+                                               valid_until=None,
+                                               created=None,
+                                               modified=None,
+                                               extensions=None):
     threat_intelligence_properties = {}
     if etag is not None:
         threat_intelligence_properties['etag'] = etag
@@ -1702,22 +1692,22 @@ def sentinel_threat_intelligence_indicator_create_indicator(client,
                                    threat_intelligence_properties=threat_intelligence_properties)
 
 
-def sentinel_threat_intelligence_indicator_query_indicator(client,
-                                                           resource_group_name,
-                                                           workspace_name,
-                                                           page_size=None,
-                                                           min_confidence=None,
-                                                           max_confidence=None,
-                                                           min_valid_until=None,
-                                                           max_valid_until=None,
-                                                           include_disabled=None,
-                                                           sort_by=None,
-                                                           sources=None,
-                                                           pattern_types=None,
-                                                           threat_types=None,
-                                                           ids=None,
-                                                           keywords=None,
-                                                           skip_token=None):
+def sentinel_threat_indicator_query_indicator(client,
+                                              resource_group_name,
+                                              workspace_name,
+                                              page_size=None,
+                                              min_confidence=None,
+                                              max_confidence=None,
+                                              min_valid_until=None,
+                                              max_valid_until=None,
+                                              include_disabled=None,
+                                              sort_by=None,
+                                              sources=None,
+                                              pattern_types=None,
+                                              threat_types=None,
+                                              ids=None,
+                                              keywords=None,
+                                              skip_token=None):
     threat_intelligence_filtering_criteria = {}
     if page_size is not None:
         threat_intelligence_filtering_criteria['page_size'] = page_size
@@ -1750,39 +1740,39 @@ def sentinel_threat_intelligence_indicator_query_indicator(client,
                                    threat_intelligence_filtering_criteria=threat_intelligence_filtering_criteria)
 
 
-def sentinel_threat_intelligence_indicator_replace_tag(client,
-                                                       resource_group_name,
-                                                       workspace_name,
-                                                       name,
-                                                       etag=None,
-                                                       threat_intelligence_tags=None,
-                                                       last_updated_time_utc=None,
-                                                       source=None,
-                                                       display_name=None,
-                                                       description=None,
-                                                       indicator_types=None,
-                                                       pattern=None,
-                                                       pattern_type=None,
-                                                       pattern_version=None,
-                                                       kill_chain_phases=None,
-                                                       parsed_pattern=None,
-                                                       external_id=None,
-                                                       created_by_ref=None,
-                                                       defanged=None,
-                                                       external_last_updated_time_utc=None,
-                                                       external_references=None,
-                                                       granular_markings=None,
-                                                       labels=None,
-                                                       revoked=None,
-                                                       confidence=None,
-                                                       object_marking_refs=None,
-                                                       language=None,
-                                                       threat_types=None,
-                                                       valid_from=None,
-                                                       valid_until=None,
-                                                       created=None,
-                                                       modified=None,
-                                                       extensions=None):
+def sentinel_threat_indicator_replace_tag(client,
+                                          resource_group_name,
+                                          workspace_name,
+                                          name,
+                                          etag=None,
+                                          threat_intelligence_tags=None,
+                                          last_updated_time_utc=None,
+                                          source=None,
+                                          display_name=None,
+                                          description=None,
+                                          indicator_types=None,
+                                          pattern=None,
+                                          pattern_type=None,
+                                          pattern_version=None,
+                                          kill_chain_phases=None,
+                                          parsed_pattern=None,
+                                          external_id=None,
+                                          created_by_ref=None,
+                                          defanged=None,
+                                          external_last_updated_time_utc=None,
+                                          external_references=None,
+                                          granular_markings=None,
+                                          labels=None,
+                                          revoked=None,
+                                          confidence=None,
+                                          object_marking_refs=None,
+                                          language=None,
+                                          threat_types=None,
+                                          valid_from=None,
+                                          valid_until=None,
+                                          created=None,
+                                          modified=None,
+                                          extensions=None):
     threat_intelligence_replace_tags = {}
     if etag is not None:
         threat_intelligence_replace_tags['etag'] = etag
@@ -1849,13 +1839,13 @@ def sentinel_threat_intelligence_indicator_replace_tag(client,
                                threat_intelligence_replace_tags=threat_intelligence_replace_tags)
 
 
-def sentinel_threat_intelligence_indicator_list(client,
-                                                resource_group_name,
-                                                workspace_name,
-                                                filter_=None,
-                                                orderby=None,
-                                                top=None,
-                                                skip_token=None):
+def sentinel_threat_indicator_list(client,
+                                   resource_group_name,
+                                   workspace_name,
+                                   filter_=None,
+                                   orderby=None,
+                                   top=None,
+                                   skip_token=None):
     return client.list(resource_group_name=resource_group_name,
                        workspace_name=workspace_name,
                        filter=filter_,
@@ -1864,9 +1854,9 @@ def sentinel_threat_intelligence_indicator_list(client,
                        skip_token=skip_token)
 
 
-def sentinel_threat_intelligence_indicator_metric_list(client,
-                                                       resource_group_name,
-                                                       workspace_name):
+def sentinel_threat_indicator_metric_list(client,
+                                          resource_group_name,
+                                          workspace_name):
     return client.list(resource_group_name=resource_group_name,
                        workspace_name=workspace_name)
 
@@ -2280,26 +2270,26 @@ def sentinel_data_connector_disconnect(client,
                              data_connector_id=data_connector_id)
 
 
-def sentinel_data_connector_check_requirement_post(client,
-                                                   resource_group_name,
-                                                   workspace_name,
-                                                   aad_check_requirements=None,
-                                                   aatp_check_requirements=None,
-                                                   asc_check_requirements=None,
-                                                   aws_cloud_trail_check_requirements=None,
-                                                   aws_s3_check_requirements=None,
-                                                   dynamics365_check_requirements=None,
-                                                   mcas_check_requirements=None,
-                                                   mdatp_check_requirements=None,
-                                                   msti_check_requirements=None,
-                                                   mtp_check_requirements=None,
-                                                   office_atp_check_requirements=None,
-                                                   office_irm_check_requirements=None,
-                                                   office365_project_check_requirements=None,
-                                                   office_power_bi_check_requirements=None,
-                                                   ti_check_requirements=None,
-                                                   ti_taxii_check_requirements=None,
-                                                   io_t_check_requirements=None):
+def sentinel_data_connector_check_requirement(client,
+                                              resource_group_name,
+                                              workspace_name,
+                                              aad_check_requirements=None,
+                                              aatp_check_requirements=None,
+                                              asc_check_requirements=None,
+                                              aws_cloud_trail_check_requirements=None,
+                                              aws_s3_check_requirements=None,
+                                              dynamics365_check_requirements=None,
+                                              mcas_check_requirements=None,
+                                              mdatp_check_requirements=None,
+                                              msti_check_requirements=None,
+                                              mtp_check_requirements=None,
+                                              office_atp_check_requirements=None,
+                                              office_irm_check_requirements=None,
+                                              office365_project_check_requirements=None,
+                                              office_power_bi_check_requirements=None,
+                                              ti_check_requirements=None,
+                                              ti_taxii_check_requirements=None,
+                                              io_t_check_requirements=None):
     all_data_connectors_check_requirements = []
     if aad_check_requirements is not None:
         all_data_connectors_check_requirements.append(aad_check_requirements)

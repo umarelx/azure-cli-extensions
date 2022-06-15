@@ -774,40 +774,30 @@ helps['sentinel entity expand'] = """
 "2019-04-25T00:00:00.000Z" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel entity get-insight'] = """
+helps['sentinel entity list-insight'] = """
     type: command
     short-summary: "Execute Insights for an entity."
     examples:
       - name: Entity Insight
         text: |-
-               az sentinel entity get-insight --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" \
+               az sentinel entity list-insight --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" \
 --add-default-extended-time-range false --end-time "2021-10-01T00:00:00.000Z" --insight-query-ids \
 "cae8d0aa-aa45-4d53-8d88-17dd64ffd4e4" --start-time "2021-09-01T00:00:00.000Z" --resource-group "myRg" \
 --workspace-name "myWorkspace"
 """
 
-helps['sentinel entity query'] = """
-    type: command
-    short-summary: "Get Insights and Activities for an entity."
-    examples:
-      - name: Get Entity Query
-        text: |-
-               az sentinel entity query --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --resource-group "myRg" \
---workspace-name "myWorkspace"
-"""
-
-helps['sentinel entity get-timeline'] = """
+helps['sentinel entity'] = """
     type: group
-    short-summary: Manage entity get timeline with sentinel
+    short-summary: Manage entity with sentinel
 """
 
-helps['sentinel entity get-timeline list'] = """
+helps['sentinel entity list-timeline'] = """
     type: command
     short-summary: "Timeline for an entity."
     examples:
       - name: Entity timeline
         text: |-
-               az sentinel entity get-timeline list --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --end-time \
+               az sentinel entity list-timeline --entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" --end-time \
 "2021-10-01T00:00:00.000Z" --number-of-bucket 4 --start-time "2021-09-01T00:00:00.000Z" --resource-group "myRg" \
 --workspace-name "myWorkspace"
 """
@@ -832,14 +822,14 @@ helps['sentinel entity relation'] = """
     short-summary: Manage entity relation with sentinel
 """
 
-helps['sentinel entity relation show-relation'] = """
+helps['sentinel entity relation show'] = """
     type: command
     short-summary: "Gets an entity relation."
     examples:
       - name: Get an entity relation.
         text: |-
-               az sentinel entity relation show-relation --entity-id "afbd324f-6c48-459c-8710-8d1e1cd03812" \
---relation-name "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" --resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel entity relation show --entity-id "afbd324f-6c48-459c-8710-8d1e1cd03812" --relation-name \
+"4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
 helps['sentinel entity query'] = """
@@ -917,78 +907,78 @@ helps['sentinel entity query delete'] = """
 --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel entity query-template'] = """
+helps['sentinel entity template'] = """
     type: group
     short-summary: Manage entity query template with sentinel
 """
 
-helps['sentinel entity query-template list'] = """
+helps['sentinel entity template list'] = """
     type: command
     short-summary: "Gets all entity query templates."
     examples:
       - name: Get all entity query templates.
         text: |-
-               az sentinel entity query-template list --resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel entity template list --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel entity query-template show'] = """
+helps['sentinel entity template show'] = """
     type: command
     short-summary: "Gets an entity query."
     examples:
       - name: Get an Activity entity query template.
         text: |-
-               az sentinel entity query-template show --entity-query-template-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b"\
- --resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel entity template show --entity-query-template-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b" \
+--resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel incident-comment'] = """
+helps['sentinel incident comment'] = """
     type: group
     short-summary: Manage incident comment with sentinel
 """
 
-helps['sentinel incident-comment list'] = """
+helps['sentinel incident comment list'] = """
     type: command
     short-summary: "Gets all incident comments."
     examples:
       - name: Get all incident comments.
         text: |-
-               az sentinel incident-comment list --incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group \
+               az sentinel incident comment list --incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group \
 "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel incident-comment show'] = """
+helps['sentinel incident comment show'] = """
     type: command
     short-summary: "Gets an incident comment."
     examples:
       - name: Get an incident comment.
         text: |-
-               az sentinel incident-comment show --incident-comment-id "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" \
+               az sentinel incident comment show --incident-comment-id "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" \
 --incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel incident-comment create'] = """
+helps['sentinel incident comment create'] = """
     type: command
     short-summary: "Create the incident comment."
     examples:
       - name: Creates or updates an incident comment.
         text: |-
-               az sentinel incident-comment create --message "Some message" --incident-comment-id \
+               az sentinel incident comment create --message "Some message" --incident-comment-id \
 "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" --incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" \
 --workspace-name "myWorkspace"
 """
 
-helps['sentinel incident-comment update'] = """
+helps['sentinel incident comment update'] = """
     type: command
     short-summary: "Update the incident comment."
 """
 
-helps['sentinel incident-comment delete'] = """
+helps['sentinel incident comment delete'] = """
     type: command
     short-summary: "Delete the incident comment."
     examples:
       - name: Delete the incident comment.
         text: |-
-               az sentinel incident-comment delete --incident-comment-id "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" \
+               az sentinel incident comment delete --incident-comment-id "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" \
 --incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
@@ -1220,81 +1210,81 @@ helps['sentinel office-consent delete'] = """
 "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel sentinel-onboarding-state'] = """
+helps['sentinel onboarding-state'] = """
     type: group
-    short-summary: Manage sentinel onboarding state with sentinel
+    short-summary: Manage onboarding state with sentinel
 """
 
-helps['sentinel sentinel-onboarding-state list'] = """
+helps['sentinel onboarding-state list'] = """
     type: command
     short-summary: "Gets all Sentinel onboarding states."
     examples:
       - name: Get all Sentinel onboarding states
         text: |-
-               az sentinel sentinel-onboarding-state list --resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel onboarding-state list --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel sentinel-onboarding-state show'] = """
+helps['sentinel onboarding-state show'] = """
     type: command
     short-summary: "Get Sentinel onboarding state."
     examples:
       - name: Get Sentinel onboarding state
         text: |-
-               az sentinel sentinel-onboarding-state show --resource-group "myRg" --name "default" --workspace-name \
+               az sentinel onboarding-state show --resource-group "myRg" --name "default" --workspace-name \
 "myWorkspace"
 """
 
-helps['sentinel sentinel-onboarding-state create'] = """
+helps['sentinel onboarding-state create'] = """
     type: command
     short-summary: "Create Sentinel onboarding state."
     examples:
       - name: Create Sentinel onboarding state
         text: |-
-               az sentinel sentinel-onboarding-state create --resource-group "myRg" --name "default" \
---customer-managed-key false --workspace-name "myWorkspace"
+               az sentinel onboarding-state create --resource-group "myRg" --name "default" --customer-managed-key \
+false --workspace-name "myWorkspace"
 """
 
-helps['sentinel sentinel-onboarding-state delete'] = """
+helps['sentinel onboarding-state delete'] = """
     type: command
     short-summary: "Delete Sentinel onboarding state."
     examples:
       - name: Delete Sentinel onboarding state
         text: |-
-               az sentinel sentinel-onboarding-state delete --resource-group "myRg" --name "default" --workspace-name \
+               az sentinel onboarding-state delete --resource-group "myRg" --name "default" --workspace-name \
 "myWorkspace"
 """
 
-helps['sentinel security-ml-analytic-setting'] = """
+helps['sentinel analytic-setting'] = """
     type: group
-    short-summary: Manage security ml analytic setting with sentinel
+    short-summary: Manage analytic setting with sentinel
 """
 
-helps['sentinel security-ml-analytic-setting list'] = """
+helps['sentinel analytic-setting list'] = """
     type: command
     short-summary: "Gets all Security ML Analytics Settings."
     examples:
       - name: Get all Security ML Analytics Settings.
         text: |-
-               az sentinel security-ml-analytic-setting list --resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel analytic-setting list --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel security-ml-analytic-setting show'] = """
+helps['sentinel analytic-setting show'] = """
     type: command
     short-summary: "Gets the Security ML Analytics Settings."
     examples:
       - name: Get a Anomaly Security ML Analytics Settings.
         text: |-
-               az sentinel security-ml-analytic-setting show --resource-group "myRg" --settings-resource-name \
+               az sentinel analytic-setting show --resource-group "myRg" --settings-resource-name \
 "myFirstAnomalySettings" --workspace-name "myWorkspace"
 """
 
-helps['sentinel security-ml-analytic-setting create'] = """
+helps['sentinel analytic-setting create'] = """
     type: command
     short-summary: "Create the Security ML Analytics Settings."
     examples:
       - name: Creates or updates a Anomaly Security ML Analytics Settings.
         text: |-
-               az sentinel security-ml-analytic-setting create --resource-group "myRg" --security-ml-analytics-setting \
+               az sentinel analytic-setting create --resource-group "myRg" --security-ml-analytics-setting \
 "{\\"etag\\":\\"\\\\\\"260090e2-0000-0d00-0000-5d6fb8670000\\\\\\"\\",\\"kind\\":\\"Anomaly\\",\\"properties\\":{\\"des\
 cription\\":\\"When account logs from a source region that has rarely been logged in from during the last 14 days, an \
 anomaly is triggered.\\",\\"anomalySettingsVersion\\":0,\\"anomalyVersion\\":\\"1.0.5\\",\\"customizableObservations\\"\
@@ -1315,18 +1305,18 @@ unusual region\\",\\"enabled\\":true,\\"frequency\\":\\"PT1H\\",\\"isDefaultSett
 --workspace-name "myWorkspace"
 """
 
-helps['sentinel security-ml-analytic-setting update'] = """
+helps['sentinel analytic-setting update'] = """
     type: command
     short-summary: "Update the Security ML Analytics Settings."
 """
 
-helps['sentinel security-ml-analytic-setting delete'] = """
+helps['sentinel analytic-setting delete'] = """
     type: command
     short-summary: "Delete the Security ML Analytics Settings."
     examples:
       - name: Delete a Security ML Analytics Settings.
         text: |-
-               az sentinel security-ml-analytic-setting delete --resource-group "myRg" --settings-resource-name \
+               az sentinel analytic-setting delete --resource-group "myRg" --settings-resource-name \
 "f209187f-1d17-4431-94af-c141bf5f23db" --workspace-name "myWorkspace"
 """
 
@@ -1500,22 +1490,22 @@ helps['sentinel source-control delete'] = """
 "789e0c1f-4a3d-43ad-809c-e713b677b04a" --workspace-name "myWorkspace"
 """
 
-helps['sentinel threat-intelligence-indicator'] = """
+helps['sentinel threat-indicator'] = """
     type: group
-    short-summary: Manage threat intelligence indicator with sentinel
+    short-summary: Manage threat indicator with sentinel
 """
 
-helps['sentinel threat-intelligence-indicator show'] = """
+helps['sentinel threat-indicator show'] = """
     type: command
     short-summary: "View a threat intelligence indicator by name."
     examples:
       - name: View a threat intelligence indicator by name
         text: |-
-               az sentinel threat-intelligence-indicator show --name "e16ef847-962e-d7b6-9c8b-a33e4bd30e47" \
---resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel threat-indicator show --name "e16ef847-962e-d7b6-9c8b-a33e4bd30e47" --resource-group "myRg" \
+--workspace-name "myWorkspace"
 """
 
-helps['sentinel threat-intelligence-indicator create'] = """
+helps['sentinel threat-indicator create'] = """
     type: command
     short-summary: "Update a threat Intelligence indicator."
     parameters:
@@ -1541,34 +1531,34 @@ helps['sentinel threat-intelligence-indicator create'] = """
     examples:
       - name: Update a threat Intelligence indicator
         text: |-
-               az sentinel threat-intelligence-indicator create --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" \
---description "debugging indicators" --confidence 78 --created-by-ref "contoso@contoso.com" --display-name "new \
-schema" --external-references "[]" --modified "" --pattern "[url:value = \'https://www.contoso.com\']" --pattern-type \
-"url" --revoked false --source "Azure Sentinel" --threat-intelligence-tags "new schema" --threat-types "compromised" \
+               az sentinel threat-indicator create --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" --description \
+"debugging indicators" --confidence 78 --created-by-ref "contoso@contoso.com" --display-name "new schema" \
+--external-references "[]" --modified "" --pattern "[url:value = \'https://www.contoso.com\']" --pattern-type "url" \
+--revoked false --source "Azure Sentinel" --threat-intelligence-tags "new schema" --threat-types "compromised" \
 --valid-from "2020-04-15T17:44:00.114052Z" --valid-until "" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel threat-intelligence-indicator delete'] = """
+helps['sentinel threat-indicator delete'] = """
     type: command
     short-summary: "Delete a threat intelligence indicator."
     examples:
       - name: Delete a threat intelligence indicator
         text: |-
-               az sentinel threat-intelligence-indicator delete --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" \
---resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel threat-indicator delete --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" --resource-group \
+"myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel threat-intelligence-indicator append-tag'] = """
+helps['sentinel threat-indicator append-tag'] = """
     type: command
     short-summary: "Append tags to a threat intelligence indicator."
     examples:
       - name: Append tags to a threat intelligence indicator
         text: |-
-               az sentinel threat-intelligence-indicator append-tag --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" \
+               az sentinel threat-indicator append-tag --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" \
 --threat-intelligence-tags "tag1" "tag2" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel threat-intelligence-indicator create-indicator'] = """
+helps['sentinel threat-indicator create-indicator'] = """
     type: command
     short-summary: "Create a new threat intelligence indicator."
     parameters:
@@ -1594,14 +1584,14 @@ helps['sentinel threat-intelligence-indicator create-indicator'] = """
     examples:
       - name: Create a new Threat Intelligence
         text: |-
-               az sentinel threat-intelligence-indicator create-indicator --description "debugging indicators" \
---confidence 78 --created-by-ref "contoso@contoso.com" --display-name "new schema" --external-references "[]" \
---modified "" --pattern "[url:value = \'https://www.contoso.com\']" --pattern-type "url" --revoked false --source \
-"Azure Sentinel" --threat-intelligence-tags "new schema" --threat-types "compromised" --valid-from \
-"2021-09-15T17:44:00.114052Z" --valid-until "" --resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel threat-indicator create-indicator --description "debugging indicators" --confidence 78 \
+--created-by-ref "contoso@contoso.com" --display-name "new schema" --external-references "[]" --modified "" --pattern \
+"[url:value = \'https://www.contoso.com\']" --pattern-type "url" --revoked false --source "Azure Sentinel" \
+--threat-intelligence-tags "new schema" --threat-types "compromised" --valid-from "2021-09-15T17:44:00.114052Z" \
+--valid-until "" --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel threat-intelligence-indicator query-indicator'] = """
+helps['sentinel threat-indicator query-indicator'] = """
     type: command
     short-summary: "Query threat intelligence indicators as per filtering criteria."
     parameters:
@@ -1617,13 +1607,13 @@ helps['sentinel threat-intelligence-indicator query-indicator'] = """
     examples:
       - name: Query threat intelligence indicators as per filtering criteria
         text: |-
-               az sentinel threat-intelligence-indicator query-indicator --max-confidence 80 --max-valid-until \
+               az sentinel threat-indicator query-indicator --max-confidence 80 --max-valid-until \
 "2021-04-25T17:44:00.114052Z" --min-confidence 25 --min-valid-until "2021-04-05T17:44:00.114052Z" --page-size 100 \
 --sort-by item-key="lastUpdatedTimeUtc" sort-order="descending" --sources "Azure Sentinel" --resource-group "myRg" \
 --workspace-name "myWorkspace"
 """
 
-helps['sentinel threat-intelligence-indicator replace-tag'] = """
+helps['sentinel threat-indicator replace-tag'] = """
     type: command
     short-summary: "Replace tags added to a threat intelligence indicator."
     parameters:
@@ -1649,38 +1639,37 @@ helps['sentinel threat-intelligence-indicator replace-tag'] = """
     examples:
       - name: Replace tags to a Threat Intelligence
         text: |-
-               az sentinel threat-intelligence-indicator replace-tag --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" \
---etag "\\"0000262c-0000-0800-0000-5e9767060000\\"" --threat-intelligence-tags "patching tags" --resource-group "myRg" \
+               az sentinel threat-indicator replace-tag --name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" --etag \
+"\\"0000262c-0000-0800-0000-5e9767060000\\"" --threat-intelligence-tags "patching tags" --resource-group "myRg" \
 --workspace-name "myWorkspace"
 """
 
-helps['sentinel threat-intelligence-indicator'] = """
+helps['sentinel threat-indicator'] = """
     type: group
-    short-summary: Manage threat intelligence indicator with sentinel
+    short-summary: Manage threat indicator with sentinel
 """
 
-helps['sentinel threat-intelligence-indicator list'] = """
+helps['sentinel threat-indicator list'] = """
     type: command
     short-summary: "Get all threat intelligence indicators."
     examples:
       - name: Get all threat intelligence indicators
         text: |-
-               az sentinel threat-intelligence-indicator list --resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel threat-indicator list --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel threat-intelligence-indicator metric'] = """
+helps['sentinel threat-indicator metric'] = """
     type: group
     short-summary: Manage threat intelligence indicator metric with sentinel
 """
 
-helps['sentinel threat-intelligence-indicator metric list'] = """
+helps['sentinel threat-indicator metric list'] = """
     type: command
     short-summary: "Get threat intelligence indicators metrics (Indicators counts by Type, Threat Type, Source)."
     examples:
       - name: Get threat intelligence indicators metrics.
         text: |-
-               az sentinel threat-intelligence-indicator metric list --resource-group "myRg" --workspace-name \
-"myWorkspace"
+               az sentinel threat-indicator metric list --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
 helps['sentinel watchlist'] = """
@@ -2139,12 +2128,12 @@ helps['sentinel data-connector disconnect'] = """
 --resource-group "myRg" --workspace-name "myWorkspace"
 """
 
-helps['sentinel data-connector check-requirement'] = """
+helps['sentinel data-connector'] = """
     type: group
-    short-summary: Manage data connector check requirement with sentinel
+    short-summary: Manage data connector with sentinel
 """
 
-helps['sentinel data-connector check-requirement post'] = """
+helps['sentinel data-connector check-requirement'] = """
     type: command
     short-summary: "Get requirements state for a data connector type."
     parameters:
@@ -2268,14 +2257,14 @@ helps['sentinel data-connector check-requirement post'] = """
     examples:
       - name: Check requirements for AAD - no authorization.
         text: |-
-               az sentinel data-connector check-requirement post --aad-check-requirements \
-tenant-id="2070ecc9-b4d5-4ae4-adaa-936fa1954fa8" --resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel data-connector check-requirement --aad-check-requirements tenant-id="2070ecc9-b4d5-4ae4-adaa\
+-936fa1954fa8" --resource-group "myRg" --workspace-name "myWorkspace"
       - name: Check requirements for AAD - no license.
         text: |-
-               az sentinel data-connector check-requirement post --aad-check-requirements \
-tenant-id="2070ecc9-b4d5-4ae4-adaa-936fa1954fa8" --resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel data-connector check-requirement --aad-check-requirements tenant-id="2070ecc9-b4d5-4ae4-adaa\
+-936fa1954fa8" --resource-group "myRg" --workspace-name "myWorkspace"
       - name: Check requirements for AAD.
         text: |-
-               az sentinel data-connector check-requirement post --aad-check-requirements \
-tenant-id="2070ecc9-b4d5-4ae4-adaa-936fa1954fa8" --resource-group "myRg" --workspace-name "myWorkspace"
+               az sentinel data-connector check-requirement --aad-check-requirements tenant-id="2070ecc9-b4d5-4ae4-adaa\
+-936fa1954fa8" --resource-group "myRg" --workspace-name "myWorkspace"
 """

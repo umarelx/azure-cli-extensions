@@ -69,6 +69,12 @@ sentinel_alert_rule_template = CliCommandType(
 )
 
 
+sentinel_security_ml_analytic_setting = CliCommandType(
+    operations_tmpl='azext_sentinel.vendored_sdks.securityinsight.operations._security_ml_analytics_settings_operations#SecurityMlAnalyticsSettingsOperations.{}',
+    client_factory=cf_security_ml_analytic_setting,
+)
+
+
 sentinel_automation_rule = CliCommandType(
     operations_tmpl='azext_sentinel.vendored_sdks.securityinsight.operations._automation_rules_operations#AutomationRulesOperations.{}',
     client_factory=cf_automation_rule,
@@ -139,12 +145,6 @@ sentinel_entity_query = CliCommandType(
 )
 
 
-sentinel_entity_query_template = CliCommandType(
-    operations_tmpl='azext_sentinel.vendored_sdks.securityinsight.operations._entity_query_templates_operations#EntityQueryTemplatesOperations.{}',
-    client_factory=cf_entity_query_template,
-)
-
-
 sentinel_entity_relation = CliCommandType(
     operations_tmpl='azext_sentinel.vendored_sdks.securityinsight.operations._entities_relations_operations#EntitiesRelationsOperations.{}',
     client_factory=cf_entity_relation,
@@ -157,6 +157,12 @@ sentinel_entity_relation = CliCommandType(
 )
 
 
+sentinel_entity_query_template = CliCommandType(
+    operations_tmpl='azext_sentinel.vendored_sdks.securityinsight.operations._entity_query_templates_operations#EntityQueryTemplatesOperations.{}',
+    client_factory=cf_entity_query_template,
+)
+
+
 sentinel_incident = CliCommandType(
     operations_tmpl=(
         'azext_sentinel.vendored_sdks.securityinsight.operations._incidents_operations#IncidentsOperations.{}'
@@ -165,15 +171,15 @@ sentinel_incident = CliCommandType(
 )
 
 
-sentinel_incident_relation = CliCommandType(
-    operations_tmpl='azext_sentinel.vendored_sdks.securityinsight.operations._incident_relations_operations#IncidentRelationsOperations.{}',
-    client_factory=cf_incident_relation,
-)
-
-
 sentinel_incident_comment = CliCommandType(
     operations_tmpl='azext_sentinel.vendored_sdks.securityinsight.operations._incident_comments_operations#IncidentCommentsOperations.{}',
     client_factory=cf_incident_comment,
+)
+
+
+sentinel_incident_relation = CliCommandType(
+    operations_tmpl='azext_sentinel.vendored_sdks.securityinsight.operations._incident_relations_operations#IncidentRelationsOperations.{}',
+    client_factory=cf_incident_relation,
 )
 
 
@@ -199,21 +205,15 @@ sentinel_office_consent = CliCommandType(
 )
 
 
-sentinel_product_setting = CliCommandType(
-    operations_tmpl='azext_sentinel.vendored_sdks.securityinsight.operations._product_settings_operations#ProductSettingsOperations.{}',
-    client_factory=cf_product_setting,
-)
-
-
-sentinel_security_ml_analytic_setting = CliCommandType(
-    operations_tmpl='azext_sentinel.vendored_sdks.securityinsight.operations._security_ml_analytics_settings_operations#SecurityMlAnalyticsSettingsOperations.{}',
-    client_factory=cf_security_ml_analytic_setting,
-)
-
-
 sentinel_sentinel_onboarding_state = CliCommandType(
     operations_tmpl='azext_sentinel.vendored_sdks.securityinsight.operations._sentinel_onboarding_states_operations#SentinelOnboardingStatesOperations.{}',
     client_factory=cf_sentinel_onboarding_state,
+)
+
+
+sentinel_product_setting = CliCommandType(
+    operations_tmpl='azext_sentinel.vendored_sdks.securityinsight.operations._product_settings_operations#ProductSettingsOperations.{}',
+    client_factory=cf_product_setting,
 )
 
 
@@ -286,6 +286,17 @@ def load_command_table(self, _):
         g.custom_show_command('show', 'sentinel_alert_rule_template_show')
 
     with self.command_group(
+        'sentinel analytic-setting',
+        sentinel_security_ml_analytic_setting,
+        client_factory=cf_security_ml_analytic_setting,
+    ) as g:
+        g.custom_command('list', 'sentinel_analytic_setting_list')
+        g.custom_show_command('show', 'sentinel_analytic_setting_show')
+        g.custom_command('create', 'sentinel_analytic_setting_create')
+        g.custom_command('update', 'sentinel_analytic_setting_update')
+        g.custom_command('delete', 'sentinel_analytic_setting_delete', confirmation=True)
+
+    with self.command_group(
         'sentinel automation-rule', sentinel_automation_rule, client_factory=cf_automation_rule
     ) as g:
         g.custom_command('list', 'sentinel_automation_rule_list')
@@ -327,11 +338,11 @@ def load_command_table(self, _):
         g.custom_command('disconnect', 'sentinel_data_connector_disconnect')
 
     with self.command_group(
-        'sentinel data-connector check-requirement',
+        'sentinel data-connector',
         sentinel_data_connector_check_requirement,
         client_factory=cf_data_connector_check_requirement,
     ) as g:
-        g.custom_command('post', 'sentinel_data_connector_check_requirement_post')
+        g.custom_command('check-requirement', 'sentinel_data_connector_check_requirement')
 
     with self.command_group('sentinel domain-whois', sentinel_domain_whois, client_factory=cf_domain_whois) as g:
         g.custom_show_command('show', 'sentinel_domain_whois_show')
@@ -340,13 +351,12 @@ def load_command_table(self, _):
         g.custom_command('list', 'sentinel_entity_list')
         g.custom_show_command('show', 'sentinel_entity_show')
         g.custom_command('expand', 'sentinel_entity_expand')
-        g.custom_command('get-insight', 'sentinel_entity_get_insight')
-        g.custom_command('query', 'sentinel_entity_query')
+        g.custom_command('list-insight', 'sentinel_entity_list_insight')
 
     with self.command_group(
-        'sentinel entity get-timeline', sentinel_entity_get_timeline, client_factory=cf_entity_get_timeline
+        'sentinel entity', sentinel_entity_get_timeline, client_factory=cf_entity_get_timeline
     ) as g:
-        g.custom_command('list', 'sentinel_entity_get_timeline_list')
+        g.custom_command('list-timeline', 'sentinel_entity_list_timeline')
 
     with self.command_group('sentinel entity query', sentinel_entity_query, client_factory=cf_entity_query) as g:
         g.custom_command('list', 'sentinel_entity_query_list')
@@ -356,12 +366,6 @@ def load_command_table(self, _):
         g.custom_command('delete', 'sentinel_entity_query_delete', confirmation=True)
 
     with self.command_group(
-        'sentinel entity query-template', sentinel_entity_query_template, client_factory=cf_entity_query_template
-    ) as g:
-        g.custom_command('list', 'sentinel_entity_query_template_list')
-        g.custom_show_command('show', 'sentinel_entity_query_template_show')
-
-    with self.command_group(
         'sentinel entity relation', sentinel_entity_relation, client_factory=cf_entity_relation
     ) as g:
         g.custom_command('list', 'sentinel_entity_relation_list')
@@ -369,7 +373,13 @@ def load_command_table(self, _):
     with self.command_group(
         'sentinel entity relation', sentinel_entity_relation, client_factory=cf_entity_relation
     ) as g:
-        g.custom_command('show-relation', 'sentinel_entity_relation_show_relation')
+        g.custom_show_command('show', 'sentinel_entity_relation_show')
+
+    with self.command_group(
+        'sentinel entity template', sentinel_entity_query_template, client_factory=cf_entity_query_template
+    ) as g:
+        g.custom_command('list', 'sentinel_entity_template_list')
+        g.custom_show_command('show', 'sentinel_entity_template_show')
 
     with self.command_group('sentinel incident', sentinel_incident, client_factory=cf_incident) as g:
         g.custom_command('list', 'sentinel_incident_list')
@@ -384,6 +394,17 @@ def load_command_table(self, _):
         g.custom_command('run-playbook', 'sentinel_incident_run_playbook')
 
     with self.command_group(
+        'sentinel incident comment', sentinel_incident_comment, client_factory=cf_incident_comment
+    ) as g:
+        g.custom_command('list', 'sentinel_incident_comment_list')
+        g.custom_show_command('show', 'sentinel_incident_comment_show')
+        g.custom_command('create', 'sentinel_incident_comment_create')
+        g.generic_update_command(
+            'update', custom_func_name='sentinel_incident_comment_update', setter_arg_name='incident_comment'
+        )
+        g.custom_command('delete', 'sentinel_incident_comment_delete', confirmation=True)
+
+    with self.command_group(
         'sentinel incident relation', sentinel_incident_relation, client_factory=cf_incident_relation
     ) as g:
         g.custom_command('list', 'sentinel_incident_relation_list')
@@ -393,17 +414,6 @@ def load_command_table(self, _):
             'update', custom_func_name='sentinel_incident_relation_update', setter_arg_name='relation'
         )
         g.custom_command('delete', 'sentinel_incident_relation_delete', confirmation=True)
-
-    with self.command_group(
-        'sentinel incident-comment', sentinel_incident_comment, client_factory=cf_incident_comment
-    ) as g:
-        g.custom_command('list', 'sentinel_incident_comment_list')
-        g.custom_show_command('show', 'sentinel_incident_comment_show')
-        g.custom_command('create', 'sentinel_incident_comment_create')
-        g.generic_update_command(
-            'update', custom_func_name='sentinel_incident_comment_update', setter_arg_name='incident_comment'
-        )
-        g.custom_command('delete', 'sentinel_incident_comment_delete', confirmation=True)
 
     with self.command_group('sentinel ip-geodata', sentinel_ip_geodata, client_factory=cf_ip_geodata) as g:
         g.custom_show_command('show', 'sentinel_ip_geodata_show')
@@ -421,33 +431,20 @@ def load_command_table(self, _):
         g.custom_command('delete', 'sentinel_office_consent_delete', confirmation=True)
 
     with self.command_group(
+        'sentinel onboarding-state', sentinel_sentinel_onboarding_state, client_factory=cf_sentinel_onboarding_state
+    ) as g:
+        g.custom_command('list', 'sentinel_onboarding_state_list')
+        g.custom_show_command('show', 'sentinel_onboarding_state_show')
+        g.custom_command('create', 'sentinel_onboarding_state_create')
+        g.custom_command('delete', 'sentinel_onboarding_state_delete', confirmation=True)
+
+    with self.command_group(
         'sentinel product-setting', sentinel_product_setting, client_factory=cf_product_setting
     ) as g:
         g.custom_command('list', 'sentinel_product_setting_list')
         g.custom_show_command('show', 'sentinel_product_setting_show')
         g.custom_command('update', 'sentinel_product_setting_update')
         g.custom_command('delete', 'sentinel_product_setting_delete', confirmation=True)
-
-    with self.command_group(
-        'sentinel security-ml-analytic-setting',
-        sentinel_security_ml_analytic_setting,
-        client_factory=cf_security_ml_analytic_setting,
-    ) as g:
-        g.custom_command('list', 'sentinel_security_ml_analytic_setting_list')
-        g.custom_show_command('show', 'sentinel_security_ml_analytic_setting_show')
-        g.custom_command('create', 'sentinel_security_ml_analytic_setting_create')
-        g.custom_command('update', 'sentinel_security_ml_analytic_setting_update')
-        g.custom_command('delete', 'sentinel_security_ml_analytic_setting_delete', confirmation=True)
-
-    with self.command_group(
-        'sentinel sentinel-onboarding-state',
-        sentinel_sentinel_onboarding_state,
-        client_factory=cf_sentinel_onboarding_state,
-    ) as g:
-        g.custom_command('list', 'sentinel_sentinel_onboarding_state_list')
-        g.custom_show_command('show', 'sentinel_sentinel_onboarding_state_show')
-        g.custom_command('create', 'sentinel_sentinel_onboarding_state_create')
-        g.custom_command('delete', 'sentinel_sentinel_onboarding_state_delete', confirmation=True)
 
     with self.command_group('sentinel source-control', sentinel_source_control, client_factory=cf_source_control) as g:
         g.custom_command('list-repository', 'sentinel_source_control_list_repository')
@@ -459,31 +456,31 @@ def load_command_table(self, _):
         g.custom_command('delete', 'sentinel_source_control_delete', confirmation=True)
 
     with self.command_group(
-        'sentinel threat-intelligence-indicator',
+        'sentinel threat-indicator',
         sentinel_threat_intelligence_indicator,
         client_factory=cf_threat_intelligence_indicator,
     ) as g:
-        g.custom_show_command('show', 'sentinel_threat_intelligence_indicator_show')
-        g.custom_command('create', 'sentinel_threat_intelligence_indicator_create')
-        g.custom_command('delete', 'sentinel_threat_intelligence_indicator_delete', confirmation=True)
-        g.custom_command('append-tag', 'sentinel_threat_intelligence_indicator_append_tag')
-        g.custom_command('create-indicator', 'sentinel_threat_intelligence_indicator_create_indicator')
-        g.custom_command('query-indicator', 'sentinel_threat_intelligence_indicator_query_indicator')
-        g.custom_command('replace-tag', 'sentinel_threat_intelligence_indicator_replace_tag')
+        g.custom_show_command('show', 'sentinel_threat_indicator_show')
+        g.custom_command('create', 'sentinel_threat_indicator_create')
+        g.custom_command('delete', 'sentinel_threat_indicator_delete', confirmation=True)
+        g.custom_command('append-tag', 'sentinel_threat_indicator_append_tag')
+        g.custom_command('create-indicator', 'sentinel_threat_indicator_create_indicator')
+        g.custom_command('query-indicator', 'sentinel_threat_indicator_query_indicator')
+        g.custom_command('replace-tag', 'sentinel_threat_indicator_replace_tag')
 
     with self.command_group(
-        'sentinel threat-intelligence-indicator',
+        'sentinel threat-indicator',
         sentinel_threat_intelligence_indicator,
         client_factory=cf_threat_intelligence_indicator,
     ) as g:
-        g.custom_command('list', 'sentinel_threat_intelligence_indicator_list')
+        g.custom_command('list', 'sentinel_threat_indicator_list')
 
     with self.command_group(
-        'sentinel threat-intelligence-indicator metric',
+        'sentinel threat-indicator metric',
         sentinel_threat_intelligence_indicator_metric,
         client_factory=cf_threat_intelligence_indicator_metric,
     ) as g:
-        g.custom_command('list', 'sentinel_threat_intelligence_indicator_metric_list')
+        g.custom_command('list', 'sentinel_threat_indicator_metric_list')
 
     with self.command_group('sentinel watchlist', sentinel_watchlist, client_factory=cf_watchlist) as g:
         g.custom_command('list', 'sentinel_watchlist_list')

@@ -78,9 +78,9 @@ from .example_steps import step_data_connector_delete2
 from .example_steps import step_data_connector_delete3
 from .example_steps import step_data_connector_delete4
 from .example_steps import step_data_connector_delete5
-from .example_steps import step_data_connector_check_requirement_post
-from .example_steps import step_data_connector_check_requirement_post2
-from .example_steps import step_data_connector_check_requirement_post3
+from .example_steps import step_data_connector_check_requirement
+from .example_steps import step_data_connector_check_requirement2
+from .example_steps import step_data_connector_check_requirement3
 from .example_steps import step_domain_whois_show
 from .example_steps import step_entity_show
 from .example_steps import step_entity_show2
@@ -103,19 +103,18 @@ from .example_steps import step_entity_show17
 from .example_steps import step_entity_show18
 from .example_steps import step_entity_show19
 from .example_steps import step_entity_show20
-from .example_steps import step_entity_query
-from .example_steps import step_entity_get_insight
+from .example_steps import step_entity_list_insight
 from .example_steps import step_entity_expand
-from .example_steps import step_entity_get_timeline_list
+from .example_steps import step_entity_list_timeline
 from .example_steps import step_entity_relation_list
 from .example_steps import step_entity_query_create
 from .example_steps import step_entity_query_list
 from .example_steps import step_entity_query_show
 from .example_steps import step_entity_query_show2
 from .example_steps import step_entity_query_delete
-from .example_steps import step_entity_query_template_list
-from .example_steps import step_entity_query_template_show
-from .example_steps import step_entity_relation_show_relation
+from .example_steps import step_entity_template_list
+from .example_steps import step_entity_template_show
+from .example_steps import step_entity_relation_show
 from .example_steps import step_incident_comment_create
 from .example_steps import step_incident_comment_list
 from .example_steps import step_incident_comment_show
@@ -147,28 +146,28 @@ from .example_steps import step_office_consent_delete
 from .example_steps import step_product_setting_list
 from .example_steps import step_product_setting_show
 from .example_steps import step_product_setting_delete
-from .example_steps import step_security_ml_analytic_setting_create
-from .example_steps import step_security_ml_analytic_setting_show
-from .example_steps import step_security_ml_analytic_setting_list
-from .example_steps import step_security_ml_analytic_setting_delete
-from .example_steps import step_sentinel_onboarding_state_create
-from .example_steps import step_sentinel_onboarding_state_list
-from .example_steps import step_sentinel_onboarding_state_show
-from .example_steps import step_sentinel_onboarding_state_delete
+from .example_steps import step_analytic_setting_create
+from .example_steps import step_analytic_setting_show
+from .example_steps import step_analytic_setting_list
+from .example_steps import step_analytic_setting_delete
+from .example_steps import step_onboarding_state_create
+from .example_steps import step_onboarding_state_list
+from .example_steps import step_onboarding_state_show
+from .example_steps import step_onboarding_state_delete
 from .example_steps import step_source_control_list_repository
 from .example_steps import step_source_control_create
 from .example_steps import step_source_control_show
 from .example_steps import step_source_control_list
 from .example_steps import step_source_control_delete
-from .example_steps import step_threat_intelligence_indicator_create
-from .example_steps import step_threat_intelligence_indicator_show
-from .example_steps import step_threat_intelligence_indicator_append_tag
-from .example_steps import step_threat_intelligence_indicator
-from .example_steps import step_threat_intelligence_indicator_query_indicator
-from .example_steps import step_threat_intelligence_indicator_replace_tag
-from .example_steps import step_threat_intelligence_indicator_delete
-from .example_steps import step_threat_intelligence_indicator_metric_list
-from .example_steps import step_threat_intelligence_indicator_list
+from .example_steps import step_threat_indicator_create
+from .example_steps import step_threat_indicator_show
+from .example_steps import step_threat_indicator_append_tag
+from .example_steps import step_threat_indicator_create_indicator
+from .example_steps import step_threat_indicator_query_indicator
+from .example_steps import step_threat_indicator_replace_tag
+from .example_steps import step_threat_indicator_delete
+from .example_steps import step_threat_indicator_metric_list
+from .example_steps import step_threat_indicator_list
 from .example_steps import step_watchlist_item_create
 from .example_steps import step_watchlist_item_show
 from .example_steps import step_watchlist_item_list
@@ -271,9 +270,9 @@ def call_scenario(test):
     step_data_connector_delete3(test, checks=[])
     step_data_connector_delete4(test, checks=[])
     step_data_connector_delete5(test, checks=[])
-    step_data_connector_check_requirement_post(test, checks=[])
-    step_data_connector_check_requirement_post2(test, checks=[])
-    step_data_connector_check_requirement_post3(test, checks=[])
+    step_data_connector_check_requirement(test, checks=[])
+    step_data_connector_check_requirement2(test, checks=[])
+    step_data_connector_check_requirement3(test, checks=[])
     step_domain_whois_show(test, checks=[])
     step_entity_show(test, checks=[])
     step_entity_show2(test, checks=[])
@@ -296,19 +295,18 @@ def call_scenario(test):
     step_entity_show18(test, checks=[])
     step_entity_show19(test, checks=[])
     step_entity_show20(test, checks=[])
-    step_entity_query(test, checks=[])
-    step_entity_get_insight(test, checks=[])
+    step_entity_list_insight(test, checks=[])
     step_entity_expand(test, checks=[])
-    step_entity_get_timeline_list(test, checks=[])
+    step_entity_list_timeline(test, checks=[])
     step_entity_relation_list(test, checks=[])
     step_entity_query_create(test, checks=[])
     step_entity_query_list(test, checks=[])
     step_entity_query_show(test, checks=[])
     step_entity_query_show2(test, checks=[])
     step_entity_query_delete(test, checks=[])
-    step_entity_query_template_list(test, checks=[])
-    step_entity_query_template_show(test, checks=[])
-    step_entity_relation_show_relation(test, checks=[])
+    step_entity_template_list(test, checks=[])
+    step_entity_template_show(test, checks=[])
+    step_entity_relation_show(test, checks=[])
     step_incident_comment_create(test, checks=[])
     step_incident_comment_list(test, checks=[])
     step_incident_comment_show(test, checks=[])
@@ -401,36 +399,36 @@ def call_scenario(test):
     step_product_setting_list(test, checks=[])
     step_product_setting_show(test, checks=[])
     step_product_setting_delete(test, checks=[])
-    step_security_ml_analytic_setting_create(test, checks=[])
-    step_security_ml_analytic_setting_show(test, checks=[])
-    step_security_ml_analytic_setting_list(test, checks=[])
-    step_security_ml_analytic_setting_delete(test, checks=[])
-    step_sentinel_onboarding_state_create(test, checks=[
+    step_analytic_setting_create(test, checks=[])
+    step_analytic_setting_show(test, checks=[])
+    step_analytic_setting_list(test, checks=[])
+    step_analytic_setting_delete(test, checks=[])
+    step_onboarding_state_create(test, checks=[
         test.check("name", "{mySentinelOnboardingState}", case_sensitive=False),
         test.check("customerManagedKey", False),
     ])
-    step_sentinel_onboarding_state_list(test, checks=[
+    step_onboarding_state_list(test, checks=[
         test.check('length(@)', 1),
     ])
-    step_sentinel_onboarding_state_show(test, checks=[
+    step_onboarding_state_show(test, checks=[
         test.check("name", "{mySentinelOnboardingState}", case_sensitive=False),
         test.check("customerManagedKey", False),
     ])
-    step_sentinel_onboarding_state_delete(test, checks=[])
+    step_onboarding_state_delete(test, checks=[])
     step_source_control_list_repository(test, checks=[])
     step_source_control_create(test, checks=[])
     step_source_control_show(test, checks=[])
     step_source_control_list(test, checks=[])
     step_source_control_delete(test, checks=[])
-    step_threat_intelligence_indicator_create(test, checks=[])
-    step_threat_intelligence_indicator_show(test, checks=[])
-    step_threat_intelligence_indicator_append_tag(test, checks=[])
-    step_threat_intelligence_indicator(test, checks=[])
-    step_threat_intelligence_indicator_query_indicator(test, checks=[])
-    step_threat_intelligence_indicator_replace_tag(test, checks=[])
-    step_threat_intelligence_indicator_delete(test, checks=[])
-    step_threat_intelligence_indicator_metric_list(test, checks=[])
-    step_threat_intelligence_indicator_list(test, checks=[])
+    step_threat_indicator_create(test, checks=[])
+    step_threat_indicator_show(test, checks=[])
+    step_threat_indicator_append_tag(test, checks=[])
+    step_threat_indicator_create_indicator(test, checks=[])
+    step_threat_indicator_query_indicator(test, checks=[])
+    step_threat_indicator_replace_tag(test, checks=[])
+    step_threat_indicator_delete(test, checks=[])
+    step_threat_indicator_metric_list(test, checks=[])
+    step_threat_indicator_list(test, checks=[])
     step_watchlist_item_create(test, checks=[])
     step_watchlist_item_show(test, checks=[])
     step_watchlist_item_list(test, checks=[])

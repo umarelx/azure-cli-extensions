@@ -1029,10 +1029,10 @@ def step_data_connector_delete5(test, checks=None):
 
 # EXAMPLE: /DataConnectorsCheckRequirements/post/Check requirements for AAD - no authorization.
 @try_manual
-def step_data_connector_check_requirement_post(test, checks=None):
+def step_data_connector_check_requirement(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel data-connector check-requirement post '
+    test.cmd('az sentinel data-connector check-requirement '
              '--aad-check-requirements tenant-id="2070ecc9-b4d5-4ae4-adaa-936fa1954fa8" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -1041,14 +1041,14 @@ def step_data_connector_check_requirement_post(test, checks=None):
 
 # EXAMPLE: /DataConnectorsCheckRequirements/post/Check requirements for AAD - no license.
 @try_manual
-def step_data_connector_check_requirement_post2(test, checks=None):
-    return step_data_connector_check_requirement_post(test, checks)
+def step_data_connector_check_requirement2(test, checks=None):
+    return step_data_connector_check_requirement(test, checks)
 
 
 # EXAMPLE: /DataConnectorsCheckRequirements/post/Check requirements for AAD.
 @try_manual
-def step_data_connector_check_requirement_post3(test, checks=None):
-    return step_data_connector_check_requirement_post(test, checks)
+def step_data_connector_check_requirement3(test, checks=None):
+    return step_data_connector_check_requirement(test, checks)
 
 
 # EXAMPLE: /DomainWhois/get/Get whois information for a single domain name
@@ -1235,24 +1235,12 @@ def step_entity_show20(test, checks=None):
     return step_entity_show(test, checks)
 
 
-# EXAMPLE: /Entities/get/Get Entity Query
-@try_manual
-def step_entity_query(test, checks=None):
-    if checks is None:
-        checks = []
-    test.cmd('az sentinel entity query '
-             '--entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" '
-             '--resource-group "{rg}" '
-             '--workspace-name "myWorkspace"',
-             checks=checks)
-
-
 # EXAMPLE: /Entities/post/Entity Insight
 @try_manual
-def step_entity_get_insight(test, checks=None):
+def step_entity_list_insight(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity get-insight '
+    test.cmd('az sentinel entity list-insight '
              '--entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" '
              '--add-default-extended-time-range false '
              '--end-time "2021-10-01T00:00:00.000Z" '
@@ -1280,10 +1268,10 @@ def step_entity_expand(test, checks=None):
 
 # EXAMPLE: /EntitiesGetTimeline/post/Entity timeline
 @try_manual
-def step_entity_get_timeline_list(test, checks=None):
+def step_entity_list_timeline(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity get-timeline list '
+    test.cmd('az sentinel entity list-timeline '
              '--entity-id "e1d3d618-e11f-478b-98e3-bb381539a8e1" '
              '--end-time "2021-10-01T00:00:00.000Z" '
              '--number-of-bucket 4 '
@@ -1388,10 +1376,10 @@ def step_entity_query_delete(test, checks=None):
 
 # EXAMPLE: /EntityQueryTemplates/get/Get all entity query templates.
 @try_manual
-def step_entity_query_template_list(test, checks=None):
+def step_entity_template_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity query-template list '
+    test.cmd('az sentinel entity template list '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
              checks=checks)
@@ -1399,10 +1387,10 @@ def step_entity_query_template_list(test, checks=None):
 
 # EXAMPLE: /EntityQueryTemplates/get/Get an Activity entity query template.
 @try_manual
-def step_entity_query_template_show(test, checks=None):
+def step_entity_template_show(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity query-template show '
+    test.cmd('az sentinel entity template show '
              '--entity-query-template-id "07da3cc8-c8ad-4710-a44e-334cdcb7882b" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -1411,10 +1399,10 @@ def step_entity_query_template_show(test, checks=None):
 
 # EXAMPLE: /EntityRelations/get/Get an entity relation.
 @try_manual
-def step_entity_relation_show_relation(test, checks=None):
+def step_entity_relation_show(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel entity relation show-relation '
+    test.cmd('az sentinel entity relation show '
              '--entity-id "{myIncident}" '
              '--relation-name "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" '
              '--resource-group "{rg}" '
@@ -1427,7 +1415,7 @@ def step_entity_relation_show_relation(test, checks=None):
 def step_incident_comment_create(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel incident-comment create '
+    test.cmd('az sentinel incident comment create '
              '--message "Some message" '
              '--incident-comment-id "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" '
              '--incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
@@ -1441,7 +1429,7 @@ def step_incident_comment_create(test, checks=None):
 def step_incident_comment_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel incident-comment list '
+    test.cmd('az sentinel incident comment list '
              '--incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -1453,7 +1441,7 @@ def step_incident_comment_list(test, checks=None):
 def step_incident_comment_show(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel incident-comment show '
+    test.cmd('az sentinel incident comment show '
              '--incident-comment-id "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" '
              '--incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
              '--resource-group "{rg}" '
@@ -1466,7 +1454,7 @@ def step_incident_comment_show(test, checks=None):
 def step_incident_comment_delete(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel incident-comment delete -y '
+    test.cmd('az sentinel incident comment delete -y '
              '--incident-comment-id "4bb36b7b-26ff-4d1c-9cbe-0d8ab3da0014" '
              '--incident-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" '
              '--resource-group "{rg}" '
@@ -1843,10 +1831,10 @@ def step_product_setting_delete(test, checks=None):
 
 # EXAMPLE: /SecurityMLAnalyticsSettings/put/Creates or updates a Anomaly Security ML Analytics Settings.
 @try_manual
-def step_security_ml_analytic_setting_create(test, checks=None):
+def step_analytic_setting_create(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel security-ml-analytic-setting create '
+    test.cmd('az sentinel analytic-setting create '
              '--resource-group "{rg}" '
              '--security-ml-analytics-setting "{{\\"etag\\":\\"\\\\\\"260090e2-0000-0d00-0000-5d6fb8670000\\\\\\"\\",\\'
              '"kind\\":\\"Anomaly\\",\\"properties\\":{{\\"description\\":\\"When account logs from a source region '
@@ -1875,10 +1863,10 @@ def step_security_ml_analytic_setting_create(test, checks=None):
 
 # EXAMPLE: /SecurityMLAnalyticsSettings/get/Get a Anomaly Security ML Analytics Settings.
 @try_manual
-def step_security_ml_analytic_setting_show(test, checks=None):
+def step_analytic_setting_show(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel security-ml-analytic-setting show '
+    test.cmd('az sentinel analytic-setting show '
              '--resource-group "{rg}" '
              '--settings-resource-name "myFirstAnomalySettings" '
              '--workspace-name "myWorkspace"',
@@ -1887,10 +1875,10 @@ def step_security_ml_analytic_setting_show(test, checks=None):
 
 # EXAMPLE: /SecurityMLAnalyticsSettings/get/Get all Security ML Analytics Settings.
 @try_manual
-def step_security_ml_analytic_setting_list(test, checks=None):
+def step_analytic_setting_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel security-ml-analytic-setting list '
+    test.cmd('az sentinel analytic-setting list '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
              checks=checks)
@@ -1898,10 +1886,10 @@ def step_security_ml_analytic_setting_list(test, checks=None):
 
 # EXAMPLE: /SecurityMLAnalyticsSettings/delete/Delete a Security ML Analytics Settings.
 @try_manual
-def step_security_ml_analytic_setting_delete(test, checks=None):
+def step_analytic_setting_delete(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel security-ml-analytic-setting delete -y '
+    test.cmd('az sentinel analytic-setting delete -y '
              '--resource-group "{rg}" '
              '--settings-resource-name "f209187f-1d17-4431-94af-c141bf5f23db" '
              '--workspace-name "myWorkspace"',
@@ -1910,10 +1898,10 @@ def step_security_ml_analytic_setting_delete(test, checks=None):
 
 # EXAMPLE: /SentinelOnboardingStates/put/Create Sentinel onboarding state
 @try_manual
-def step_sentinel_onboarding_state_create(test, checks=None):
+def step_onboarding_state_create(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel sentinel-onboarding-state create '
+    test.cmd('az sentinel onboarding-state create '
              '--resource-group "{rg}" '
              '--name "{mySentinelOnboardingState}" '
              '--customer-managed-key false '
@@ -1923,10 +1911,10 @@ def step_sentinel_onboarding_state_create(test, checks=None):
 
 # EXAMPLE: /SentinelOnboardingStates/get/Get all Sentinel onboarding states
 @try_manual
-def step_sentinel_onboarding_state_list(test, checks=None):
+def step_onboarding_state_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel sentinel-onboarding-state list '
+    test.cmd('az sentinel onboarding-state list '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
              checks=checks)
@@ -1934,10 +1922,10 @@ def step_sentinel_onboarding_state_list(test, checks=None):
 
 # EXAMPLE: /SentinelOnboardingStates/get/Get Sentinel onboarding state
 @try_manual
-def step_sentinel_onboarding_state_show(test, checks=None):
+def step_onboarding_state_show(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel sentinel-onboarding-state show '
+    test.cmd('az sentinel onboarding-state show '
              '--resource-group "{rg}" '
              '--name "{mySentinelOnboardingState}" '
              '--workspace-name "myWorkspace"',
@@ -1946,10 +1934,10 @@ def step_sentinel_onboarding_state_show(test, checks=None):
 
 # EXAMPLE: /SentinelOnboardingStates/delete/Delete Sentinel onboarding state
 @try_manual
-def step_sentinel_onboarding_state_delete(test, checks=None):
+def step_onboarding_state_delete(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel sentinel-onboarding-state delete -y '
+    test.cmd('az sentinel onboarding-state delete -y '
              '--resource-group "{rg}" '
              '--name "{mySentinelOnboardingState}" '
              '--workspace-name "myWorkspace"',
@@ -2027,10 +2015,10 @@ def step_source_control_delete(test, checks=None):
 
 # EXAMPLE: /ThreatIntelligenceIndicator/put/Update a threat Intelligence indicator
 @try_manual
-def step_threat_intelligence_indicator_create(test, checks=None):
+def step_threat_indicator_create(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel threat-intelligence-indicator create '
+    test.cmd('az sentinel threat-indicator create '
              '--name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" '
              '--description "debugging indicators" '
              '--confidence 78 '
@@ -2053,10 +2041,10 @@ def step_threat_intelligence_indicator_create(test, checks=None):
 
 # EXAMPLE: /ThreatIntelligenceIndicator/get/View a threat intelligence indicator by name
 @try_manual
-def step_threat_intelligence_indicator_show(test, checks=None):
+def step_threat_indicator_show(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel threat-intelligence-indicator show '
+    test.cmd('az sentinel threat-indicator show '
              '--name "e16ef847-962e-d7b6-9c8b-a33e4bd30e47" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -2065,10 +2053,10 @@ def step_threat_intelligence_indicator_show(test, checks=None):
 
 # EXAMPLE: /ThreatIntelligenceIndicator/post/Append tags to a threat intelligence indicator
 @try_manual
-def step_threat_intelligence_indicator_append_tag(test, checks=None):
+def step_threat_indicator_append_tag(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel threat-intelligence-indicator append-tag '
+    test.cmd('az sentinel threat-indicator append-tag '
              '--name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" '
              '--threat-intelligence-tags "tag1" "tag2" '
              '--resource-group "{rg}" '
@@ -2078,10 +2066,10 @@ def step_threat_intelligence_indicator_append_tag(test, checks=None):
 
 # EXAMPLE: /ThreatIntelligenceIndicator/post/Create a new Threat Intelligence
 @try_manual
-def step_threat_intelligence_indicator(test, checks=None):
+def step_threat_indicator_create_indicator(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel threat-intelligence-indicator create-indicator '
+    test.cmd('az sentinel threat-indicator create-indicator '
              '--description "debugging indicators" '
              '--confidence 78 '
              '--created-by-ref "contoso@contoso.com" '
@@ -2103,10 +2091,10 @@ def step_threat_intelligence_indicator(test, checks=None):
 
 # EXAMPLE: /ThreatIntelligenceIndicator/post/Query threat intelligence indicators as per filtering criteria
 @try_manual
-def step_threat_intelligence_indicator_query_indicator(test, checks=None):
+def step_threat_indicator_query_indicator(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel threat-intelligence-indicator query-indicator '
+    test.cmd('az sentinel threat-indicator query-indicator '
              '--max-confidence 80 '
              '--max-valid-until "2021-04-25T17:44:00.114052Z" '
              '--min-confidence 25 '
@@ -2121,10 +2109,10 @@ def step_threat_intelligence_indicator_query_indicator(test, checks=None):
 
 # EXAMPLE: /ThreatIntelligenceIndicator/post/Replace tags to a Threat Intelligence
 @try_manual
-def step_threat_intelligence_indicator_replace_tag(test, checks=None):
+def step_threat_indicator_replace_tag(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel threat-intelligence-indicator replace-tag '
+    test.cmd('az sentinel threat-indicator replace-tag '
              '--name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" '
              '--etag "\\"0000262c-0000-0800-0000-5e9767060000\\"" '
              '--threat-intelligence-tags "patching tags" '
@@ -2135,10 +2123,10 @@ def step_threat_intelligence_indicator_replace_tag(test, checks=None):
 
 # EXAMPLE: /ThreatIntelligenceIndicator/delete/Delete a threat intelligence indicator
 @try_manual
-def step_threat_intelligence_indicator_delete(test, checks=None):
+def step_threat_indicator_delete(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel threat-intelligence-indicator delete -y '
+    test.cmd('az sentinel threat-indicator delete -y '
              '--name "d9cd6f0b-96b9-3984-17cd-a779d1e15a93" '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
@@ -2147,10 +2135,10 @@ def step_threat_intelligence_indicator_delete(test, checks=None):
 
 # EXAMPLE: /ThreatIntelligenceIndicatorMetrics/get/Get threat intelligence indicators metrics.
 @try_manual
-def step_threat_intelligence_indicator_metric_list(test, checks=None):
+def step_threat_indicator_metric_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel threat-intelligence-indicator metric list '
+    test.cmd('az sentinel threat-indicator metric list '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
              checks=checks)
@@ -2158,10 +2146,10 @@ def step_threat_intelligence_indicator_metric_list(test, checks=None):
 
 # EXAMPLE: /ThreatIntelligenceIndicators/get/Get all threat intelligence indicators
 @try_manual
-def step_threat_intelligence_indicator_list(test, checks=None):
+def step_threat_indicator_list(test, checks=None):
     if checks is None:
         checks = []
-    test.cmd('az sentinel threat-intelligence-indicator list '
+    test.cmd('az sentinel threat-indicator list '
              '--resource-group "{rg}" '
              '--workspace-name "myWorkspace"',
              checks=checks)
