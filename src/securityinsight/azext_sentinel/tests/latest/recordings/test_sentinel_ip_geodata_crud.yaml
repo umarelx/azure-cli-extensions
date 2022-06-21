@@ -1,0 +1,49 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      CommandName:
+      - sentinel ip-geodata show
+      Connection:
+      - keep-alive
+      ParameterSetName:
+      - -g --ip-address
+      User-Agent:
+      - AZURECLI/2.37.0 azsdk-python-mgmt-securityinsight/1.0.0b1 Python/3.8.10 (Windows-10-10.0.19044-SP0)
+    method: GET
+    uri: https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_sentinel_000001/providers/Microsoft.SecurityInsights/enrichment/ip/geodata/?api-version=2022-06-01-preview&ipAddress=1.2.3.4
+  response:
+    body:
+      string: '{"asn":null,"carrier":null,"city":"brisbane","cityCf":50,"continent":"oceania","country":"australia","countryCf":86,"ipAddr":"1.2.3.4","ipRoutingType":"fixed","latitude":"-27.46758","longitude":"153.02789","organization":"apnic
+        debogon project","organizationType":"Telecommunications","region":null,"state":"queensland","stateCf":68,"stateCode":"qld"}'
+    headers:
+      cache-control:
+      - no-cache
+      content-length:
+      - '351'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Tue, 21 Jun 2022 02:59:25 GMT
+      expires:
+      - '-1'
+      pragma:
+      - no-cache
+      server:
+      - Kestrel
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
+version: 1
