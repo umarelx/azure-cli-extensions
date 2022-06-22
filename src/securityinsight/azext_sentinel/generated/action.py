@@ -43,6 +43,9 @@ class AddActions(argparse._AppendAction):
             elif kl == 'action-type':
                 d['action_type'] = v[0]
 
+            elif kl == 'severity':
+                d['action_configuration'] = {'severiry': v[0]}
+
             else:
                 raise CLIError(
                     'Unsupported Key {} is provided for parameter actions. All possible keys are: order, action-type'

@@ -534,12 +534,12 @@ helps['sentinel bookmark create'] = """
       - name: Creates or updates a bookmark.
         text: |-
                az sentinel bookmark create --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\"" --created \
-"2021-09-01T13:15:30Z" --user-info-object-id "2046feea-040d-4a46-9e2b-91c2941bfa70" --display-name "My bookmark" \
+"2021-09-01T13:15:30Z" --display-name "My bookmark" \
 --entity-mappings "[{\\"entityType\\":\\"Account\\",\\"fieldMappings\\":[{\\"identifier\\":\\"Fullname\\",\\"value\\":\
 \\"johndoe@microsoft.com\\"}]}]" --labels "Tag1" "Tag2" --notes "Found a suspicious activity" --query-content \
 "SecurityEvent | where TimeGenerated > ago(1d) and TimeGenerated < ago(2d)" --query-result "Security Event query \
-result" --tactics "Execution" --techniques "T1609" --updated "2021-09-01T13:15:30Z" --object-id \
-"2046feea-040d-4a46-9e2b-91c2941bfa70" --bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" \
+result" --tactics "Execution" --techniques "T1609" --updated "2021-09-01T13:15:30Z" \
+--bookmark-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" \
 --workspace-name "myWorkspace"
 """
 

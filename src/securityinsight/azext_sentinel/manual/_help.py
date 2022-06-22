@@ -18,7 +18,7 @@ helps['sentinel automation-rule create'] = """
       - name: --actions
         short-summary: "The actions to execute when the automation rule is triggered."
         long-summary: |
-            Usage: --actions order=XX action-type=XX
+            Usage: --actions order=XX action-type=XX severity=XX
 
             action-type: Required. The type of the automation rule action.
 
@@ -35,9 +35,8 @@ object."
       - name: AutomationRules_CreateOrUpdate
         text: |-
                az sentinel automation-rule create --etag "\\"0300bf09-0000-0000-0000-5c37296e0000\\"" --actions \
-action-type="ModifyProperties" order=1 --display-name "High severity incidents \
-escalation" --order 1 --conditions condition-type="Property" --conditions condition-type="PropertyChanged" --conditions \
-condition-type="PropertyArrayChanged" --is-enabled \
+action-type="ModifyProperties" order=1 severity=High --display-name "High severity incidents \
+escalation" --order 1 --is-enabled \
 true --triggers-when "Created" --automation-rule-id "73e01a99-5cd7-4139-a149-9f2736ff2ab5" --resource-group "myRg" \
 --workspace-name "myWorkspace"
 """

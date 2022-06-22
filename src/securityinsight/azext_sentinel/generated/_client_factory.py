@@ -116,7 +116,7 @@ def cf_threat_intelligence_indicator(cli_ctx, *_):
     return cf_sentinel_cl(cli_ctx).threat_intelligence_indicator
 
 
-def cf_threat_intelligence_indicator(cli_ctx, *_):
+def cf_threat_intelligence_indicators(cli_ctx, *_):
     return cf_sentinel_cl(cli_ctx).threat_intelligence_indicators
 
 

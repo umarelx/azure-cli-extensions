@@ -39,7 +39,7 @@ from azext_sentinel.generated._client_factory import (
     cf_source_control,
     cf_source_control,
     cf_threat_intelligence_indicator,
-    cf_threat_intelligence_indicator,
+    cf_threat_intelligence_indicators,
     cf_threat_intelligence_indicator_metric,
     cf_watchlist,
     cf_watchlist_item,
@@ -228,9 +228,9 @@ sentinel_threat_intelligence_indicator = CliCommandType(
 )
 
 
-sentinel_threat_intelligence_indicator = CliCommandType(
+sentinel_threat_intelligence_indicators = CliCommandType(
     operations_tmpl='azext_sentinel.vendored_sdks.securityinsight.operations._threat_intelligence_indicators_operations#ThreatIntelligenceIndicatorsOperations.{}',
-    client_factory=cf_threat_intelligence_indicator,
+    client_factory=cf_threat_intelligence_indicators,
 )
 
 
@@ -459,8 +459,8 @@ def load_command_table(self, _):
 
     with self.command_group(
         'sentinel threat-indicator',
-        sentinel_threat_intelligence_indicator,
-        client_factory=cf_threat_intelligence_indicator,
+        sentinel_threat_intelligence_indicators,
+        client_factory=cf_threat_intelligence_indicators,
     ) as g:
         g.custom_command('list', 'sentinel_threat_indicator_list')
 
